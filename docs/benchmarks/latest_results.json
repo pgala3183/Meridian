@@ -1,0 +1,556 @@
+{
+  "dataset_version": "2026.07.12",
+  "summary": {
+    "n_naive": 4,
+    "n_hierarchical": 4,
+    "n_hierarchical_cached": 4,
+    "avg_cost_usd_naive": 3.795e-05,
+    "avg_cost_usd_hierarchical": 2.41e-05,
+    "cost_reduction_pct": 36.5,
+    "avg_latency_s_naive": 0.000124,
+    "avg_latency_s_hierarchical": 0.000982,
+    "avg_latency_s_hierarchical_cached": 0.000333,
+    "cached_speedup_vs_cold_hierarchical": 2.944,
+    "cache_hit_rate_on_repeat": 1.0,
+    "avg_quality_overall_naive": 0.5112,
+    "avg_quality_overall_hierarchical": 0.7434,
+    "avg_stage_seconds_hierarchical": {
+      "extract_media": 1e-06,
+      "load_cached_tree": 3.6e-05,
+      "transcribe": 5.6e-05,
+      "semantic_chunk": 0.000423,
+      "keyframe_select": 1.2e-05,
+      "hierarchy_build": 0.000124,
+      "store_cached_tree": 4e-06,
+      "retrieve": 0.000123,
+      "answer": 0.000192
+    },
+    "judge": "heuristic_rubric (approximation \u2014 not ground truth)"
+  },
+  "results": [
+    {
+      "item_id": "lecture-os-caching-01",
+      "question_id": "q1",
+      "mode": "naive",
+      "answer": "A CPU cache stores frequently used data closer to the processor.",
+      "latency_seconds": 0.0002556999988883035,
+      "estimated_usd": 4.28e-05,
+      "input_tokens": 364,
+      "output_tokens": 16,
+      "cache_hit": false,
+      "quality": {
+        "groundedness": 1.0,
+        "correctness": 0.3372,
+        "citation_accuracy": 0.0,
+        "overall": 0.4457333333333333
+      },
+      "citation_count": 0,
+      "stage_timings": []
+    },
+    {
+      "item_id": "lecture-os-caching-01",
+      "question_id": "q1",
+      "mode": "hierarchical",
+      "answer": "<<<UNTRUSTED_CONTENT_START>>> label=retrieved_transcript\n[chunk-0002 | 26.00s-42.00s] A CPU cache stores frequently used data closer to the processor. [chunk-0002]",
+      "latency_seconds": 0.0015143000000534812,
+      "estimated_usd": 2.97e-05,
+      "input_tokens": 137,
+      "output_tokens": 40,
+      "cache_hit": false,
+      "quality": {
+        "groundedness": 0.7273,
+        "correctness": 0.3372,
+        "citation_accuracy": 1.0,
+        "overall": 0.6881666666666666
+      },
+      "citation_count": 1,
+      "stage_timings": [
+        {
+          "stage": "extract_media",
+          "seconds": 1.2999989849049598e-06
+        },
+        {
+          "stage": "load_cached_tree",
+          "seconds": 7.189999996626284e-05
+        },
+        {
+          "stage": "transcribe",
+          "seconds": 9.979999958886765e-05
+        },
+        {
+          "stage": "semantic_chunk",
+          "seconds": 0.0006963999985600822
+        },
+        {
+          "stage": "keyframe_select",
+          "seconds": 2.1600000764010474e-05
+        },
+        {
+          "stage": "hierarchy_build",
+          "seconds": 0.0001685999995970633
+        },
+        {
+          "stage": "store_cached_tree",
+          "seconds": 5.699999746866524e-06
+        },
+        {
+          "stage": "retrieve",
+          "seconds": 0.0001415999995515449
+        },
+        {
+          "stage": "answer",
+          "seconds": 0.00028920000113430433
+        }
+      ]
+    },
+    {
+      "item_id": "lecture-os-caching-01",
+      "question_id": "q1",
+      "mode": "hierarchical_cached",
+      "answer": "<<<UNTRUSTED_CONTENT_START>>> label=retrieved_transcript\n[chunk-0002 | 26.00s-42.00s] A CPU cache stores frequently used data closer to the processor. [chunk-0002]",
+      "latency_seconds": 0.0003348000009282259,
+      "estimated_usd": 2.97e-05,
+      "input_tokens": 137,
+      "output_tokens": 40,
+      "cache_hit": true,
+      "quality": {
+        "groundedness": 0.7273,
+        "correctness": 0.3372,
+        "citation_accuracy": 1.0,
+        "overall": 0.6881666666666666
+      },
+      "citation_count": 1,
+      "stage_timings": [
+        {
+          "stage": "extract_media",
+          "seconds": 8.000006346264854e-07
+        },
+        {
+          "stage": "load_cached_tree",
+          "seconds": 3.3999998777289875e-05
+        },
+        {
+          "stage": "transcribe",
+          "seconds": 8.999995770864189e-07
+        },
+        {
+          "stage": "semantic_chunk",
+          "seconds": 5.999991117278114e-07
+        },
+        {
+          "stage": "keyframe_select",
+          "seconds": 1.0999992809956893e-06
+        },
+        {
+          "stage": "hierarchy_build",
+          "seconds": 6.999998731771484e-07
+        },
+        {
+          "stage": "store_cached_tree",
+          "seconds": 5.999991117278114e-07
+        },
+        {
+          "stage": "retrieve",
+          "seconds": 0.00012659999993047677
+        },
+        {
+          "stage": "answer",
+          "seconds": 0.0001601999992999481
+        }
+      ]
+    },
+    {
+      "item_id": "lecture-os-caching-01",
+      "question_id": "q2",
+      "mode": "naive",
+      "answer": "On a cache miss the system fetches the block from slower main memory.",
+      "latency_seconds": 9.280000085709617e-05,
+      "estimated_usd": 4.24e-05,
+      "input_tokens": 356,
+      "output_tokens": 17,
+      "cache_hit": false,
+      "quality": {
+        "groundedness": 1.0,
+        "correctness": 0.9808,
+        "citation_accuracy": 0.0,
+        "overall": 0.6602666666666667
+      },
+      "citation_count": 0,
+      "stage_timings": []
+    },
+    {
+      "item_id": "lecture-os-caching-01",
+      "question_id": "q2",
+      "mode": "hierarchical",
+      "answer": "A CPU cache stores frequently used data closer to the processor. [chunk-0002]",
+      "latency_seconds": 0.00030839999999443535,
+      "estimated_usd": 2.26e-05,
+      "input_tokens": 150,
+      "output_tokens": 19,
+      "cache_hit": true,
+      "quality": {
+        "groundedness": 1.0,
+        "correctness": 0.0577,
+        "citation_accuracy": 1.0,
+        "overall": 0.6859000000000001
+      },
+      "citation_count": 1,
+      "stage_timings": [
+        {
+          "stage": "extract_media",
+          "seconds": 6.999998731771484e-07
+        },
+        {
+          "stage": "load_cached_tree",
+          "seconds": 2.4599999960628338e-05
+        },
+        {
+          "stage": "transcribe",
+          "seconds": 6.999998731771484e-07
+        },
+        {
+          "stage": "semantic_chunk",
+          "seconds": 3.9999940781854093e-07
+        },
+        {
+          "stage": "keyframe_select",
+          "seconds": 5.000001692678779e-07
+        },
+        {
+          "stage": "hierarchy_build",
+          "seconds": 5.000001692678779e-07
+        },
+        {
+          "stage": "store_cached_tree",
+          "seconds": 5.000001692678779e-07
+        },
+        {
+          "stage": "retrieve",
+          "seconds": 0.00011989999984507449
+        },
+        {
+          "stage": "answer",
+          "seconds": 0.00015220000022964086
+        }
+      ]
+    },
+    {
+      "item_id": "lecture-os-caching-01",
+      "question_id": "q2",
+      "mode": "hierarchical_cached",
+      "answer": "A CPU cache stores frequently used data closer to the processor. [chunk-0002]",
+      "latency_seconds": 0.0002950999987660907,
+      "estimated_usd": 2.26e-05,
+      "input_tokens": 150,
+      "output_tokens": 19,
+      "cache_hit": true,
+      "quality": {
+        "groundedness": 1.0,
+        "correctness": 0.0577,
+        "citation_accuracy": 1.0,
+        "overall": 0.6859000000000001
+      },
+      "citation_count": 1,
+      "stage_timings": [
+        {
+          "stage": "extract_media",
+          "seconds": 6.000009307172149e-07
+        },
+        {
+          "stage": "load_cached_tree",
+          "seconds": 2.0700001186924055e-05
+        },
+        {
+          "stage": "transcribe",
+          "seconds": 5.999991117278114e-07
+        },
+        {
+          "stage": "semantic_chunk",
+          "seconds": 3.0000046535860747e-07
+        },
+        {
+          "stage": "keyframe_select",
+          "seconds": 4.999983502784744e-07
+        },
+        {
+          "stage": "hierarchy_build",
+          "seconds": 5.999991117278114e-07
+        },
+        {
+          "stage": "store_cached_tree",
+          "seconds": 5.999991117278114e-07
+        },
+        {
+          "stage": "retrieve",
+          "seconds": 0.00011660000018309802
+        },
+        {
+          "stage": "answer",
+          "seconds": 0.00014689999989059288
+        }
+      ]
+    },
+    {
+      "item_id": "interview-founder-01",
+      "question_id": "q1",
+      "mode": "naive",
+      "answer": "Founder: Happy to be here; we have learned a lot the hard way.",
+      "latency_seconds": 8.299999899463728e-05,
+      "estimated_usd": 3.8e-05,
+      "input_tokens": 320,
+      "output_tokens": 15,
+      "cache_hit": false,
+      "quality": {
+        "groundedness": 1.0,
+        "correctness": 0.0179,
+        "citation_accuracy": 0.0,
+        "overall": 0.3393
+      },
+      "citation_count": 0,
+      "stage_timings": []
+    },
+    {
+      "item_id": "interview-founder-01",
+      "question_id": "q1",
+      "mode": "hierarchical",
+      "answer": "Interviewer: How do you decide when an ML feature is ready to ship? [chunk-0001]",
+      "latency_seconds": 0.001150000000052387,
+      "estimated_usd": 2.27e-05,
+      "input_tokens": 147,
+      "output_tokens": 20,
+      "cache_hit": false,
+      "quality": {
+        "groundedness": 1.0,
+        "correctness": 0.0,
+        "citation_accuracy": 1.0,
+        "overall": 0.6666666666666666
+      },
+      "citation_count": 1,
+      "stage_timings": [
+        {
+          "stage": "extract_media",
+          "seconds": 6.000009307172149e-07
+        },
+        {
+          "stage": "load_cached_tree",
+          "seconds": 2.209999911428895e-05
+        },
+        {
+          "stage": "transcribe",
+          "seconds": 7.089999962772708e-05
+        },
+        {
+          "stage": "semantic_chunk",
+          "seconds": 0.000552100000277278
+        },
+        {
+          "stage": "keyframe_select",
+          "seconds": 1.320000046689529e-05
+        },
+        {
+          "stage": "hierarchy_build",
+          "seconds": 0.00019859999883919954
+        },
+        {
+          "stage": "store_cached_tree",
+          "seconds": 3.700000888784416e-06
+        },
+        {
+          "stage": "retrieve",
+          "seconds": 0.00012210000022605527
+        },
+        {
+          "stage": "answer",
+          "seconds": 0.00015729999904579017
+        }
+      ]
+    },
+    {
+      "item_id": "interview-founder-01",
+      "question_id": "q1",
+      "mode": "hierarchical_cached",
+      "answer": "Interviewer: How do you decide when an ML feature is ready to ship? [chunk-0001]",
+      "latency_seconds": 0.00030189999961294234,
+      "estimated_usd": 2.27e-05,
+      "input_tokens": 147,
+      "output_tokens": 20,
+      "cache_hit": true,
+      "quality": {
+        "groundedness": 1.0,
+        "correctness": 0.0,
+        "citation_accuracy": 1.0,
+        "overall": 0.6666666666666666
+      },
+      "citation_count": 1,
+      "stage_timings": [
+        {
+          "stage": "extract_media",
+          "seconds": 6.999998731771484e-07
+        },
+        {
+          "stage": "load_cached_tree",
+          "seconds": 2.829999903042335e-05
+        },
+        {
+          "stage": "transcribe",
+          "seconds": 6.999998731771484e-07
+        },
+        {
+          "stage": "semantic_chunk",
+          "seconds": 4.000012268079445e-07
+        },
+        {
+          "stage": "keyframe_select",
+          "seconds": 5.000001692678779e-07
+        },
+        {
+          "stage": "hierarchy_build",
+          "seconds": 5.000001692678779e-07
+        },
+        {
+          "stage": "store_cached_tree",
+          "seconds": 5.000001692678779e-07
+        },
+        {
+          "stage": "retrieve",
+          "seconds": 0.00011579999954847153
+        },
+        {
+          "stage": "answer",
+          "seconds": 0.00014600000031350646
+        }
+      ]
+    },
+    {
+      "item_id": "product-demo-search-01",
+      "question_id": "q1",
+      "mode": "naive",
+      "answer": "Clicking a citation seeks the player to that timestamp automatically.",
+      "latency_seconds": 6.439999924623407e-05,
+      "estimated_usd": 2.86e-05,
+      "input_tokens": 218,
+      "output_tokens": 17,
+      "cache_hit": false,
+      "quality": {
+        "groundedness": 1.0,
+        "correctness": 0.7985,
+        "citation_accuracy": 0.0,
+        "overall": 0.5995
+      },
+      "citation_count": 0,
+      "stage_timings": []
+    },
+    {
+      "item_id": "product-demo-search-01",
+      "question_id": "q1",
+      "mode": "hierarchical",
+      "answer": "Clicking a citation seeks the player to that timestamp automatically. [chunk-0003]",
+      "latency_seconds": 0.0009540999999444466,
+      "estimated_usd": 2.14e-05,
+      "input_tokens": 134,
+      "output_tokens": 20,
+      "cache_hit": false,
+      "quality": {
+        "groundedness": 1.0,
+        "correctness": 0.7985,
+        "citation_accuracy": 1.0,
+        "overall": 0.9328333333333333
+      },
+      "citation_count": 1,
+      "stage_timings": [
+        {
+          "stage": "extract_media",
+          "seconds": 5.999991117278114e-07
+        },
+        {
+          "stage": "load_cached_tree",
+          "seconds": 2.4199998733820394e-05
+        },
+        {
+          "stage": "transcribe",
+          "seconds": 5.1900000471505336e-05
+        },
+        {
+          "stage": "semantic_chunk",
+          "seconds": 0.00044359999992593657
+        },
+        {
+          "stage": "keyframe_select",
+          "seconds": 1.1899999663000926e-05
+        },
+        {
+          "stage": "hierarchy_build",
+          "seconds": 0.00012860000060754828
+        },
+        {
+          "stage": "store_cached_tree",
+          "seconds": 7.599999662488699e-06
+        },
+        {
+          "stage": "retrieve",
+          "seconds": 0.0001080999991245335
+        },
+        {
+          "stage": "answer",
+          "seconds": 0.0001675000003160676
+        }
+      ]
+    },
+    {
+      "item_id": "product-demo-search-01",
+      "question_id": "q1",
+      "mode": "hierarchical_cached",
+      "answer": "Clicking a citation seeks the player to that timestamp automatically. [chunk-0003]",
+      "latency_seconds": 0.00040190000072470866,
+      "estimated_usd": 2.14e-05,
+      "input_tokens": 134,
+      "output_tokens": 20,
+      "cache_hit": true,
+      "quality": {
+        "groundedness": 1.0,
+        "correctness": 0.7985,
+        "citation_accuracy": 1.0,
+        "overall": 0.9328333333333333
+      },
+      "citation_count": 1,
+      "stage_timings": [
+        {
+          "stage": "extract_media",
+          "seconds": 1.8999999156221747e-06
+        },
+        {
+          "stage": "load_cached_tree",
+          "seconds": 3.9599999581696466e-05
+        },
+        {
+          "stage": "transcribe",
+          "seconds": 1.7000002117129043e-06
+        },
+        {
+          "stage": "semantic_chunk",
+          "seconds": 7.00001692166552e-07
+        },
+        {
+          "stage": "keyframe_select",
+          "seconds": 1.5600000551785342e-05
+        },
+        {
+          "stage": "hierarchy_build",
+          "seconds": 5.000001692678779e-07
+        },
+        {
+          "stage": "store_cached_tree",
+          "seconds": 8.999995770864189e-07
+        },
+        {
+          "stage": "retrieve",
+          "seconds": 0.00013870000111637637
+        },
+        {
+          "stage": "answer",
+          "seconds": 0.00019099999917671084
+        }
+      ]
+    }
+  ]
+}

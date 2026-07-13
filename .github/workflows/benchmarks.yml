@@ -1,0 +1,41 @@
+name: Benchmarks
+
+on:
+  schedule:
+    # Mondays 06:00 UTC
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  eval:
+    name: cost-latency-quality-eval
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+      - name: Install
+        run: uv sync --extra dev
+      - name: Pin checksums + run eval
+        run: uv run python -m tests.benchmarks.run_eval --pin-checksums
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: meridian-benchmarks
+          path: docs/benchmarks/
+      - name: Commit refreshed reports (scheduled only)
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/benchmarks/ tests/benchmarks/dataset.json
+          if git diff --staged --quiet; then
+            echo "No benchmark changes"
+          else
+            git commit -m "chore: refresh benchmark reports"
+            git push
+          fi

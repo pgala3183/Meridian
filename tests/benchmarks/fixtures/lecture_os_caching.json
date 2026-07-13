@@ -1,0 +1,26 @@
+{
+  "video_id": "lecture-os-caching-01",
+  "language": "en",
+  "segments": [
+    {"text": "Welcome to operating systems lecture five on caching.", "start_seconds": 0.0, "end_seconds": 5.0},
+    {"text": "We begin with a historical note about magnetic core memory and early DRAM latencies.", "start_seconds": 5.0, "end_seconds": 12.0},
+    {"text": "Modern CPUs are much faster than main memory access latency.", "start_seconds": 12.0, "end_seconds": 18.0},
+    {"text": "Without a cache hierarchy every load would stall the pipeline for hundreds of cycles.", "start_seconds": 18.0, "end_seconds": 26.0},
+    {"text": "A CPU cache stores frequently used data closer to the processor.", "start_seconds": 26.0, "end_seconds": 34.0},
+    {"text": "The goal is to reduce average memory latency using locality.", "start_seconds": 34.0, "end_seconds": 42.0},
+    {"text": "Temporal locality means recently accessed lines are likely reused.", "start_seconds": 42.0, "end_seconds": 50.0},
+    {"text": "Spatial locality means nearby addresses are often accessed together.", "start_seconds": 50.0, "end_seconds": 58.0},
+    {"text": "Caches are organized into sets and ways; associativity trades hit rate for lookup cost.", "start_seconds": 58.0, "end_seconds": 68.0},
+    {"text": "On a cache hit the data returns from the fast cache hierarchy.", "start_seconds": 68.0, "end_seconds": 76.0},
+    {"text": "On a cache miss the system fetches the block from slower main memory.", "start_seconds": 76.0, "end_seconds": 86.0},
+    {"text": "Misses may be classified as compulsory, capacity, or conflict misses.", "start_seconds": 86.0, "end_seconds": 94.0},
+    {"text": "Write policies include write-through and write-back with dirty bits.", "start_seconds": 94.0, "end_seconds": 104.0},
+    {"text": "Write-allocate versus no-write-allocate changes miss handling behavior.", "start_seconds": 104.0, "end_seconds": 112.0},
+    {"text": "Replacement policies such as LRU approximate recency under limited hardware budgets.", "start_seconds": 112.0, "end_seconds": 122.0},
+    {"text": "Multi-level caches L1 L2 and L3 form an inclusion or non-inclusion hierarchy.", "start_seconds": 122.0, "end_seconds": 132.0},
+    {"text": "Coherence protocols keep private caches consistent across cores.", "start_seconds": 132.0, "end_seconds": 140.0},
+    {"text": "False sharing can destroy performance even when logical data is independent.", "start_seconds": 140.0, "end_seconds": 148.0},
+    {"text": "Prefetchers try to hide latency by guessing future accesses.", "start_seconds": 148.0, "end_seconds": 156.0},
+    {"text": "Next lecture covers virtual memory and page tables.", "start_seconds": 156.0, "end_seconds": 180.0}
+  ]
+}

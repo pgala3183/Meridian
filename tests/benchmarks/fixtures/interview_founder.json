@@ -1,0 +1,23 @@
+{
+  "video_id": "interview-founder-01",
+  "language": "en",
+  "segments": [
+    {"text": "Interviewer: Thanks for joining us to talk about shipping machine learning features.", "start_seconds": 0.0, "end_seconds": 6.0},
+    {"text": "Founder: Happy to be here; we have learned a lot the hard way.", "start_seconds": 6.0, "end_seconds": 12.0},
+    {"text": "Interviewer: How do you decide when an ML feature is ready to ship?", "start_seconds": 12.0, "end_seconds": 18.0},
+    {"text": "Founder: First we run offline evals on a labeled set with clear metrics.", "start_seconds": 18.0, "end_seconds": 26.0},
+    {"text": "Founder: Those metrics include precision, recall, and calibrated confidence where relevant.", "start_seconds": 26.0, "end_seconds": 34.0},
+    {"text": "Founder: If offline numbers look good we enable shadow traffic in production.", "start_seconds": 34.0, "end_seconds": 42.0},
+    {"text": "Founder: Shadow mode compares model outputs without affecting users.", "start_seconds": 42.0, "end_seconds": 50.0},
+    {"text": "Founder: We log disagreements between the shadow model and the current system.", "start_seconds": 50.0, "end_seconds": 58.0},
+    {"text": "Founder: Then we roll a small A/B test to measure user impact.", "start_seconds": 58.0, "end_seconds": 66.0},
+    {"text": "Founder: The A/B gate requires a pre-registered success metric and a stopping rule.", "start_seconds": 66.0, "end_seconds": 74.0},
+    {"text": "Interviewer: What fails most often?", "start_seconds": 74.0, "end_seconds": 78.0},
+    {"text": "Founder: Label drift and silent quality regressions between offline and live data.", "start_seconds": 78.0, "end_seconds": 88.0},
+    {"text": "Founder: Also, feature pipelines that look identical in notebooks but diverge in prod.", "start_seconds": 88.0, "end_seconds": 96.0},
+    {"text": "Founder: We gate launches on both offline eval and A/B confidence intervals.", "start_seconds": 96.0, "end_seconds": 106.0},
+    {"text": "Interviewer: Any advice for early teams?", "start_seconds": 106.0, "end_seconds": 110.0},
+    {"text": "Founder: Invest in eval datasets early; demos without numbers are dangerous.", "start_seconds": 110.0, "end_seconds": 118.0},
+    {"text": "Interviewer: Thanks for walking through the validation ladder.", "start_seconds": 118.0, "end_seconds": 150.0}
+  ]
+}

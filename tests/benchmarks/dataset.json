@@ -1,0 +1,131 @@
+{
+  "dataset_version": "2026.07.12",
+  "items": [
+    {
+      "item_id": "lecture-os-caching-01",
+      "video_type": "lecture",
+      "title": "Operating Systems \u2014 Caching Basics (synthetic lecture)",
+      "content_hash": "sha256:ca89951defae2043bd6570be2d4695ed790f2f2b562d33db72d0f15e5e1173e7",
+      "duration_seconds": 180.0,
+      "transcript_file": "fixtures/lecture_os_caching.json",
+      "source": {
+        "kind": "synthetic_checked_in",
+        "license": "CC0-1.0-equivalent-synthetic",
+        "notes": "Synthetic timed transcript for reproducible offline eval; not a scraped lecture."
+      },
+      "questions": [
+        {
+          "question_id": "q1",
+          "question": "What is the purpose of a CPU cache according to the lecture?",
+          "rubric": {
+            "must_include": [
+              "faster",
+              "memory",
+              "cache"
+            ],
+            "acceptable_concepts": [
+              "latency",
+              "locality",
+              "hierarchy"
+            ],
+            "forbidden": [
+              "rocket",
+              "tomato"
+            ]
+          },
+          "expected_answer": "CPU caches store frequently used data closer to the processor to reduce memory latency."
+        },
+        {
+          "question_id": "q2",
+          "question": "What happens on a cache miss?",
+          "rubric": {
+            "must_include": [
+              "miss",
+              "memory"
+            ],
+            "acceptable_concepts": [
+              "fetch",
+              "slower",
+              "main memory"
+            ],
+            "forbidden": [
+              "mulch",
+              "tomato"
+            ]
+          },
+          "expected_answer": "On a cache miss the system fetches the block from slower main memory into the cache."
+        }
+      ]
+    },
+    {
+      "item_id": "interview-founder-01",
+      "video_type": "interview",
+      "title": "Founder Interview \u2014 Shipping ML Features (synthetic)",
+      "content_hash": "sha256:457337ed0e569480394c3bcd8295e921ed7951015a624fd2916a329b7ffb399c",
+      "duration_seconds": 150.0,
+      "transcript_file": "fixtures/interview_founder.json",
+      "source": {
+        "kind": "synthetic_checked_in",
+        "license": "CC0-1.0-equivalent-synthetic",
+        "notes": "Synthetic interview-style Q&A transcript for eval."
+      },
+      "questions": [
+        {
+          "question_id": "q1",
+          "question": "How does the founder say they validate ML features before launch?",
+          "rubric": {
+            "must_include": [
+              "offline",
+              "eval"
+            ],
+            "acceptable_concepts": [
+              "metrics",
+              "shadow",
+              "A/B"
+            ],
+            "forbidden": [
+              "cache line",
+              "tomato"
+            ]
+          },
+          "expected_answer": "They run offline evals on labeled sets, then shadow traffic, then a small A/B test."
+        }
+      ]
+    },
+    {
+      "item_id": "product-demo-search-01",
+      "video_type": "product_demo",
+      "title": "Product Demo \u2014 Semantic Video Search UI (synthetic)",
+      "content_hash": "sha256:7349de67e7ba04f79565053a6c14611546cfda83e0b50c67be0b8fdecd5013d9",
+      "duration_seconds": 120.0,
+      "transcript_file": "fixtures/product_demo_search.json",
+      "source": {
+        "kind": "synthetic_checked_in",
+        "license": "CC0-1.0-equivalent-synthetic",
+        "notes": "Synthetic product-demo narration for eval."
+      },
+      "questions": [
+        {
+          "question_id": "q1",
+          "question": "What does clicking a citation do in the demo?",
+          "rubric": {
+            "must_include": [
+              "timestamp",
+              "seek"
+            ],
+            "acceptable_concepts": [
+              "jump",
+              "playback",
+              "citation"
+            ],
+            "forbidden": [
+              "cache miss",
+              "A/B"
+            ]
+          },
+          "expected_answer": "Clicking a citation seeks the player to the cited timestamp in the video."
+        }
+      ]
+    }
+  ]
+}

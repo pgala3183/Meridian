@@ -1,0 +1,19 @@
+{
+  "video_id": "product-demo-search-01",
+  "language": "en",
+  "segments": [
+    {"text": "This demo shows Meridian semantic search over a long product video.", "start_seconds": 0.0, "end_seconds": 6.0},
+    {"text": "First we upload a one-hour recording from a customer onboarding call.", "start_seconds": 6.0, "end_seconds": 12.0},
+    {"text": "The pipeline extracts audio, builds a transcript, and constructs a hierarchy tree.", "start_seconds": 12.0, "end_seconds": 20.0},
+    {"text": "Type a natural language question in the search box.", "start_seconds": 20.0, "end_seconds": 26.0},
+    {"text": "Results list grounded answers with citation chips.", "start_seconds": 26.0, "end_seconds": 32.0},
+    {"text": "Each citation includes a start and end timestamp.", "start_seconds": 32.0, "end_seconds": 38.0},
+    {"text": "Clicking a citation seeks the player to that timestamp automatically.", "start_seconds": 38.0, "end_seconds": 46.0},
+    {"text": "You can also filter results by chapter using the hierarchy tree.", "start_seconds": 46.0, "end_seconds": 54.0},
+    {"text": "Administrators can export the cited answer as a shareable clip.", "start_seconds": 54.0, "end_seconds": 62.0},
+    {"text": "Repeat queries against the same video hit the multi-tier cache.", "start_seconds": 62.0, "end_seconds": 70.0},
+    {"text": "That keeps demos snappy without re-embedding the full transcript.", "start_seconds": 70.0, "end_seconds": 78.0},
+    {"text": "We also show a cost estimate panel so teams can forecast spend.", "start_seconds": 78.0, "end_seconds": 86.0},
+    {"text": "Finally the UI highlights which provider answered the question.", "start_seconds": 86.0, "end_seconds": 120.0}
+  ]
+}
