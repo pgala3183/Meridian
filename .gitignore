@@ -53,4 +53,5 @@ coverage.xml
 # Local data / artifacts
 data/
 tmp/
+.meridian-data/
 *.log
