@@ -19,6 +19,9 @@ dependencies = [
     "redis>=5.0.0",
     "python-dotenv>=1.0.0",
     "google-cloud-secret-manager>=2.20.0",
+    "google-cloud-storage>=2.18.0",
+    "google-cloud-firestore>=2.19.0",
+    "google-cloud-pubsub>=2.27.0",
 ]
 
 [project.optional-dependencies]

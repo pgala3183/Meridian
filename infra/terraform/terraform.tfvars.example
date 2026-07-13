@@ -1,0 +1,6 @@
+# Example tfvars — copy to terraform.tfvars (do not commit secrets).
+project_id   = "your-gcp-project-id"
+region       = "us-central1"
+name_prefix  = "meridian"
+api_image    = "us-central1-docker.pkg.dev/your-gcp-project-id/meridian/api:latest"
+worker_image = "us-central1-docker.pkg.dev/your-gcp-project-id/meridian/worker:latest"
