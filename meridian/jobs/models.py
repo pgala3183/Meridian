@@ -33,6 +33,10 @@ class VideoJob(BaseModel):
     job_id: str = Field(default_factory=lambda: str(uuid4()))
     user_id: str
     video_id: str
+    request_id: str | None = Field(
+        default=None,
+        description="Correlation ID from the enqueueing HTTP request",
+    )
     source_uri: str | None = None
     status: JobStatus = JobStatus.QUEUED
     stage: JobStage = JobStage.INGEST

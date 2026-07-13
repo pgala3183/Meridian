@@ -1,0 +1,115 @@
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-main
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  # Re-run the same gates as CI so main merges never deploy a broken tree.
+  gate:
+    uses: ./.github/workflows/ci.yml
+
+  build-and-deploy:
+    name: Build images & deploy Cloud Run
+    needs: gate
+    runs-on: ubuntu-latest
+    if: ${{ vars.GCP_PROJECT_ID != '' }}
+    environment: production
+    env:
+      PROJECT_ID: ${{ vars.GCP_PROJECT_ID }}
+      REGION: ${{ vars.GCP_REGION || 'us-central1' }}
+      REPOSITORY: ${{ vars.ARTIFACT_REPO || 'meridian' }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
+
+      - name: Set up gcloud
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Configure Docker for Artifact Registry
+        run: gcloud auth configure-docker "${REGION}-docker.pkg.dev" --quiet
+
+      - name: Compute image tags
+        id: meta
+        run: |
+          SHA_SHORT="${GITHUB_SHA::12}"
+          REG="${REGION}-docker.pkg.dev/${PROJECT_ID}/${REPOSITORY}"
+          echo "api=${REG}/api:${SHA_SHORT}" >> "$GITHUB_OUTPUT"
+          echo "worker=${REG}/worker:${SHA_SHORT}" >> "$GITHUB_OUTPUT"
+          echo "web=${REG}/web:${SHA_SHORT}" >> "$GITHUB_OUTPUT"
+          echo "api_latest=${REG}/api:latest" >> "$GITHUB_OUTPUT"
+          echo "worker_latest=${REG}/worker:latest" >> "$GITHUB_OUTPUT"
+          echo "web_latest=${REG}/web:latest" >> "$GITHUB_OUTPUT"
+
+      - name: Build & push API / worker image
+        run: |
+          docker build -f infra/docker/Dockerfile \
+            -t "${{ steps.meta.outputs.api }}" \
+            -t "${{ steps.meta.outputs.api_latest }}" \
+            -t "${{ steps.meta.outputs.worker }}" \
+            -t "${{ steps.meta.outputs.worker_latest }}" \
+            .
+          docker push "${{ steps.meta.outputs.api }}"
+          docker push "${{ steps.meta.outputs.api_latest }}"
+          docker push "${{ steps.meta.outputs.worker }}"
+          docker push "${{ steps.meta.outputs.worker_latest }}"
+
+      - name: Resolve API URL for web build
+        id: api_url
+        run: |
+          URL=$(gcloud run services describe meridian-api \
+            --region "${REGION}" \
+            --format='value(status.url)' 2>/dev/null || true)
+          if [ -z "$URL" ]; then
+            URL="https://meridian-api-placeholder.run.app"
+          fi
+          echo "url=${URL}" >> "$GITHUB_OUTPUT"
+
+      - name: Build & push web image
+        working-directory: web
+        run: |
+          docker build \
+            --build-arg "NEXT_PUBLIC_MERIDIAN_API_URL=${{ steps.api_url.outputs.url }}" \
+            -t "${{ steps.meta.outputs.web }}" \
+            -t "${{ steps.meta.outputs.web_latest }}" \
+            .
+          docker push "${{ steps.meta.outputs.web }}"
+          docker push "${{ steps.meta.outputs.web_latest }}"
+
+      - name: Deploy API to Cloud Run
+        run: |
+          gcloud run services update meridian-api \
+            --region "${REGION}" \
+            --image "${{ steps.meta.outputs.api }}" \
+            --quiet
+
+      - name: Deploy worker to Cloud Run
+        run: |
+          gcloud run services update meridian-worker \
+            --region "${REGION}" \
+            --image "${{ steps.meta.outputs.worker }}" \
+            --command "uvicorn" \
+            --args "meridian.workers.video_processor:app,--host,0.0.0.0,--port,8080" \
+            --quiet
+
+      - name: Deploy web to Cloud Run
+        run: |
+          gcloud run services update meridian-web \
+            --region "${REGION}" \
+            --image "${{ steps.meta.outputs.web }}" \
+            --quiet

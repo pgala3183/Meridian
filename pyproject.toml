@@ -22,6 +22,10 @@ dependencies = [
     "google-cloud-storage>=2.18.0",
     "google-cloud-firestore>=2.19.0",
     "google-cloud-pubsub>=2.27.0",
+    "opentelemetry-api>=1.28.0",
+    "opentelemetry-sdk>=1.28.0",
+    "opentelemetry-exporter-gcp-trace>=1.7.0",
+    "opentelemetry-exporter-gcp-monitoring>=1.7.0a0",
 ]
 
 [project.optional-dependencies]
@@ -97,6 +101,8 @@ module = [
     "sentence_transformers.*",
     "redis.*",
     "dotenv.*",
+    "opentelemetry.*",
+    "opentelemetry.exporter.*",
 ]
 ignore_missing_imports = true
 

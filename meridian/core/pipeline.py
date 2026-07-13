@@ -39,6 +39,7 @@ from meridian.core.models import (
 )
 from meridian.core.retrieval import build_grounding_context, retrieve
 from meridian.core.security.prompt_guard import PromptGuard
+from meridian.observability.tracing import pipeline_stage_span, tracer
 from meridian.providers.base import MultimodalProvider
 from meridian.providers.types import AudioInput, GroundedAnswer, Transcript, TranscriptSegment
 from meridian.storage.safe_path import scratch_directory
@@ -421,8 +422,16 @@ class VideoPipeline:
 
     async def run(self, source: VideoSource) -> PipelineArtifacts:
         artifacts = PipelineArtifacts(source=source)
-        for stage in self.stages:
-            artifacts = await stage.run(artifacts)
+        with tracer().start_as_current_span("pipeline.run") as root:
+            root.set_attribute("meridian.video_id", source.video_id)
+            if source.path:
+                root.set_attribute("meridian.source_path", source.path)
+            for stage in self.stages:
+                with pipeline_stage_span(
+                    stage.name,
+                    attributes={"meridian.video_id": source.video_id},
+                ):
+                    artifacts = await stage.run(artifacts)
         return artifacts
 
 

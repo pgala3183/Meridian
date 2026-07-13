@@ -46,6 +46,21 @@ def test_enqueue_returns_job_id(tmp_path) -> None:
     assert len(queue.messages) == 1
 
 
+def test_enqueue_propagates_request_id(tmp_path) -> None:
+    client, store, queue = _client(tmp_path)
+    with client:
+        resp = client.post(
+            "/videos",
+            json={"video_id": "corr", "user_id": "alice"},
+            headers={"X-Request-ID": "corr-123", "X-API-Key": "k"},
+        )
+    assert resp.status_code == 202
+    job = store.get_job(resp.json()["job_id"])
+    assert job is not None
+    assert job.request_id == "corr-123"
+    assert queue.messages[0].request_id == "corr-123"
+
+
 def test_get_status(tmp_path) -> None:
     client, _store, _queue = _client(tmp_path)
     with client:

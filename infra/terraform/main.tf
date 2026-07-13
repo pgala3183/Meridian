@@ -36,6 +36,12 @@ variable "api_image" {
   default     = "us-docker.pkg.dev/cloudrun/container/hello"
 }
 
+variable "worker_image" {
+  type        = string
+  description = "Container image for the worker Cloud Run service"
+  default     = "us-docker.pkg.dev/cloudrun/container/hello"
+}
+
 variable "web_image" {
   type        = string
   description = "Container image for the web Cloud Run service"
@@ -52,6 +58,18 @@ variable "monthly_budget_usd" {
   type        = number
   description = "Monthly GCP budget threshold for the demo stack"
   default     = 50
+}
+
+variable "budget_alert_email" {
+  type        = string
+  description = "Email for billing budget threshold notifications (optional)"
+  default     = ""
+}
+
+variable "enable_uptime_checks" {
+  type        = bool
+  description = "Create Cloud Monitoring uptime checks against /health"
+  default     = true
 }
 
 locals {
@@ -76,6 +94,9 @@ resource "google_project_service" "services" {
     "artifactregistry.googleapis.com",
     "cloudbuild.googleapis.com",
     "billingbudgets.googleapis.com",
+    "monitoring.googleapis.com",
+    "cloudtrace.googleapis.com",
+    "logging.googleapis.com",
   ])
   service            = each.key
   disable_on_destroy = false
@@ -153,6 +174,60 @@ resource "google_project_iam_member" "worker_firestore" {
   project = var.project_id
   role    = "roles/datastore.user"
   member  = "serviceAccount:${google_service_account.worker.email}"
+}
+
+# Trace + metrics export (OpenTelemetry → Cloud Trace / Monitoring)
+resource "google_project_iam_member" "api_cloudtrace" {
+  project = var.project_id
+  role    = "roles/cloudtrace.agent"
+  member  = "serviceAccount:${google_service_account.api.email}"
+}
+
+resource "google_project_iam_member" "worker_cloudtrace" {
+  project = var.project_id
+  role    = "roles/cloudtrace.agent"
+  member  = "serviceAccount:${google_service_account.worker.email}"
+}
+
+resource "google_project_iam_member" "api_monitoring_metric_writer" {
+  project = var.project_id
+  role    = "roles/monitoring.metricWriter"
+  member  = "serviceAccount:${google_service_account.api.email}"
+}
+
+resource "google_project_iam_member" "worker_monitoring_metric_writer" {
+  project = var.project_id
+  role    = "roles/monitoring.metricWriter"
+  member  = "serviceAccount:${google_service_account.worker.email}"
+}
+
+resource "google_project_iam_member" "api_logging" {
+  project = var.project_id
+  role    = "roles/logging.logWriter"
+  member  = "serviceAccount:${google_service_account.api.email}"
+}
+
+resource "google_project_iam_member" "worker_logging" {
+  project = var.project_id
+  role    = "roles/logging.logWriter"
+  member  = "serviceAccount:${google_service_account.worker.email}"
+}
+
+# ---------------------------------------------------------------------------
+# Artifact Registry (CI/CD image pushes)
+# ---------------------------------------------------------------------------
+
+resource "google_artifact_registry_repository" "meridian" {
+  location      = var.region
+  repository_id = var.name_prefix
+  description   = "Meridian container images (api, worker, web)"
+  format        = "DOCKER"
+  labels        = local.labels
+  depends_on    = [google_project_service.services]
+}
+
+output "artifact_registry" {
+  value = "${var.region}-docker.pkg.dev/${var.project_id}/${google_artifact_registry_repository.meridian.repository_id}"
 }
 
 # ---------------------------------------------------------------------------
@@ -264,6 +339,14 @@ resource "google_cloud_run_v2_service" "api" {
         name  = "MERIDIAN_PUBSUB_TOPIC"
         value = google_pubsub_topic.video_jobs.id
       }
+      env {
+        name  = "MERIDIAN_OTEL_ENABLED"
+        value = "true"
+      }
+      env {
+        name  = "MERIDIAN_LOG_FORMAT"
+        value = "json"
+      }
       resources {
         limits = {
           cpu    = "1"
@@ -322,6 +405,14 @@ resource "google_cloud_run_v2_service" "worker" {
       env {
         name  = "MERIDIAN_GCS_BUCKET"
         value = google_storage_bucket.artifacts.name
+      }
+      env {
+        name  = "MERIDIAN_OTEL_ENABLED"
+        value = "true"
+      }
+      env {
+        name  = "MERIDIAN_LOG_FORMAT"
+        value = "json"
       }
       resources {
         limits = {
@@ -463,6 +554,16 @@ resource "google_cloud_run_v2_service_iam_member" "web_public" {
   member   = "allUsers"
 }
 
+resource "google_monitoring_notification_channel" "budget_email" {
+  count        = var.budget_alert_email == "" ? 0 : 1
+  display_name = "${var.name_prefix}-budget-email"
+  type         = "email"
+  labels = {
+    email_address = var.budget_alert_email
+  }
+  depends_on = [google_project_service.services]
+}
+
 resource "google_billing_budget" "meridian_demo" {
   count = var.billing_account == "" ? 0 : 1
 
@@ -489,8 +590,79 @@ resource "google_billing_budget" "meridian_demo" {
   threshold_rules {
     threshold_percent = 1.0
   }
+
+  dynamic "all_updates_rule" {
+    for_each = length(google_monitoring_notification_channel.budget_email) > 0 ? [1] : []
+    content {
+      monitoring_notification_channels = [
+        google_monitoring_notification_channel.budget_email[0].id,
+      ]
+      disable_default_iam_recipients = false
+    }
+  }
+}
+
+# ---------------------------------------------------------------------------
+# Uptime checks (API + web /health)
+# ---------------------------------------------------------------------------
+
+locals {
+  api_host = trimprefix(google_cloud_run_v2_service.api.uri, "https://")
+  web_host = trimprefix(google_cloud_run_v2_service.web.uri, "https://")
+}
+
+resource "google_monitoring_uptime_check_config" "api_health" {
+  count        = var.enable_uptime_checks ? 1 : 0
+  display_name = "${var.name_prefix}-api-health"
+  timeout      = "10s"
+  period       = "60s"
+
+  http_check {
+    path         = "/health"
+    port         = 443
+    use_ssl      = true
+    validate_ssl = true
+  }
+
+  monitored_resource {
+    type = "uptime_url"
+    labels = {
+      project_id = var.project_id
+      host       = local.api_host
+    }
+  }
+
+  depends_on = [google_project_service.services]
+}
+
+resource "google_monitoring_uptime_check_config" "web_health" {
+  count        = var.enable_uptime_checks ? 1 : 0
+  display_name = "${var.name_prefix}-web-health"
+  timeout      = "10s"
+  period       = "60s"
+
+  http_check {
+    path         = "/"
+    port         = 443
+    use_ssl      = true
+    validate_ssl = true
+  }
+
+  monitored_resource {
+    type = "uptime_url"
+    labels = {
+      project_id = var.project_id
+      host       = local.web_host
+    }
+  }
+
+  depends_on = [google_project_service.services]
 }
 
 output "web_uri" {
   value = google_cloud_run_v2_service.web.uri
+}
+
+output "uptime_check_api" {
+  value = var.enable_uptime_checks ? google_monitoring_uptime_check_config.api_health[0].name : null
 }

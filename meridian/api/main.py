@@ -5,8 +5,9 @@ from __future__ import annotations
 import os
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
+from typing import Any
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Response
 from fastapi.middleware.cors import CORSMiddleware
 
 from meridian.api.rate_limit import RateLimitConfig, TokenBucketRateLimiter
@@ -14,6 +15,10 @@ from meridian.api.routes import videos as videos_routes
 from meridian.jobs.firestore_store import FirestoreJobStore
 from meridian.jobs.memory_store import InMemoryJobStore
 from meridian.jobs.queue import InMemoryJobQueue, PubSubJobQueue
+from meridian.observability.health import health_payload, readiness_payload
+from meridian.observability.logging import configure_logging
+from meridian.observability.middleware import RequestContextMiddleware
+from meridian.observability.tracing import configure_telemetry
 from meridian.secrets import (
     AppEnvironment,
     SecretError,
@@ -85,17 +90,14 @@ def _build_rate_limiter() -> TokenBucketRateLimiter:
     )
 
 
-@asynccontextmanager
-async def lifespan(app: FastAPI) -> AsyncIterator[None]:
-    try:
-        _boot_secrets()
-    except SecretError as exc:
-        raise RuntimeError(f"Meridian startup aborted: {exc}") from exc
-    app.state.job_store = _build_job_store()
-    app.state.job_queue = _build_queue()
-    app.state.object_store = _build_object_store()
-    app.state.rate_limiter = _build_rate_limiter()
-    yield
+def _readiness_checks(app: FastAPI) -> dict[str, bool]:
+    checks: dict[str, bool] = {
+        "job_store": getattr(app.state, "job_store", None) is not None,
+        "job_queue": getattr(app.state, "job_queue", None) is not None,
+        "object_store": getattr(app.state, "object_store", None) is not None,
+        "rate_limiter": getattr(app.state, "rate_limiter", None) is not None,
+    }
+    return checks
 
 
 def create_app(
@@ -106,6 +108,8 @@ def create_app(
     rate_limiter: TokenBucketRateLimiter | None = None,
 ) -> FastAPI:
     """Application factory for production and tests."""
+    configure_logging(service="meridian-api")
+    configure_telemetry(service_name="meridian-api")
 
     @asynccontextmanager
     async def _lifespan(app: FastAPI) -> AsyncIterator[None]:
@@ -127,6 +131,7 @@ def create_app(
         version="0.1.0",
         lifespan=_lifespan,
     )
+    application.add_middleware(RequestContextMiddleware, service="api")
     application.add_middleware(
         CORSMiddleware,
         allow_origins=_cors_origins(),
@@ -138,7 +143,13 @@ def create_app(
 
     @application.get("/health")
     def health() -> dict[str, str]:
-        return {"status": "ok"}
+        return health_payload(role="api")
+
+    @application.get("/ready")
+    def ready(response: Response) -> dict[str, Any]:
+        body, status = readiness_payload(role="api", checks=_readiness_checks(application))
+        response.status_code = status
+        return body
 
     return application
 

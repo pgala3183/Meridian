@@ -79,6 +79,7 @@ def enqueue_video(
         source_uri=payload.source_uri,
         webhook_url=str(payload.webhook_url) if payload.webhook_url else None,
         status=JobStatus.QUEUED,
+        request_id=getattr(request.state, "request_id", None),
     )
     store.create_job(job)
     queue.enqueue(QueueMessage.from_job(job))

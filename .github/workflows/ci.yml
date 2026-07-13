@@ -1,0 +1,106 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main, master]
+  workflow_call:
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  python:
+    name: Lint, typecheck, unit tests
+    runs-on: ubuntu-latest
+    env:
+      MERIDIAN_ENV: test
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: uv sync --extra dev
+
+      - name: Ruff lint
+        run: uv run ruff check meridian tests
+
+      - name: Ruff format check
+        run: uv run ruff format --check meridian tests
+
+      - name: Mypy (strict)
+        run: uv run mypy meridian
+
+      - name: Pytest
+        run: uv run pytest -q --tb=short
+
+  security:
+    name: Security tests & audits
+    runs-on: ubuntu-latest
+    env:
+      MERIDIAN_ENV: test
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: uv sync --extra dev
+
+      - name: Security unit tests
+        run: >
+          uv run pytest -q --tb=short
+          tests/security
+          tests/unit/test_url_validator.py
+          tests/unit/test_safe_path.py
+          tests/unit/test_secrets.py
+
+      - name: pip-audit
+        run: uv run pip-audit
+
+      - name: npm audit (web)
+        working-directory: web
+        run: npm ci && npm audit --audit-level=high
+
+  web:
+    name: Web typecheck & build
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: web
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+
+      - name: Install
+        run: npm ci
+
+      - name: ESLint
+        run: npm run lint
+
+      - name: Typecheck
+        run: npx tsc --noEmit
+
+      - name: Production build
+        env:
+          NEXT_PUBLIC_MERIDIAN_API_URL: http://localhost:8000
+        run: npm run build

@@ -18,26 +18,29 @@ class QueueMessage:
     video_id: str
     user_id: str
     stage_hint: str = "ingest"
+    request_id: str | None = None
 
     def to_bytes(self) -> bytes:
-        return json.dumps(
-            {
-                "job_id": self.job_id,
-                "video_id": self.video_id,
-                "user_id": self.user_id,
-                "stage_hint": self.stage_hint,
-            },
-            separators=(",", ":"),
-        ).encode("utf-8")
+        payload: dict[str, Any] = {
+            "job_id": self.job_id,
+            "video_id": self.video_id,
+            "user_id": self.user_id,
+            "stage_hint": self.stage_hint,
+        }
+        if self.request_id:
+            payload["request_id"] = self.request_id
+        return json.dumps(payload, separators=(",", ":")).encode("utf-8")
 
     @classmethod
     def from_bytes(cls, raw: bytes) -> QueueMessage:
         data = json.loads(raw.decode("utf-8"))
+        request_id = data.get("request_id")
         return cls(
             job_id=str(data["job_id"]),
             video_id=str(data["video_id"]),
             user_id=str(data["user_id"]),
             stage_hint=str(data.get("stage_hint", "ingest")),
+            request_id=str(request_id) if request_id else None,
         )
 
     @classmethod
@@ -47,6 +50,7 @@ class QueueMessage:
             video_id=job.video_id,
             user_id=job.user_id,
             stage_hint=stage_hint,
+            request_id=job.request_id,
         )
 
 
@@ -96,11 +100,12 @@ class PubSubJobQueue(JobQueue):
 
     def enqueue(self, message: QueueMessage) -> str:
         publisher = self._get_publisher()
-        future = publisher.publish(
-            self.topic_path,
-            message.to_bytes(),
-            job_id=message.job_id,
-            video_id=message.video_id,
-            stage_hint=message.stage_hint,
-        )
+        attrs = {
+            "job_id": message.job_id,
+            "video_id": message.video_id,
+            "stage_hint": message.stage_hint,
+        }
+        if message.request_id:
+            attrs["request_id"] = message.request_id
+        future = publisher.publish(self.topic_path, message.to_bytes(), **attrs)
         return str(future.result())
