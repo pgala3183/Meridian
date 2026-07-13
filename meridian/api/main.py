@@ -7,27 +7,30 @@ from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
 from typing import Any
 
+from dotenv import load_dotenv
 from fastapi import FastAPI, Response
 from fastapi.middleware.cors import CORSMiddleware
 
-from meridian.api.rate_limit import RateLimitConfig, TokenBucketRateLimiter
-from meridian.api.routes import videos as videos_routes
-from meridian.jobs.firestore_store import FirestoreJobStore
-from meridian.jobs.memory_store import InMemoryJobStore
-from meridian.jobs.queue import InMemoryJobQueue, PubSubJobQueue
-from meridian.observability.health import health_payload, readiness_payload
-from meridian.observability.logging import configure_logging
-from meridian.observability.middleware import RequestContextMiddleware
-from meridian.observability.tracing import configure_telemetry
-from meridian.secrets import (
+load_dotenv()
+
+from meridian.api.rate_limit import RateLimitConfig, TokenBucketRateLimiter  # noqa: E402
+from meridian.api.routes import videos as videos_routes  # noqa: E402
+from meridian.jobs.firestore_store import FirestoreJobStore  # noqa: E402
+from meridian.jobs.memory_store import InMemoryJobStore  # noqa: E402
+from meridian.jobs.queue import InMemoryJobQueue, PubSubJobQueue  # noqa: E402
+from meridian.observability.health import health_payload, readiness_payload  # noqa: E402
+from meridian.observability.logging import configure_logging  # noqa: E402
+from meridian.observability.middleware import RequestContextMiddleware  # noqa: E402
+from meridian.observability.tracing import configure_telemetry  # noqa: E402
+from meridian.secrets import (  # noqa: E402
     AppEnvironment,
     SecretError,
     assert_boot_secrets,
     detect_environment,
     load_runtime_secrets,
 )
-from meridian.storage.base import StorageBackendName
-from meridian.storage.factory import StorageConfig, create_object_store
+from meridian.storage.base import StorageBackendName  # noqa: E402
+from meridian.storage.factory import StorageConfig, create_object_store  # noqa: E402
 
 
 def _cors_origins() -> list[str]:

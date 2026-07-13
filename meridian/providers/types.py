@@ -108,7 +108,7 @@ class ProviderConfig:
     # Vertex / Gemini
     project: str | None = None
     location: str = "us-central1"
-    generation_model: str = "gemini-2.0-flash"
+    generation_model: str = "gemini-2.5-flash"
     embedding_model: str = "text-embedding-005"
     # OpenAI
     openai_api_key: str | None = None

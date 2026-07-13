@@ -26,6 +26,7 @@ dependencies = [
     "opentelemetry-sdk>=1.28.0",
     "opentelemetry-exporter-gcp-trace>=1.7.0",
     "opentelemetry-exporter-gcp-monitoring>=1.7.0a0",
+    "youtube-transcript-api>=1.0.0",
 ]
 
 [project.optional-dependencies]
@@ -103,6 +104,7 @@ module = [
     "dotenv.*",
     "opentelemetry.*",
     "opentelemetry.exporter.*",
+    "youtube_transcript_api.*",
 ]
 ignore_missing_imports = true
 

@@ -1,0 +1,20 @@
+{
+  "video_id": "interview-researcher-rag-01",
+  "language": "en",
+  "segments": [
+    {"text": "Today we interview a researcher working on retrieval augmented generation.", "start_seconds": 0.0, "end_seconds": 7.0},
+    {"text": "He explains that RAG grounds a language model in retrieved documents.", "start_seconds": 7.0, "end_seconds": 15.0},
+    {"text": "The retriever finds relevant passages and the generator writes the answer.", "start_seconds": 15.0, "end_seconds": 24.0},
+    {"text": "He says the biggest quality lever is retrieval, not the generator.", "start_seconds": 24.0, "end_seconds": 33.0},
+    {"text": "If the right passage is missing the model will hallucinate confidently.", "start_seconds": 33.0, "end_seconds": 42.0},
+    {"text": "He measures retrieval with recall at k before touching the prompt.", "start_seconds": 42.0, "end_seconds": 51.0},
+    {"text": "For chunking he prefers semantic boundaries over fixed token windows.", "start_seconds": 51.0, "end_seconds": 60.0},
+    {"text": "Overlapping chunks help when an answer spans a boundary.", "start_seconds": 60.0, "end_seconds": 69.0},
+    {"text": "He warns that long context windows do not remove the need for retrieval.", "start_seconds": 69.0, "end_seconds": 79.0},
+    {"text": "Feeding everything into context is expensive and dilutes attention.", "start_seconds": 79.0, "end_seconds": 88.0},
+    {"text": "For evaluation he uses a labeled set with gold supporting passages.", "start_seconds": 88.0, "end_seconds": 98.0},
+    {"text": "He also tracks citation accuracy so answers point to real evidence.", "start_seconds": 98.0, "end_seconds": 108.0},
+    {"text": "On languages he notes cross lingual retrieval is still an open challenge.", "start_seconds": 108.0, "end_seconds": 118.0},
+    {"text": "His parting advice is to instrument retrieval before optimizing the model.", "start_seconds": 118.0, "end_seconds": 128.0}
+  ]
+}

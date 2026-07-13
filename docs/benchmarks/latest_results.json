@@ -1,161 +1,231 @@
 {
-  "dataset_version": "2026.07.12",
+  "dataset_version": "2026.07.13",
   "summary": {
-    "n_naive": 4,
-    "n_hierarchical": 4,
-    "n_hierarchical_cached": 4,
-    "avg_cost_usd_naive": 3.795e-05,
-    "avg_cost_usd_hierarchical": 2.41e-05,
-    "cost_reduction_pct": 36.5,
-    "avg_latency_s_naive": 0.000124,
-    "avg_latency_s_hierarchical": 0.000982,
-    "avg_latency_s_hierarchical_cached": 0.000333,
-    "cached_speedup_vs_cold_hierarchical": 2.944,
-    "cache_hit_rate_on_repeat": 1.0,
-    "avg_quality_overall_naive": 0.5112,
-    "avg_quality_overall_hierarchical": 0.7434,
+    "n_naive": 21,
+    "n_hierarchical": 21,
+    "n_hierarchical_cached": 0,
+    "n_answerable": 18,
+    "n_unanswerable": 3,
+    "avg_cost_usd_naive": 4.385e-05,
+    "avg_cost_usd_hierarchical": 2.438e-05,
+    "cost_reduction_pct": 44.4,
+    "avg_latency_s_naive": 1.552642,
+    "avg_latency_s_hierarchical": 1.475384,
+    "avg_latency_s_hierarchical_cached": 0.0,
+    "cached_speedup_vs_cold_hierarchical": 0.0,
+    "cache_hit_rate_on_repeat": 0.0,
+    "avg_quality_overall_naive": 0.8337,
+    "avg_quality_overall_hierarchical": 0.8418,
     "avg_stage_seconds_hierarchical": {
-      "extract_media": 1e-06,
-      "load_cached_tree": 3.6e-05,
-      "transcribe": 5.6e-05,
-      "semantic_chunk": 0.000423,
-      "keyframe_select": 1.2e-05,
-      "hierarchy_build": 0.000124,
-      "store_cached_tree": 4e-06,
-      "retrieve": 0.000123,
-      "answer": 0.000192
+      "extract_media": 5e-06,
+      "load_cached_tree": 0.000122,
+      "transcribe": 3.9e-05,
+      "semantic_chunk": 0.000284,
+      "keyframe_select": 1e-05,
+      "hierarchy_build": 6.1e-05,
+      "store_cached_tree": 6e-06,
+      "retrieve": 0.000391,
+      "answer": 1.473788
     },
-    "judge": "heuristic_rubric (approximation \u2014 not ground truth)"
+    "ask_latency_ms_p50": 1373.2734,
+    "ask_latency_ms_p95": 2342.0042,
+    "ask_latency_ms_p99": 2529.9227,
+    "answer_stage_latency_ms_p95": 2337.9804,
+    "retrieval_stage_latency_ms_avg": 0.3906,
+    "retrieval_k": 3,
+    "retrieval_recall_at_k": 0.8704,
+    "retrieval_mrr": 0.8056,
+    "retrieval_ndcg_at_k": 0.8109,
+    "citation_precision": 0.8611,
+    "citation_recall": 0.8704,
+    "refusal_accuracy_overall": 0.9524,
+    "refusal_accuracy_answerable": 0.9444,
+    "refusal_accuracy_unanswerable": 1.0,
+    "by_video_type": {
+      "interview": {
+        "n": 7,
+        "quality_overall": 0.8513,
+        "recall_at_k": 0.9444,
+        "citation_precision": 1.0,
+        "refusal_accuracy": 1.0
+      },
+      "lecture": {
+        "n": 7,
+        "quality_overall": 0.8779,
+        "recall_at_k": 1.0,
+        "citation_precision": 1.0,
+        "refusal_accuracy": 1.0
+      },
+      "product_demo": {
+        "n": 7,
+        "quality_overall": 0.7964,
+        "recall_at_k": 0.6667,
+        "citation_precision": 0.5833,
+        "refusal_accuracy": 0.8571
+      }
+    },
+    "by_question_type": {
+      "factual": {
+        "n": 16,
+        "quality_overall": 0.931,
+        "recall_at_k": 0.9375,
+        "citation_precision": 0.9062,
+        "refusal_accuracy": 1.0
+      },
+      "multi_hop": {
+        "n": 1,
+        "quality_overall": 0.7365,
+        "recall_at_k": 0.6667,
+        "citation_precision": 1.0,
+        "refusal_accuracy": 1.0
+      },
+      "negative": {
+        "n": 3,
+        "quality_overall": 0.4837,
+        "recall_at_k": null,
+        "citation_precision": null,
+        "refusal_accuracy": 1.0
+      },
+      "timestamp": {
+        "n": 1,
+        "quality_overall": 0.5943,
+        "recall_at_k": 0.0,
+        "citation_precision": 0.0,
+        "refusal_accuracy": 0.0
+      }
+    },
+    "by_difficulty": {
+      "easy": {
+        "n": 5,
+        "quality_overall": 0.9799,
+        "recall_at_k": 1.0,
+        "citation_precision": 1.0,
+        "refusal_accuracy": 1.0
+      },
+      "hard": {
+        "n": 3,
+        "quality_overall": 0.8035,
+        "recall_at_k": 0.8889,
+        "citation_precision": 1.0,
+        "refusal_accuracy": 1.0
+      },
+      "medium": {
+        "n": 13,
+        "quality_overall": 0.7976,
+        "recall_at_k": 0.8,
+        "citation_precision": 0.75,
+        "refusal_accuracy": 0.9231
+      }
+    },
+    "judge": "heuristic_rubric (approximation \u2014 not ground truth)",
+    "provider": "gemini",
+    "n_videos": 3
   },
   "results": [
     {
       "item_id": "lecture-os-caching-01",
       "question_id": "q1",
       "mode": "naive",
-      "answer": "A CPU cache stores frequently used data closer to the processor.",
-      "latency_seconds": 0.0002556999988883035,
-      "estimated_usd": 4.28e-05,
-      "input_tokens": 364,
-      "output_tokens": 16,
+      "answer": "A CPU cache stores frequently used data closer to the processor [chunk-0000].",
+      "latency_seconds": 3.912002000000939,
+      "estimated_usd": 4.37e-05,
+      "input_tokens": 361,
+      "output_tokens": 19,
       "cache_hit": false,
       "quality": {
-        "groundedness": 1.0,
-        "correctness": 0.3372,
-        "citation_accuracy": 0.0,
-        "overall": 0.4457333333333333
+        "groundedness": 0.8462,
+        "correctness": 1.0,
+        "citation_accuracy": 1.0,
+        "overall": 0.9487333333333333
       },
-      "citation_count": 0,
+      "citation_count": 1,
+      "video_type": "lecture",
+      "question_type": "factual",
+      "difficulty": "medium",
+      "unanswerable": false,
+      "duration_seconds": 180.0,
+      "retrieval": {},
+      "retrieval_latency_ms": 0.0,
+      "answer_latency_ms": 0.0,
+      "citation": {},
+      "refusal_accuracy": 1.0,
       "stage_timings": []
     },
     {
       "item_id": "lecture-os-caching-01",
       "question_id": "q1",
       "mode": "hierarchical",
-      "answer": "<<<UNTRUSTED_CONTENT_START>>> label=retrieved_transcript\n[chunk-0002 | 26.00s-42.00s] A CPU cache stores frequently used data closer to the processor. [chunk-0002]",
-      "latency_seconds": 0.0015143000000534812,
-      "estimated_usd": 2.97e-05,
-      "input_tokens": 137,
-      "output_tokens": 40,
+      "answer": "A CPU cache stores frequently used data closer to the processor [chunk-0002].",
+      "latency_seconds": 0.8958946999991895,
+      "estimated_usd": 2.31e-05,
+      "input_tokens": 155,
+      "output_tokens": 19,
       "cache_hit": false,
       "quality": {
-        "groundedness": 0.7273,
-        "correctness": 0.3372,
+        "groundedness": 1.0,
+        "correctness": 1.0,
         "citation_accuracy": 1.0,
-        "overall": 0.6881666666666666
+        "overall": 1.0
       },
       "citation_count": 1,
+      "video_type": "lecture",
+      "question_type": "factual",
+      "difficulty": "medium",
+      "unanswerable": false,
+      "duration_seconds": 180.0,
+      "retrieval": {
+        "k": 3,
+        "recall_at_k": 1.0,
+        "mrr": 1.0,
+        "ndcg_at_k": 1.0,
+        "num_gold_spans": 1,
+        "num_relevant_retrieved": 1
+      },
+      "retrieval_latency_ms": 0.4103,
+      "answer_latency_ms": 891.0432,
+      "citation": {
+        "citation_precision": 1.0,
+        "citation_recall": 1.0,
+        "citation_count": 1,
+        "citations_supported": 1
+      },
+      "refusal_accuracy": 1.0,
       "stage_timings": [
         {
           "stage": "extract_media",
-          "seconds": 1.2999989849049598e-06
+          "seconds": 4.1000021155923605e-06
         },
         {
           "stage": "load_cached_tree",
-          "seconds": 7.189999996626284e-05
+          "seconds": 0.00015549999807262793
         },
         {
           "stage": "transcribe",
-          "seconds": 9.979999958886765e-05
+          "seconds": 0.0003225999971618876
         },
         {
           "stage": "semantic_chunk",
-          "seconds": 0.0006963999985600822
+          "seconds": 0.0024625999976706225
         },
         {
           "stage": "keyframe_select",
-          "seconds": 2.1600000764010474e-05
+          "seconds": 6.600000051548705e-05
         },
         {
           "stage": "hierarchy_build",
-          "seconds": 0.0001685999995970633
+          "seconds": 0.00045029999819234945
         },
         {
           "stage": "store_cached_tree",
-          "seconds": 5.699999746866524e-06
+          "seconds": 1.5899997379165143e-05
         },
         {
           "stage": "retrieve",
-          "seconds": 0.0001415999995515449
+          "seconds": 0.00041029999920283444
         },
         {
           "stage": "answer",
-          "seconds": 0.00028920000113430433
-        }
-      ]
-    },
-    {
-      "item_id": "lecture-os-caching-01",
-      "question_id": "q1",
-      "mode": "hierarchical_cached",
-      "answer": "<<<UNTRUSTED_CONTENT_START>>> label=retrieved_transcript\n[chunk-0002 | 26.00s-42.00s] A CPU cache stores frequently used data closer to the processor. [chunk-0002]",
-      "latency_seconds": 0.0003348000009282259,
-      "estimated_usd": 2.97e-05,
-      "input_tokens": 137,
-      "output_tokens": 40,
-      "cache_hit": true,
-      "quality": {
-        "groundedness": 0.7273,
-        "correctness": 0.3372,
-        "citation_accuracy": 1.0,
-        "overall": 0.6881666666666666
-      },
-      "citation_count": 1,
-      "stage_timings": [
-        {
-          "stage": "extract_media",
-          "seconds": 8.000006346264854e-07
-        },
-        {
-          "stage": "load_cached_tree",
-          "seconds": 3.3999998777289875e-05
-        },
-        {
-          "stage": "transcribe",
-          "seconds": 8.999995770864189e-07
-        },
-        {
-          "stage": "semantic_chunk",
-          "seconds": 5.999991117278114e-07
-        },
-        {
-          "stage": "keyframe_select",
-          "seconds": 1.0999992809956893e-06
-        },
-        {
-          "stage": "hierarchy_build",
-          "seconds": 6.999998731771484e-07
-        },
-        {
-          "stage": "store_cached_tree",
-          "seconds": 5.999991117278114e-07
-        },
-        {
-          "stage": "retrieve",
-          "seconds": 0.00012659999993047677
-        },
-        {
-          "stage": "answer",
-          "seconds": 0.0001601999992999481
+          "seconds": 0.8910431999975117
         }
       ]
     },
@@ -163,130 +233,641 @@
       "item_id": "lecture-os-caching-01",
       "question_id": "q2",
       "mode": "naive",
-      "answer": "On a cache miss the system fetches the block from slower main memory.",
-      "latency_seconds": 9.280000085709617e-05,
-      "estimated_usd": 4.24e-05,
+      "answer": "On a cache miss, the system fetches the block from slower main memory [chunk-0007].",
+      "latency_seconds": 0.8456565999986196,
+      "estimated_usd": 4.36e-05,
       "input_tokens": 356,
-      "output_tokens": 17,
+      "output_tokens": 20,
       "cache_hit": false,
       "quality": {
-        "groundedness": 1.0,
-        "correctness": 0.9808,
-        "citation_accuracy": 0.0,
-        "overall": 0.6602666666666667
+        "groundedness": 0.8571,
+        "correctness": 1.0,
+        "citation_accuracy": 1.0,
+        "overall": 0.9523666666666667
       },
-      "citation_count": 0,
+      "citation_count": 1,
+      "video_type": "lecture",
+      "question_type": "factual",
+      "difficulty": "easy",
+      "unanswerable": false,
+      "duration_seconds": 180.0,
+      "retrieval": {},
+      "retrieval_latency_ms": 0.0,
+      "answer_latency_ms": 0.0,
+      "citation": {},
+      "refusal_accuracy": 1.0,
       "stage_timings": []
     },
     {
       "item_id": "lecture-os-caching-01",
       "question_id": "q2",
       "mode": "hierarchical",
-      "answer": "A CPU cache stores frequently used data closer to the processor. [chunk-0002]",
-      "latency_seconds": 0.00030839999999443535,
-      "estimated_usd": 2.26e-05,
+      "answer": "On a cache miss, the system fetches the block from slower main memory [chunk-0004].",
+      "latency_seconds": 1.3732734000004712,
+      "estimated_usd": 2.3e-05,
       "input_tokens": 150,
-      "output_tokens": 19,
+      "output_tokens": 20,
       "cache_hit": true,
       "quality": {
         "groundedness": 1.0,
-        "correctness": 0.0577,
+        "correctness": 1.0,
         "citation_accuracy": 1.0,
-        "overall": 0.6859000000000001
+        "overall": 1.0
       },
       "citation_count": 1,
+      "video_type": "lecture",
+      "question_type": "factual",
+      "difficulty": "easy",
+      "unanswerable": false,
+      "duration_seconds": 180.0,
+      "retrieval": {
+        "k": 3,
+        "recall_at_k": 1.0,
+        "mrr": 1.0,
+        "ndcg_at_k": 1.0,
+        "num_gold_spans": 1,
+        "num_relevant_retrieved": 1
+      },
+      "retrieval_latency_ms": 0.1641,
+      "answer_latency_ms": 1372.7033,
+      "citation": {
+        "citation_precision": 1.0,
+        "citation_recall": 1.0,
+        "citation_count": 1,
+        "citations_supported": 1
+      },
+      "refusal_accuracy": 1.0,
       "stage_timings": [
         {
           "stage": "extract_media",
-          "seconds": 6.999998731771484e-07
+          "seconds": 1.6000012692529708e-06
         },
         {
           "stage": "load_cached_tree",
-          "seconds": 2.4599999960628338e-05
+          "seconds": 7.710000136285089e-05
         },
         {
           "stage": "transcribe",
-          "seconds": 6.999998731771484e-07
+          "seconds": 2.4000000848900527e-06
         },
         {
           "stage": "semantic_chunk",
-          "seconds": 3.9999940781854093e-07
+          "seconds": 1.3000026228837669e-06
         },
         {
           "stage": "keyframe_select",
-          "seconds": 5.000001692678779e-07
+          "seconds": 1.5000005078036338e-06
         },
         {
           "stage": "hierarchy_build",
-          "seconds": 5.000001692678779e-07
+          "seconds": 1.5000005078036338e-06
         },
         {
           "stage": "store_cached_tree",
-          "seconds": 5.000001692678779e-07
+          "seconds": 1.2000018614344299e-06
         },
         {
           "stage": "retrieve",
-          "seconds": 0.00011989999984507449
+          "seconds": 0.0001641000017116312
         },
         {
           "stage": "answer",
-          "seconds": 0.00015220000022964086
+          "seconds": 1.3727032999995572
         }
       ]
     },
     {
       "item_id": "lecture-os-caching-01",
-      "question_id": "q2",
-      "mode": "hierarchical_cached",
-      "answer": "A CPU cache stores frequently used data closer to the processor. [chunk-0002]",
-      "latency_seconds": 0.0002950999987660907,
-      "estimated_usd": 2.26e-05,
-      "input_tokens": 150,
+      "question_id": "q3",
+      "mode": "naive",
+      "answer": "Temporal locality means recently accessed lines are likely reused [chunk-0007].",
+      "latency_seconds": 0.8204097999987425,
+      "estimated_usd": 4.33e-05,
+      "input_tokens": 357,
+      "output_tokens": 19,
+      "cache_hit": false,
+      "quality": {
+        "groundedness": 0.8182,
+        "correctness": 1.0,
+        "citation_accuracy": 1.0,
+        "overall": 0.9394
+      },
+      "citation_count": 1,
+      "video_type": "lecture",
+      "question_type": "factual",
+      "difficulty": "medium",
+      "unanswerable": false,
+      "duration_seconds": 180.0,
+      "retrieval": {},
+      "retrieval_latency_ms": 0.0,
+      "answer_latency_ms": 0.0,
+      "citation": {},
+      "refusal_accuracy": 1.0,
+      "stage_timings": []
+    },
+    {
+      "item_id": "lecture-os-caching-01",
+      "question_id": "q3",
+      "mode": "hierarchical",
+      "answer": "Temporal locality means that recently accessed lines are likely to be reused [chunk-0003].",
+      "latency_seconds": 0.673103799999808,
+      "estimated_usd": 2.23e-05,
+      "input_tokens": 135,
+      "output_tokens": 22,
+      "cache_hit": true,
+      "quality": {
+        "groundedness": 0.8571,
+        "correctness": 1.0,
+        "citation_accuracy": 1.0,
+        "overall": 0.9523666666666667
+      },
+      "citation_count": 1,
+      "video_type": "lecture",
+      "question_type": "factual",
+      "difficulty": "medium",
+      "unanswerable": false,
+      "duration_seconds": 180.0,
+      "retrieval": {
+        "k": 3,
+        "recall_at_k": 1.0,
+        "mrr": 1.0,
+        "ndcg_at_k": 1.0,
+        "num_gold_spans": 1,
+        "num_relevant_retrieved": 1
+      },
+      "retrieval_latency_ms": 0.4056,
+      "answer_latency_ms": 671.8127,
+      "citation": {
+        "citation_precision": 1.0,
+        "citation_recall": 1.0,
+        "citation_count": 1,
+        "citations_supported": 1
+      },
+      "refusal_accuracy": 1.0,
+      "stage_timings": [
+        {
+          "stage": "extract_media",
+          "seconds": 5.059999966761097e-05
+        },
+        {
+          "stage": "load_cached_tree",
+          "seconds": 0.0001467000001866836
+        },
+        {
+          "stage": "transcribe",
+          "seconds": 3.4000004234258085e-06
+        },
+        {
+          "stage": "semantic_chunk",
+          "seconds": 2.2999993234407157e-06
+        },
+        {
+          "stage": "keyframe_select",
+          "seconds": 2.0000006770715117e-06
+        },
+        {
+          "stage": "hierarchy_build",
+          "seconds": 2.2999993234407157e-06
+        },
+        {
+          "stage": "store_cached_tree",
+          "seconds": 2.6000016077887267e-06
+        },
+        {
+          "stage": "retrieve",
+          "seconds": 0.0004055999997945037
+        },
+        {
+          "stage": "answer",
+          "seconds": 0.6718126999985543
+        }
+      ]
+    },
+    {
+      "item_id": "lecture-os-caching-01",
+      "question_id": "q4",
+      "mode": "naive",
+      "answer": "Spatial locality means that nearby addresses are often accessed together [chunk-0007].",
+      "latency_seconds": 0.7731546000031813,
+      "estimated_usd": 4.41e-05,
+      "input_tokens": 357,
+      "output_tokens": 21,
+      "cache_hit": false,
+      "quality": {
+        "groundedness": 0.75,
+        "correctness": 1.0,
+        "citation_accuracy": 1.0,
+        "overall": 0.9166666666666666
+      },
+      "citation_count": 1,
+      "video_type": "lecture",
+      "question_type": "factual",
+      "difficulty": "medium",
+      "unanswerable": false,
+      "duration_seconds": 180.0,
+      "retrieval": {},
+      "retrieval_latency_ms": 0.0,
+      "answer_latency_ms": 0.0,
+      "citation": {},
+      "refusal_accuracy": 1.0,
+      "stage_timings": []
+    },
+    {
+      "item_id": "lecture-os-caching-01",
+      "question_id": "q4",
+      "mode": "hierarchical",
+      "answer": "Spatial locality means that nearby addresses are often accessed together [chunk-0003].",
+      "latency_seconds": 1.3609494999982417,
+      "estimated_usd": 2.19e-05,
+      "input_tokens": 135,
+      "output_tokens": 21,
+      "cache_hit": true,
+      "quality": {
+        "groundedness": 0.9167,
+        "correctness": 1.0,
+        "citation_accuracy": 1.0,
+        "overall": 0.9722333333333334
+      },
+      "citation_count": 1,
+      "video_type": "lecture",
+      "question_type": "factual",
+      "difficulty": "medium",
+      "unanswerable": false,
+      "duration_seconds": 180.0,
+      "retrieval": {
+        "k": 3,
+        "recall_at_k": 1.0,
+        "mrr": 1.0,
+        "ndcg_at_k": 1.0,
+        "num_gold_spans": 1,
+        "num_relevant_retrieved": 1
+      },
+      "retrieval_latency_ms": 0.4957,
+      "answer_latency_ms": 1359.6053,
+      "citation": {
+        "citation_precision": 1.0,
+        "citation_recall": 1.0,
+        "citation_count": 1,
+        "citations_supported": 1
+      },
+      "refusal_accuracy": 1.0,
+      "stage_timings": [
+        {
+          "stage": "extract_media",
+          "seconds": 3.7000027077738196e-06
+        },
+        {
+          "stage": "load_cached_tree",
+          "seconds": 0.00013010000111535192
+        },
+        {
+          "stage": "transcribe",
+          "seconds": 4.900000931229442e-06
+        },
+        {
+          "stage": "semantic_chunk",
+          "seconds": 2.6000016077887267e-06
+        },
+        {
+          "stage": "keyframe_select",
+          "seconds": 2.1000014385208488e-06
+        },
+        {
+          "stage": "hierarchy_build",
+          "seconds": 2.7000023692380637e-06
+        },
+        {
+          "stage": "store_cached_tree",
+          "seconds": 3.8000034692231566e-06
+        },
+        {
+          "stage": "retrieve",
+          "seconds": 0.0004957000019203406
+        },
+        {
+          "stage": "answer",
+          "seconds": 1.359605300000112
+        }
+      ]
+    },
+    {
+      "item_id": "lecture-os-caching-01",
+      "question_id": "q5",
+      "mode": "naive",
+      "answer": "On a cache hit, the data returns from the fast cache hierarchy [chunk-0007].",
+      "latency_seconds": 0.7360373000010441,
+      "estimated_usd": 4.32e-05,
+      "input_tokens": 356,
+      "output_tokens": 19,
+      "cache_hit": false,
+      "quality": {
+        "groundedness": 0.8333,
+        "correctness": 1.0,
+        "citation_accuracy": 1.0,
+        "overall": 0.9444333333333333
+      },
+      "citation_count": 1,
+      "video_type": "lecture",
+      "question_type": "factual",
+      "difficulty": "easy",
+      "unanswerable": false,
+      "duration_seconds": 180.0,
+      "retrieval": {},
+      "retrieval_latency_ms": 0.0,
+      "answer_latency_ms": 0.0,
+      "citation": {},
+      "refusal_accuracy": 1.0,
+      "stage_timings": []
+    },
+    {
+      "item_id": "lecture-os-caching-01",
+      "question_id": "q5",
+      "mode": "hierarchical",
+      "answer": "On a cache hit, the data returns from the fast cache hierarchy [chunk-0004].",
+      "latency_seconds": 1.0258422000006249,
+      "estimated_usd": 2.31e-05,
+      "input_tokens": 155,
       "output_tokens": 19,
       "cache_hit": true,
       "quality": {
         "groundedness": 1.0,
-        "correctness": 0.0577,
+        "correctness": 1.0,
         "citation_accuracy": 1.0,
-        "overall": 0.6859000000000001
+        "overall": 1.0
       },
       "citation_count": 1,
+      "video_type": "lecture",
+      "question_type": "factual",
+      "difficulty": "easy",
+      "unanswerable": false,
+      "duration_seconds": 180.0,
+      "retrieval": {
+        "k": 3,
+        "recall_at_k": 1.0,
+        "mrr": 1.0,
+        "ndcg_at_k": 1.0,
+        "num_gold_spans": 1,
+        "num_relevant_retrieved": 1
+      },
+      "retrieval_latency_ms": 0.7605,
+      "answer_latency_ms": 1024.1421,
+      "citation": {
+        "citation_precision": 1.0,
+        "citation_recall": 1.0,
+        "citation_count": 1,
+        "citations_supported": 1
+      },
+      "refusal_accuracy": 1.0,
       "stage_timings": [
         {
           "stage": "extract_media",
-          "seconds": 6.000009307172149e-07
+          "seconds": 3.6999990697950125e-06
         },
         {
           "stage": "load_cached_tree",
-          "seconds": 2.0700001186924055e-05
+          "seconds": 0.00013220000255387276
         },
         {
           "stage": "transcribe",
-          "seconds": 5.999991117278114e-07
+          "seconds": 3.5000011848751456e-06
         },
         {
           "stage": "semantic_chunk",
-          "seconds": 3.0000046535860747e-07
+          "seconds": 2.2999993234407157e-06
         },
         {
           "stage": "keyframe_select",
-          "seconds": 4.999983502784744e-07
+          "seconds": 2.1000014385208488e-06
         },
         {
           "stage": "hierarchy_build",
-          "seconds": 5.999991117278114e-07
+          "seconds": 2.4000000848900527e-06
         },
         {
           "stage": "store_cached_tree",
-          "seconds": 5.999991117278114e-07
+          "seconds": 2.8000031306874007e-06
         },
         {
           "stage": "retrieve",
-          "seconds": 0.00011660000018309802
+          "seconds": 0.000760499999159947
         },
         {
           "stage": "answer",
-          "seconds": 0.00014689999989059288
+          "seconds": 1.0241420999991533
+        }
+      ]
+    },
+    {
+      "item_id": "lecture-os-caching-01",
+      "question_id": "q6",
+      "mode": "naive",
+      "answer": "Replacement policies such as LRU approximate recency under limited hardware budgets [chunk-0000].",
+      "latency_seconds": 0.739943200002017,
+      "estimated_usd": 4.56e-05,
+      "input_tokens": 360,
+      "output_tokens": 24,
+      "cache_hit": false,
+      "quality": {
+        "groundedness": 0.8462,
+        "correctness": 1.0,
+        "citation_accuracy": 1.0,
+        "overall": 0.9487333333333333
+      },
+      "citation_count": 1,
+      "video_type": "lecture",
+      "question_type": "factual",
+      "difficulty": "hard",
+      "unanswerable": false,
+      "duration_seconds": 180.0,
+      "retrieval": {},
+      "retrieval_latency_ms": 0.0,
+      "answer_latency_ms": 0.0,
+      "citation": {},
+      "refusal_accuracy": 1.0,
+      "stage_timings": []
+    },
+    {
+      "item_id": "lecture-os-caching-01",
+      "question_id": "q6",
+      "mode": "hierarchical",
+      "answer": "LRU (Least Recently Used) is a replacement policy that approximates recency [chunk-0006].",
+      "latency_seconds": 0.830366199999844,
+      "estimated_usd": 2.32e-05,
+      "input_tokens": 144,
+      "output_tokens": 22,
+      "cache_hit": true,
+      "quality": {
+        "groundedness": 0.4615,
+        "correctness": 0.7182,
+        "citation_accuracy": 1.0,
+        "overall": 0.7265666666666667
+      },
+      "citation_count": 1,
+      "video_type": "lecture",
+      "question_type": "factual",
+      "difficulty": "hard",
+      "unanswerable": false,
+      "duration_seconds": 180.0,
+      "retrieval": {
+        "k": 3,
+        "recall_at_k": 1.0,
+        "mrr": 0.5,
+        "ndcg_at_k": 0.6309,
+        "num_gold_spans": 1,
+        "num_relevant_retrieved": 1
+      },
+      "retrieval_latency_ms": 0.7304,
+      "answer_latency_ms": 828.3933,
+      "citation": {
+        "citation_precision": 1.0,
+        "citation_recall": 1.0,
+        "citation_count": 1,
+        "citations_supported": 1
+      },
+      "refusal_accuracy": 1.0,
+      "stage_timings": [
+        {
+          "stage": "extract_media",
+          "seconds": 3.9000005926936865e-06
+        },
+        {
+          "stage": "load_cached_tree",
+          "seconds": 0.00012519999654614367
+        },
+        {
+          "stage": "transcribe",
+          "seconds": 3.7999998312443495e-06
+        },
+        {
+          "stage": "semantic_chunk",
+          "seconds": 3.4999975468963385e-06
+        },
+        {
+          "stage": "keyframe_select",
+          "seconds": 7.800001185387373e-06
+        },
+        {
+          "stage": "hierarchy_build",
+          "seconds": 4.7000030463095754e-06
+        },
+        {
+          "stage": "store_cached_tree",
+          "seconds": 5.900001269765198e-06
+        },
+        {
+          "stage": "retrieve",
+          "seconds": 0.0007303999991563614
+        },
+        {
+          "stage": "answer",
+          "seconds": 0.8283933000020625
+        }
+      ]
+    },
+    {
+      "item_id": "lecture-os-caching-01",
+      "question_id": "q7",
+      "mode": "naive",
+      "answer": "The context does not provide information about GPU brands or recommendations for gaming.",
+      "latency_seconds": 1.7562195999998949,
+      "estimated_usd": 4.5e-05,
+      "input_tokens": 362,
+      "output_tokens": 22,
+      "cache_hit": false,
+      "quality": {
+        "groundedness": 0.3077,
+        "correctness": 0.3278,
+        "citation_accuracy": 0.0,
+        "overall": 0.21183333333333332
+      },
+      "citation_count": 0,
+      "video_type": "lecture",
+      "question_type": "negative",
+      "difficulty": "medium",
+      "unanswerable": true,
+      "duration_seconds": 180.0,
+      "retrieval": {},
+      "retrieval_latency_ms": 0.0,
+      "answer_latency_ms": 0.0,
+      "citation": {},
+      "refusal_accuracy": 1.0,
+      "stage_timings": []
+    },
+    {
+      "item_id": "lecture-os-caching-01",
+      "question_id": "q7",
+      "mode": "hierarchical",
+      "answer": "The context does not provide information about GPU brands or recommendations for gaming.",
+      "latency_seconds": 1.292831799997657,
+      "estimated_usd": 2.26e-05,
+      "input_tokens": 138,
+      "output_tokens": 22,
+      "cache_hit": true,
+      "quality": {
+        "groundedness": 0.1538,
+        "correctness": 0.3278,
+        "citation_accuracy": 1.0,
+        "overall": 0.4938666666666667
+      },
+      "citation_count": 3,
+      "video_type": "lecture",
+      "question_type": "negative",
+      "difficulty": "medium",
+      "unanswerable": true,
+      "duration_seconds": 180.0,
+      "retrieval": {
+        "k": 3,
+        "recall_at_k": null,
+        "mrr": null,
+        "ndcg_at_k": null,
+        "num_gold_spans": 0,
+        "num_relevant_retrieved": 0
+      },
+      "retrieval_latency_ms": 0.4606,
+      "answer_latency_ms": 1291.3949,
+      "citation": {
+        "citation_precision": null,
+        "citation_recall": null,
+        "citation_count": 3,
+        "citations_supported": 0
+      },
+      "refusal_accuracy": 1.0,
+      "stage_timings": [
+        {
+          "stage": "extract_media",
+          "seconds": 4.800000169780105e-06
+        },
+        {
+          "stage": "load_cached_tree",
+          "seconds": 0.00017590000061318278
+        },
+        {
+          "stage": "transcribe",
+          "seconds": 3.9000005926936865e-06
+        },
+        {
+          "stage": "semantic_chunk",
+          "seconds": 2.1999985619913787e-06
+        },
+        {
+          "stage": "keyframe_select",
+          "seconds": 2.1999985619913787e-06
+        },
+        {
+          "stage": "hierarchy_build",
+          "seconds": 2.2999993234407157e-06
+        },
+        {
+          "stage": "store_cached_tree",
+          "seconds": 3.0000010156072676e-06
+        },
+        {
+          "stage": "retrieve",
+          "seconds": 0.0004606000002240762
+        },
+        {
+          "stage": "answer",
+          "seconds": 1.2913948999994318
         }
       ]
     },
@@ -294,237 +875,296 @@
       "item_id": "interview-founder-01",
       "question_id": "q1",
       "mode": "naive",
-      "answer": "Founder: Happy to be here; we have learned a lot the hard way.",
-      "latency_seconds": 8.299999899463728e-05,
-      "estimated_usd": 3.8e-05,
+      "answer": "The founder first validates an ML feature by running offline evaluations on a labeled set with clear metrics, which include precision, recall, and calibrated confidence where relevant [chunk-0002, chunk-0003].",
+      "latency_seconds": 0.8160208000008424,
+      "estimated_usd": 5.28e-05,
       "input_tokens": 320,
-      "output_tokens": 15,
+      "output_tokens": 52,
       "cache_hit": false,
       "quality": {
-        "groundedness": 1.0,
-        "correctness": 0.0179,
-        "citation_accuracy": 0.0,
-        "overall": 0.3393
+        "groundedness": 0.7333,
+        "correctness": 0.8375,
+        "citation_accuracy": 1.0,
+        "overall": 0.8569333333333334
       },
-      "citation_count": 0,
+      "citation_count": 1,
+      "video_type": "interview",
+      "question_type": "factual",
+      "difficulty": "medium",
+      "unanswerable": false,
+      "duration_seconds": 150.0,
+      "retrieval": {},
+      "retrieval_latency_ms": 0.0,
+      "answer_latency_ms": 0.0,
+      "citation": {},
+      "refusal_accuracy": 1.0,
       "stage_timings": []
     },
     {
       "item_id": "interview-founder-01",
       "question_id": "q1",
       "mode": "hierarchical",
-      "answer": "Interviewer: How do you decide when an ML feature is ready to ship? [chunk-0001]",
-      "latency_seconds": 0.001150000000052387,
-      "estimated_usd": 2.27e-05,
-      "input_tokens": 147,
-      "output_tokens": 20,
+      "answer": "The founder first validates an ML feature by running offline evaluations on a labeled set with clear metrics [chunk-0001].",
+      "latency_seconds": 2.342004199999792,
+      "estimated_usd": 2.72e-05,
+      "input_tokens": 152,
+      "output_tokens": 30,
       "cache_hit": false,
       "quality": {
-        "groundedness": 1.0,
-        "correctness": 0.0,
+        "groundedness": 0.8,
+        "correctness": 0.8375,
         "citation_accuracy": 1.0,
-        "overall": 0.6666666666666666
+        "overall": 0.8791666666666668
       },
       "citation_count": 1,
+      "video_type": "interview",
+      "question_type": "factual",
+      "difficulty": "medium",
+      "unanswerable": false,
+      "duration_seconds": 150.0,
+      "retrieval": {
+        "k": 3,
+        "recall_at_k": 1.0,
+        "mrr": 1.0,
+        "ndcg_at_k": 1.0,
+        "num_gold_spans": 1,
+        "num_relevant_retrieved": 1
+      },
+      "retrieval_latency_ms": 0.4263,
+      "answer_latency_ms": 2337.9804,
+      "citation": {
+        "citation_precision": 1.0,
+        "citation_recall": 1.0,
+        "citation_count": 1,
+        "citations_supported": 1
+      },
+      "refusal_accuracy": 1.0,
       "stage_timings": [
         {
           "stage": "extract_media",
-          "seconds": 6.000009307172149e-07
+          "seconds": 6.100002792663872e-06
         },
         {
           "stage": "load_cached_tree",
-          "seconds": 2.209999911428895e-05
+          "seconds": 0.00011969999832217582
         },
         {
           "stage": "transcribe",
-          "seconds": 7.089999962772708e-05
+          "seconds": 0.0002420999990135897
         },
         {
           "stage": "semantic_chunk",
-          "seconds": 0.000552100000277278
+          "seconds": 0.0019362999992154073
         },
         {
           "stage": "keyframe_select",
-          "seconds": 1.320000046689529e-05
+          "seconds": 5.379999856813811e-05
         },
         {
           "stage": "hierarchy_build",
-          "seconds": 0.00019859999883919954
+          "seconds": 0.00044630000047618523
         },
         {
           "stage": "store_cached_tree",
-          "seconds": 3.700000888784416e-06
+          "seconds": 1.680000059423037e-05
         },
         {
           "stage": "retrieve",
-          "seconds": 0.00012210000022605527
+          "seconds": 0.00042630000098142773
         },
         {
           "stage": "answer",
-          "seconds": 0.00015729999904579017
+          "seconds": 2.337980399999651
         }
       ]
     },
     {
       "item_id": "interview-founder-01",
-      "question_id": "q1",
-      "mode": "hierarchical_cached",
-      "answer": "Interviewer: How do you decide when an ML feature is ready to ship? [chunk-0001]",
-      "latency_seconds": 0.00030189999961294234,
-      "estimated_usd": 2.27e-05,
-      "input_tokens": 147,
-      "output_tokens": 20,
-      "cache_hit": true,
-      "quality": {
-        "groundedness": 1.0,
-        "correctness": 0.0,
-        "citation_accuracy": 1.0,
-        "overall": 0.6666666666666666
-      },
-      "citation_count": 1,
-      "stage_timings": [
-        {
-          "stage": "extract_media",
-          "seconds": 6.999998731771484e-07
-        },
-        {
-          "stage": "load_cached_tree",
-          "seconds": 2.829999903042335e-05
-        },
-        {
-          "stage": "transcribe",
-          "seconds": 6.999998731771484e-07
-        },
-        {
-          "stage": "semantic_chunk",
-          "seconds": 4.000012268079445e-07
-        },
-        {
-          "stage": "keyframe_select",
-          "seconds": 5.000001692678779e-07
-        },
-        {
-          "stage": "hierarchy_build",
-          "seconds": 5.000001692678779e-07
-        },
-        {
-          "stage": "store_cached_tree",
-          "seconds": 5.000001692678779e-07
-        },
-        {
-          "stage": "retrieve",
-          "seconds": 0.00011579999954847153
-        },
-        {
-          "stage": "answer",
-          "seconds": 0.00014600000031350646
-        }
-      ]
-    },
-    {
-      "item_id": "product-demo-search-01",
-      "question_id": "q1",
+      "question_id": "q2",
       "mode": "naive",
-      "answer": "Clicking a citation seeks the player to that timestamp automatically.",
-      "latency_seconds": 6.439999924623407e-05,
-      "estimated_usd": 2.86e-05,
-      "input_tokens": 218,
-      "output_tokens": 17,
+      "answer": "Shadow mode compares model outputs without affecting users, and disagreements between the shadow model and the current system are logged [chunk-0007].",
+      "latency_seconds": 1.2741583000024548,
+      "estimated_usd": 4.58e-05,
+      "input_tokens": 310,
+      "output_tokens": 37,
       "cache_hit": false,
       "quality": {
-        "groundedness": 1.0,
-        "correctness": 0.7985,
-        "citation_accuracy": 0.0,
-        "overall": 0.5995
+        "groundedness": 0.8333,
+        "correctness": 1.0,
+        "citation_accuracy": 1.0,
+        "overall": 0.9444333333333333
       },
-      "citation_count": 0,
+      "citation_count": 1,
+      "video_type": "interview",
+      "question_type": "factual",
+      "difficulty": "medium",
+      "unanswerable": false,
+      "duration_seconds": 150.0,
+      "retrieval": {},
+      "retrieval_latency_ms": 0.0,
+      "answer_latency_ms": 0.0,
+      "citation": {},
+      "refusal_accuracy": 1.0,
       "stage_timings": []
     },
     {
-      "item_id": "product-demo-search-01",
-      "question_id": "q1",
+      "item_id": "interview-founder-01",
+      "question_id": "q2",
       "mode": "hierarchical",
-      "answer": "Clicking a citation seeks the player to that timestamp automatically. [chunk-0003]",
-      "latency_seconds": 0.0009540999999444466,
-      "estimated_usd": 2.14e-05,
-      "input_tokens": 134,
-      "output_tokens": 20,
-      "cache_hit": false,
+      "answer": "Shadow mode compares model outputs without affecting users and logs disagreements between the shadow model and the current system [chunk-0003].",
+      "latency_seconds": 0.8920844999993278,
+      "estimated_usd": 2.7e-05,
+      "input_tokens": 130,
+      "output_tokens": 35,
+      "cache_hit": true,
       "quality": {
-        "groundedness": 1.0,
-        "correctness": 0.7985,
+        "groundedness": 0.9412,
+        "correctness": 1.0,
         "citation_accuracy": 1.0,
-        "overall": 0.9328333333333333
+        "overall": 0.9804
       },
       "citation_count": 1,
+      "video_type": "interview",
+      "question_type": "factual",
+      "difficulty": "medium",
+      "unanswerable": false,
+      "duration_seconds": 150.0,
+      "retrieval": {
+        "k": 3,
+        "recall_at_k": 1.0,
+        "mrr": 1.0,
+        "ndcg_at_k": 1.0,
+        "num_gold_spans": 1,
+        "num_relevant_retrieved": 1
+      },
+      "retrieval_latency_ms": 0.4645,
+      "answer_latency_ms": 890.5566,
+      "citation": {
+        "citation_precision": 1.0,
+        "citation_recall": 1.0,
+        "citation_count": 1,
+        "citations_supported": 1
+      },
+      "refusal_accuracy": 1.0,
       "stage_timings": [
         {
           "stage": "extract_media",
-          "seconds": 5.999991117278114e-07
+          "seconds": 3.7000027077738196e-06
         },
         {
           "stage": "load_cached_tree",
-          "seconds": 2.4199998733820394e-05
+          "seconds": 0.00017359999765176326
         },
         {
           "stage": "transcribe",
-          "seconds": 5.1900000471505336e-05
+          "seconds": 3.7999998312443495e-06
         },
         {
           "stage": "semantic_chunk",
-          "seconds": 0.00044359999992593657
+          "seconds": 3.2999996619764715e-06
         },
         {
           "stage": "keyframe_select",
-          "seconds": 1.1899999663000926e-05
+          "seconds": 2.2000021999701858e-06
         },
         {
           "stage": "hierarchy_build",
-          "seconds": 0.00012860000060754828
+          "seconds": 2.7999994927085936e-06
         },
         {
           "stage": "store_cached_tree",
-          "seconds": 7.599999662488699e-06
+          "seconds": 3.0999981390777975e-06
         },
         {
           "stage": "retrieve",
-          "seconds": 0.0001080999991245335
+          "seconds": 0.0004645000008167699
         },
         {
           "stage": "answer",
-          "seconds": 0.0001675000003160676
+          "seconds": 0.8905565999993996
         }
       ]
     },
     {
-      "item_id": "product-demo-search-01",
-      "question_id": "q1",
-      "mode": "hierarchical_cached",
-      "answer": "Clicking a citation seeks the player to that timestamp automatically. [chunk-0003]",
-      "latency_seconds": 0.00040190000072470866,
-      "estimated_usd": 2.14e-05,
-      "input_tokens": 134,
-      "output_tokens": 20,
+      "item_id": "interview-founder-01",
+      "question_id": "q3",
+      "mode": "naive",
+      "answer": "The A/B gate requires a pre-registered success metric and a stopping rule [chunk-0007].",
+      "latency_seconds": 1.3017083999984607,
+      "estimated_usd": 3.95e-05,
+      "input_tokens": 311,
+      "output_tokens": 21,
+      "cache_hit": false,
+      "quality": {
+        "groundedness": 0.8571,
+        "correctness": 1.0,
+        "citation_accuracy": 1.0,
+        "overall": 0.9523666666666667
+      },
+      "citation_count": 1,
+      "video_type": "interview",
+      "question_type": "factual",
+      "difficulty": "medium",
+      "unanswerable": false,
+      "duration_seconds": 150.0,
+      "retrieval": {},
+      "retrieval_latency_ms": 0.0,
+      "answer_latency_ms": 0.0,
+      "citation": {},
+      "refusal_accuracy": 1.0,
+      "stage_timings": []
+    },
+    {
+      "item_id": "interview-founder-01",
+      "question_id": "q3",
+      "mode": "hierarchical",
+      "answer": "The A/B gate requires a pre-registered success metric and a stopping rule [chunk-0004].",
+      "latency_seconds": 1.203033100002358,
+      "estimated_usd": 2.22e-05,
+      "input_tokens": 138,
+      "output_tokens": 21,
       "cache_hit": true,
       "quality": {
         "groundedness": 1.0,
-        "correctness": 0.7985,
+        "correctness": 1.0,
         "citation_accuracy": 1.0,
-        "overall": 0.9328333333333333
+        "overall": 1.0
       },
       "citation_count": 1,
+      "video_type": "interview",
+      "question_type": "factual",
+      "difficulty": "medium",
+      "unanswerable": false,
+      "duration_seconds": 150.0,
+      "retrieval": {
+        "k": 3,
+        "recall_at_k": 1.0,
+        "mrr": 1.0,
+        "ndcg_at_k": 1.0,
+        "num_gold_spans": 1,
+        "num_relevant_retrieved": 1
+      },
+      "retrieval_latency_ms": 0.1617,
+      "answer_latency_ms": 1202.5521,
+      "citation": {
+        "citation_precision": 1.0,
+        "citation_recall": 1.0,
+        "citation_count": 1,
+        "citations_supported": 1
+      },
+      "refusal_accuracy": 1.0,
       "stage_timings": [
         {
           "stage": "extract_media",
-          "seconds": 1.8999999156221747e-06
+          "seconds": 1.3000026228837669e-06
         },
         {
           "stage": "load_cached_tree",
-          "seconds": 3.9599999581696466e-05
+          "seconds": 5.0099999498343095e-05
         },
         {
           "stage": "transcribe",
-          "seconds": 1.7000002117129043e-06
+          "seconds": 1.3000026228837669e-06
         },
         {
           "stage": "semantic_chunk",
@@ -532,23 +1172,1200 @@
         },
         {
           "stage": "keyframe_select",
-          "seconds": 1.5600000551785342e-05
+          "seconds": 6.999980541877449e-07
         },
         {
           "stage": "hierarchy_build",
-          "seconds": 5.000001692678779e-07
+          "seconds": 7.999988156370819e-07
         },
         {
           "stage": "store_cached_tree",
-          "seconds": 8.999995770864189e-07
+          "seconds": 1.7000020307023078e-06
         },
         {
           "stage": "retrieve",
-          "seconds": 0.00013870000111637637
+          "seconds": 0.00016169999798876233
         },
         {
           "stage": "answer",
-          "seconds": 0.00019099999917671084
+          "seconds": 1.2025520999995933
+        }
+      ]
+    },
+    {
+      "item_id": "interview-founder-01",
+      "question_id": "q4",
+      "mode": "naive",
+      "answer": "According to the founder, what fails most often are \"Label drift and silent quality regressions between offline and live data\" and \"feature pipelines that look identical in notebooks but diverge in prod\" [chunk-0008].",
+      "latency_seconds": 0.8191547999995237,
+      "estimated_usd": 5.31e-05,
+      "input_tokens": 315,
+      "output_tokens": 54,
+      "cache_hit": false,
+      "quality": {
+        "groundedness": 0.9032,
+        "correctness": 1.0,
+        "citation_accuracy": 1.0,
+        "overall": 0.9677333333333333
+      },
+      "citation_count": 1,
+      "video_type": "interview",
+      "question_type": "factual",
+      "difficulty": "hard",
+      "unanswerable": false,
+      "duration_seconds": 150.0,
+      "retrieval": {},
+      "retrieval_latency_ms": 0.0,
+      "answer_latency_ms": 0.0,
+      "citation": {},
+      "refusal_accuracy": 1.0,
+      "stage_timings": []
+    },
+    {
+      "item_id": "interview-founder-01",
+      "question_id": "q4",
+      "mode": "hierarchical",
+      "answer": "According to the founder, label drift and silent quality regressions between offline and live data fail most often [chunk-0005].",
+      "latency_seconds": 0.9148404999978084,
+      "estimated_usd": 2.7e-05,
+      "input_tokens": 142,
+      "output_tokens": 32,
+      "cache_hit": true,
+      "quality": {
+        "groundedness": 0.8421,
+        "correctness": 1.0,
+        "citation_accuracy": 1.0,
+        "overall": 0.9473666666666666
+      },
+      "citation_count": 1,
+      "video_type": "interview",
+      "question_type": "factual",
+      "difficulty": "hard",
+      "unanswerable": false,
+      "duration_seconds": 150.0,
+      "retrieval": {
+        "k": 3,
+        "recall_at_k": 1.0,
+        "mrr": 1.0,
+        "ndcg_at_k": 1.0,
+        "num_gold_spans": 1,
+        "num_relevant_retrieved": 1
+      },
+      "retrieval_latency_ms": 0.3812,
+      "answer_latency_ms": 913.7261,
+      "citation": {
+        "citation_precision": 1.0,
+        "citation_recall": 1.0,
+        "citation_count": 1,
+        "citations_supported": 1
+      },
+      "refusal_accuracy": 1.0,
+      "stage_timings": [
+        {
+          "stage": "extract_media",
+          "seconds": 2.4000000848900527e-06
+        },
+        {
+          "stage": "load_cached_tree",
+          "seconds": 9.449999924981967e-05
+        },
+        {
+          "stage": "transcribe",
+          "seconds": 2.7000023692380637e-06
+        },
+        {
+          "stage": "semantic_chunk",
+          "seconds": 2.4000000848900527e-06
+        },
+        {
+          "stage": "keyframe_select",
+          "seconds": 1.6999983927235007e-06
+        },
+        {
+          "stage": "hierarchy_build",
+          "seconds": 1.9999970390927047e-06
+        },
+        {
+          "stage": "store_cached_tree",
+          "seconds": 2.2000021999701858e-06
+        },
+        {
+          "stage": "retrieve",
+          "seconds": 0.0003811999995377846
+        },
+        {
+          "stage": "answer",
+          "seconds": 0.9137260999996215
+        }
+      ]
+    },
+    {
+      "item_id": "interview-founder-01",
+      "question_id": "q5",
+      "mode": "naive",
+      "answer": "Before a full launch, the validation steps involve:\n1.  Running offline evaluations on a labeled dataset with clear metrics such as precision, recall, and calibrated confidence [chunk-0001, chunk-0002].\n2.  If the offline numbers look good, enabling shadow traffic in production. In shadow mode, model outputs are compared without affecting users, and disagreements between the shadow model and the current system are logged [chunk-0003, chunk-0004, chunk-0005].\n3.  Rolling a small A/B test to measure user impact. This A/B gate requires a pre-registered success metric and a stopping rule [chunk-0006, chunk-0007].\nLaunches are gated on both offline evaluation and A/B confidence intervals [chunk-0010].",
+      "latency_seconds": 5.304163700002391,
+      "estimated_usd": 0.000102,
+      "input_tokens": 316,
+      "output_tokens": 176,
+      "cache_hit": false,
+      "quality": {
+        "groundedness": 0.6375,
+        "correctness": 0.9091,
+        "citation_accuracy": 1.0,
+        "overall": 0.8488666666666665
+      },
+      "citation_count": 4,
+      "video_type": "interview",
+      "question_type": "multi_hop",
+      "difficulty": "hard",
+      "unanswerable": false,
+      "duration_seconds": 150.0,
+      "retrieval": {},
+      "retrieval_latency_ms": 0.0,
+      "answer_latency_ms": 0.0,
+      "citation": {},
+      "refusal_accuracy": 1.0,
+      "stage_timings": []
+    },
+    {
+      "item_id": "interview-founder-01",
+      "question_id": "q5",
+      "mode": "hierarchical",
+      "answer": "Before a full launch, the validation steps involve first running offline evaluations on a labeled set with clear metrics [chunk-0001]. After that, a small A/B test is rolled out to measure user impact. This A/B gate requires a pre-registered success metric and a stopping rule [chunk-0004].",
+      "latency_seconds": 2.5769022999993467,
+      "estimated_usd": 4.1e-05,
+      "input_tokens": 122,
+      "output_tokens": 72,
+      "cache_hit": true,
+      "quality": {
+        "groundedness": 0.7209,
+        "correctness": 0.4886,
+        "citation_accuracy": 1.0,
+        "overall": 0.7365
+      },
+      "citation_count": 2,
+      "video_type": "interview",
+      "question_type": "multi_hop",
+      "difficulty": "hard",
+      "unanswerable": false,
+      "duration_seconds": 150.0,
+      "retrieval": {
+        "k": 3,
+        "recall_at_k": 0.6667,
+        "mrr": 1.0,
+        "ndcg_at_k": 0.7039,
+        "num_gold_spans": 3,
+        "num_relevant_retrieved": 2
+      },
+      "retrieval_latency_ms": 0.5304,
+      "answer_latency_ms": 2575.219,
+      "citation": {
+        "citation_precision": 1.0,
+        "citation_recall": 0.6667,
+        "citation_count": 2,
+        "citations_supported": 2
+      },
+      "refusal_accuracy": 1.0,
+      "stage_timings": [
+        {
+          "stage": "extract_media",
+          "seconds": 4.400000761961564e-06
+        },
+        {
+          "stage": "load_cached_tree",
+          "seconds": 0.00016970000069704838
+        },
+        {
+          "stage": "transcribe",
+          "seconds": 4.699999408330768e-06
+        },
+        {
+          "stage": "semantic_chunk",
+          "seconds": 3.5999983083456755e-06
+        },
+        {
+          "stage": "keyframe_select",
+          "seconds": 3.1999989005271345e-06
+        },
+        {
+          "stage": "hierarchy_build",
+          "seconds": 3.0999981390777975e-06
+        },
+        {
+          "stage": "store_cached_tree",
+          "seconds": 5.099998816149309e-06
+        },
+        {
+          "stage": "retrieve",
+          "seconds": 0.0005303999969328288
+        },
+        {
+          "stage": "answer",
+          "seconds": 2.5752190000021074
+        }
+      ]
+    },
+    {
+      "item_id": "interview-founder-01",
+      "question_id": "q6",
+      "mode": "naive",
+      "answer": "The founder advises early teams to invest in evaluation datasets early because demos without numbers are dangerous [chunk-0016].",
+      "latency_seconds": 0.6443934999988414,
+      "estimated_usd": 4.43e-05,
+      "input_tokens": 315,
+      "output_tokens": 32,
+      "cache_hit": false,
+      "quality": {
+        "groundedness": 0.7222,
+        "correctness": 0.975,
+        "citation_accuracy": 1.0,
+        "overall": 0.8990666666666667
+      },
+      "citation_count": 1,
+      "video_type": "interview",
+      "question_type": "factual",
+      "difficulty": "easy",
+      "unanswerable": false,
+      "duration_seconds": 150.0,
+      "retrieval": {},
+      "retrieval_latency_ms": 0.0,
+      "answer_latency_ms": 0.0,
+      "citation": {},
+      "refusal_accuracy": 1.0,
+      "stage_timings": []
+    },
+    {
+      "item_id": "interview-founder-01",
+      "question_id": "q6",
+      "mode": "hierarchical",
+      "answer": "The founder advises early teams to invest in evaluation datasets early, stating that \"demos without numbers are dangerous\" [chunk-0007].",
+      "latency_seconds": 1.3822489000012865,
+      "estimated_usd": 2.77e-05,
+      "input_tokens": 141,
+      "output_tokens": 34,
+      "cache_hit": true,
+      "quality": {
+        "groundedness": 0.7895,
+        "correctness": 0.975,
+        "citation_accuracy": 1.0,
+        "overall": 0.9215
+      },
+      "citation_count": 1,
+      "video_type": "interview",
+      "question_type": "factual",
+      "difficulty": "easy",
+      "unanswerable": false,
+      "duration_seconds": 150.0,
+      "retrieval": {
+        "k": 3,
+        "recall_at_k": 1.0,
+        "mrr": 0.5,
+        "ndcg_at_k": 0.6309,
+        "num_gold_spans": 1,
+        "num_relevant_retrieved": 1
+      },
+      "retrieval_latency_ms": 0.44,
+      "answer_latency_ms": 1381.0308,
+      "citation": {
+        "citation_precision": 1.0,
+        "citation_recall": 1.0,
+        "citation_count": 1,
+        "citations_supported": 1
+      },
+      "refusal_accuracy": 1.0,
+      "stage_timings": [
+        {
+          "stage": "extract_media",
+          "seconds": 2.6000016077887267e-06
+        },
+        {
+          "stage": "load_cached_tree",
+          "seconds": 0.00010680000195861794
+        },
+        {
+          "stage": "transcribe",
+          "seconds": 3.1999989005271345e-06
+        },
+        {
+          "stage": "semantic_chunk",
+          "seconds": 2.2999993234407157e-06
+        },
+        {
+          "stage": "keyframe_select",
+          "seconds": 2.1999985619913787e-06
+        },
+        {
+          "stage": "hierarchy_build",
+          "seconds": 2.4000000848900527e-06
+        },
+        {
+          "stage": "store_cached_tree",
+          "seconds": 2.2999993234407157e-06
+        },
+        {
+          "stage": "retrieve",
+          "seconds": 0.0004399999997986015
+        },
+        {
+          "stage": "answer",
+          "seconds": 1.3810307999992801
+        }
+      ]
+    },
+    {
+      "item_id": "interview-founder-01",
+      "question_id": "q7",
+      "mode": "naive",
+      "answer": "The context does not mention any programming language that the founder recommends.",
+      "latency_seconds": 3.527009800000087,
+      "estimated_usd": 3.97e-05,
+      "input_tokens": 317,
+      "output_tokens": 20,
+      "cache_hit": false,
+      "quality": {
+        "groundedness": 0.3636,
+        "correctness": 0.3278,
+        "citation_accuracy": 0.0,
+        "overall": 0.23046666666666668
+      },
+      "citation_count": 0,
+      "video_type": "interview",
+      "question_type": "negative",
+      "difficulty": "medium",
+      "unanswerable": true,
+      "duration_seconds": 150.0,
+      "retrieval": {},
+      "retrieval_latency_ms": 0.0,
+      "answer_latency_ms": 0.0,
+      "citation": {},
+      "refusal_accuracy": 1.0,
+      "stage_timings": []
+    },
+    {
+      "item_id": "interview-founder-01",
+      "question_id": "q7",
+      "mode": "hierarchical",
+      "answer": "The provided context does not mention what programming language the founder recommends.",
+      "latency_seconds": 1.5705637999999453,
+      "estimated_usd": 2.21e-05,
+      "input_tokens": 137,
+      "output_tokens": 21,
+      "cache_hit": true,
+      "quality": {
+        "groundedness": 0.1818,
+        "correctness": 0.3,
+        "citation_accuracy": 1.0,
+        "overall": 0.49393333333333334
+      },
+      "citation_count": 3,
+      "video_type": "interview",
+      "question_type": "negative",
+      "difficulty": "medium",
+      "unanswerable": true,
+      "duration_seconds": 150.0,
+      "retrieval": {
+        "k": 3,
+        "recall_at_k": null,
+        "mrr": null,
+        "ndcg_at_k": null,
+        "num_gold_spans": 0,
+        "num_relevant_retrieved": 0
+      },
+      "retrieval_latency_ms": 0.1451,
+      "answer_latency_ms": 1570.115,
+      "citation": {
+        "citation_precision": null,
+        "citation_recall": null,
+        "citation_count": 3,
+        "citations_supported": 0
+      },
+      "refusal_accuracy": 1.0,
+      "stage_timings": [
+        {
+          "stage": "extract_media",
+          "seconds": 1.1999982234556228e-06
+        },
+        {
+          "stage": "load_cached_tree",
+          "seconds": 4.8000001697801054e-05
+        },
+        {
+          "stage": "transcribe",
+          "seconds": 1.1999982234556228e-06
+        },
+        {
+          "stage": "semantic_chunk",
+          "seconds": 8.00002453615889e-07
+        },
+        {
+          "stage": "keyframe_select",
+          "seconds": 7.999988156370819e-07
+        },
+        {
+          "stage": "hierarchy_build",
+          "seconds": 8.999995770864189e-07
+        },
+        {
+          "stage": "store_cached_tree",
+          "seconds": 1.0999974620062858e-06
+        },
+        {
+          "stage": "retrieve",
+          "seconds": 0.00014510000255540945
+        },
+        {
+          "stage": "answer",
+          "seconds": 1.5701149999986228
+        }
+      ]
+    },
+    {
+      "item_id": "product-demo-search-01",
+      "question_id": "q1",
+      "mode": "naive",
+      "answer": "Clicking a citation seeks the player to that timestamp automatically [chunk-0000].",
+      "latency_seconds": 0.7089443999975629,
+      "estimated_usd": 2.98e-05,
+      "input_tokens": 218,
+      "output_tokens": 20,
+      "cache_hit": false,
+      "quality": {
+        "groundedness": 0.8333,
+        "correctness": 0.9333,
+        "citation_accuracy": 1.0,
+        "overall": 0.9222
+      },
+      "citation_count": 1,
+      "video_type": "product_demo",
+      "question_type": "factual",
+      "difficulty": "easy",
+      "unanswerable": false,
+      "duration_seconds": 120.0,
+      "retrieval": {},
+      "retrieval_latency_ms": 0.0,
+      "answer_latency_ms": 0.0,
+      "citation": {},
+      "refusal_accuracy": 1.0,
+      "stage_timings": []
+    },
+    {
+      "item_id": "product-demo-search-01",
+      "question_id": "q1",
+      "mode": "hierarchical",
+      "answer": "Clicking a citation automatically seeks the player to that timestamp [chunk-0003].",
+      "latency_seconds": 1.2303661000005377,
+      "estimated_usd": 2.14e-05,
+      "input_tokens": 134,
+      "output_tokens": 20,
+      "cache_hit": false,
+      "quality": {
+        "groundedness": 1.0,
+        "correctness": 0.9333,
+        "citation_accuracy": 1.0,
+        "overall": 0.9777666666666667
+      },
+      "citation_count": 1,
+      "video_type": "product_demo",
+      "question_type": "factual",
+      "difficulty": "easy",
+      "unanswerable": false,
+      "duration_seconds": 120.0,
+      "retrieval": {
+        "k": 3,
+        "recall_at_k": 1.0,
+        "mrr": 0.5,
+        "ndcg_at_k": 0.6309,
+        "num_gold_spans": 1,
+        "num_relevant_retrieved": 1
+      },
+      "retrieval_latency_ms": 0.3104,
+      "answer_latency_ms": 1226.8167,
+      "citation": {
+        "citation_precision": 1.0,
+        "citation_recall": 1.0,
+        "citation_count": 1,
+        "citations_supported": 1
+      },
+      "refusal_accuracy": 1.0,
+      "stage_timings": [
+        {
+          "stage": "extract_media",
+          "seconds": 4.19999923906289e-06
+        },
+        {
+          "stage": "load_cached_tree",
+          "seconds": 0.00018180000188294798
+        },
+        {
+          "stage": "transcribe",
+          "seconds": 0.00020289999883971177
+        },
+        {
+          "stage": "semantic_chunk",
+          "seconds": 0.0015359999997599516
+        },
+        {
+          "stage": "keyframe_select",
+          "seconds": 3.930000093532726e-05
+        },
+        {
+          "stage": "hierarchy_build",
+          "seconds": 0.0003414999991946388
+        },
+        {
+          "stage": "store_cached_tree",
+          "seconds": 4.5900000259280205e-05
+        },
+        {
+          "stage": "retrieve",
+          "seconds": 0.00031039999885251746
+        },
+        {
+          "stage": "answer",
+          "seconds": 1.2268167000001995
+        }
+      ]
+    },
+    {
+      "item_id": "product-demo-search-01",
+      "question_id": "q2",
+      "mode": "naive",
+      "answer": "Each citation includes a start and end timestamp [chunk-0007].",
+      "latency_seconds": 0.7347802000003867,
+      "estimated_usd": 2.75e-05,
+      "input_tokens": 215,
+      "output_tokens": 15,
+      "cache_hit": false,
+      "quality": {
+        "groundedness": 0.8,
+        "correctness": 1.0,
+        "citation_accuracy": 1.0,
+        "overall": 0.9333333333333332
+      },
+      "citation_count": 1,
+      "video_type": "product_demo",
+      "question_type": "factual",
+      "difficulty": "medium",
+      "unanswerable": false,
+      "duration_seconds": 120.0,
+      "retrieval": {},
+      "retrieval_latency_ms": 0.0,
+      "answer_latency_ms": 0.0,
+      "citation": {},
+      "refusal_accuracy": 1.0,
+      "stage_timings": []
+    },
+    {
+      "item_id": "product-demo-search-01",
+      "question_id": "q2",
+      "mode": "hierarchical",
+      "answer": "Each citation includes a start and end timestamp [chunk-0002].",
+      "latency_seconds": 1.803768999998283,
+      "estimated_usd": 1.81e-05,
+      "input_tokens": 121,
+      "output_tokens": 15,
+      "cache_hit": true,
+      "quality": {
+        "groundedness": 1.0,
+        "correctness": 1.0,
+        "citation_accuracy": 1.0,
+        "overall": 1.0
+      },
+      "citation_count": 1,
+      "video_type": "product_demo",
+      "question_type": "factual",
+      "difficulty": "medium",
+      "unanswerable": false,
+      "duration_seconds": 120.0,
+      "retrieval": {
+        "k": 3,
+        "recall_at_k": 1.0,
+        "mrr": 1.0,
+        "ndcg_at_k": 1.0,
+        "num_gold_spans": 1,
+        "num_relevant_retrieved": 1
+      },
+      "retrieval_latency_ms": 0.123,
+      "answer_latency_ms": 1803.3334,
+      "citation": {
+        "citation_precision": 1.0,
+        "citation_recall": 1.0,
+        "citation_count": 1,
+        "citations_supported": 1
+      },
+      "refusal_accuracy": 1.0,
+      "stage_timings": [
+        {
+          "stage": "extract_media",
+          "seconds": 1.2000018614344299e-06
+        },
+        {
+          "stage": "load_cached_tree",
+          "seconds": 5.109999983687885e-05
+        },
+        {
+          "stage": "transcribe",
+          "seconds": 1.5000005078036338e-06
+        },
+        {
+          "stage": "semantic_chunk",
+          "seconds": 8.999995770864189e-07
+        },
+        {
+          "stage": "keyframe_select",
+          "seconds": 1.1000010999850929e-06
+        },
+        {
+          "stage": "hierarchy_build",
+          "seconds": 9.00003215065226e-07
+        },
+        {
+          "stage": "store_cached_tree",
+          "seconds": 1.0000003385357559e-06
+        },
+        {
+          "stage": "retrieve",
+          "seconds": 0.0001230000016221311
+        },
+        {
+          "stage": "answer",
+          "seconds": 1.8033333999992465
+        }
+      ]
+    },
+    {
+      "item_id": "product-demo-search-01",
+      "question_id": "q3",
+      "mode": "naive",
+      "answer": "You can filter results by chapter using the hierarchy tree [chunk-0007].",
+      "latency_seconds": 0.7431286999999429,
+      "estimated_usd": 2.87e-05,
+      "input_tokens": 215,
+      "output_tokens": 18,
+      "cache_hit": false,
+      "quality": {
+        "groundedness": 0.8333,
+        "correctness": 1.0,
+        "citation_accuracy": 1.0,
+        "overall": 0.9444333333333333
+      },
+      "citation_count": 1,
+      "video_type": "product_demo",
+      "question_type": "factual",
+      "difficulty": "medium",
+      "unanswerable": false,
+      "duration_seconds": 120.0,
+      "retrieval": {},
+      "retrieval_latency_ms": 0.0,
+      "answer_latency_ms": 0.0,
+      "citation": {},
+      "refusal_accuracy": 1.0,
+      "stage_timings": []
+    },
+    {
+      "item_id": "product-demo-search-01",
+      "question_id": "q3",
+      "mode": "hierarchical",
+      "answer": "The provided context does not specify how to filter search results. It mentions typing a natural language question in the search box to initiate a search [chunk-0001].",
+      "latency_seconds": 2.21659560000262,
+      "estimated_usd": 2.94e-05,
+      "input_tokens": 130,
+      "output_tokens": 41,
+      "cache_hit": true,
+      "quality": {
+        "groundedness": 0.4348,
+        "correctness": 0.35,
+        "citation_accuracy": 1.0,
+        "overall": 0.5949333333333333
+      },
+      "citation_count": 1,
+      "video_type": "product_demo",
+      "question_type": "factual",
+      "difficulty": "medium",
+      "unanswerable": false,
+      "duration_seconds": 120.0,
+      "retrieval": {
+        "k": 3,
+        "recall_at_k": 0.0,
+        "mrr": 0.0,
+        "ndcg_at_k": 0.0,
+        "num_gold_spans": 1,
+        "num_relevant_retrieved": 0
+      },
+      "retrieval_latency_ms": 0.4286,
+      "answer_latency_ms": 2215.1033,
+      "citation": {
+        "citation_precision": 0.0,
+        "citation_recall": 0.0,
+        "citation_count": 1,
+        "citations_supported": 0
+      },
+      "refusal_accuracy": 1.0,
+      "stage_timings": [
+        {
+          "stage": "extract_media",
+          "seconds": 3.6000019463244826e-06
+        },
+        {
+          "stage": "load_cached_tree",
+          "seconds": 0.00015940000230330043
+        },
+        {
+          "stage": "transcribe",
+          "seconds": 4.900000931229442e-06
+        },
+        {
+          "stage": "semantic_chunk",
+          "seconds": 3.4000004234258085e-06
+        },
+        {
+          "stage": "keyframe_select",
+          "seconds": 3.2999996619764715e-06
+        },
+        {
+          "stage": "hierarchy_build",
+          "seconds": 5.099998816149309e-06
+        },
+        {
+          "stage": "store_cached_tree",
+          "seconds": 4.699999408330768e-06
+        },
+        {
+          "stage": "retrieve",
+          "seconds": 0.00042860000030486844
+        },
+        {
+          "stage": "answer",
+          "seconds": 2.2151033000009193
+        }
+      ]
+    },
+    {
+      "item_id": "product-demo-search-01",
+      "question_id": "q4",
+      "mode": "naive",
+      "answer": "Repeat queries against the same video hit the multi-tier cache, which keeps demos snappy without re-embedding the full transcript [chunk-0007].",
+      "latency_seconds": 1.523460400003387,
+      "estimated_usd": 3.6e-05,
+      "input_tokens": 220,
+      "output_tokens": 35,
+      "cache_hit": false,
+      "quality": {
+        "groundedness": 0.9048,
+        "correctness": 1.0,
+        "citation_accuracy": 1.0,
+        "overall": 0.9682666666666666
+      },
+      "citation_count": 1,
+      "video_type": "product_demo",
+      "question_type": "factual",
+      "difficulty": "medium",
+      "unanswerable": false,
+      "duration_seconds": 120.0,
+      "retrieval": {},
+      "retrieval_latency_ms": 0.0,
+      "answer_latency_ms": 0.0,
+      "citation": {},
+      "refusal_accuracy": 1.0,
+      "stage_timings": []
+    },
+    {
+      "item_id": "product-demo-search-01",
+      "question_id": "q4",
+      "mode": "hierarchical",
+      "answer": "Repeat queries against the same video hit the multi-tier cache [chunk-0004]. This action helps keep demos snappy without re-embedding the full transcript [chunk-0005].",
+      "latency_seconds": 1.8149521999985154,
+      "estimated_usd": 2.97e-05,
+      "input_tokens": 133,
+      "output_tokens": 41,
+      "cache_hit": true,
+      "quality": {
+        "groundedness": 0.8333,
+        "correctness": 1.0,
+        "citation_accuracy": 1.0,
+        "overall": 0.9444333333333333
+      },
+      "citation_count": 2,
+      "video_type": "product_demo",
+      "question_type": "factual",
+      "difficulty": "medium",
+      "unanswerable": false,
+      "duration_seconds": 120.0,
+      "retrieval": {
+        "k": 3,
+        "recall_at_k": 1.0,
+        "mrr": 1.0,
+        "ndcg_at_k": 1.0,
+        "num_gold_spans": 1,
+        "num_relevant_retrieved": 1
+      },
+      "retrieval_latency_ms": 0.2281,
+      "answer_latency_ms": 1814.1903,
+      "citation": {
+        "citation_precision": 0.5,
+        "citation_recall": 1.0,
+        "citation_count": 2,
+        "citations_supported": 1
+      },
+      "refusal_accuracy": 1.0,
+      "stage_timings": [
+        {
+          "stage": "extract_media",
+          "seconds": 3.0000010156072676e-06
+        },
+        {
+          "stage": "load_cached_tree",
+          "seconds": 0.00010459999975864775
+        },
+        {
+          "stage": "transcribe",
+          "seconds": 3.1000017770566046e-06
+        },
+        {
+          "stage": "semantic_chunk",
+          "seconds": 1.3999997463542968e-06
+        },
+        {
+          "stage": "keyframe_select",
+          "seconds": 1.4999968698248267e-06
+        },
+        {
+          "stage": "hierarchy_build",
+          "seconds": 1.8999999156221747e-06
+        },
+        {
+          "stage": "store_cached_tree",
+          "seconds": 2.1999985619913787e-06
+        },
+        {
+          "stage": "retrieve",
+          "seconds": 0.00022809999791206792
+        },
+        {
+          "stage": "answer",
+          "seconds": 1.8141902999996091
+        }
+      ]
+    },
+    {
+      "item_id": "product-demo-search-01",
+      "question_id": "q5",
+      "mode": "naive",
+      "answer": "The context mentions that a cost estimate panel is shown to help teams forecast spend, but it does not specify *when* in the demo this explanation occurs [chunk-0007].",
+      "latency_seconds": 2.83536119999917,
+      "estimated_usd": 3.83e-05,
+      "input_tokens": 219,
+      "output_tokens": 41,
+      "cache_hit": false,
+      "quality": {
+        "groundedness": 0.4643,
+        "correctness": 0.9107,
+        "citation_accuracy": 1.0,
+        "overall": 0.7916666666666666
+      },
+      "citation_count": 1,
+      "video_type": "product_demo",
+      "question_type": "timestamp",
+      "difficulty": "medium",
+      "unanswerable": false,
+      "duration_seconds": 120.0,
+      "retrieval": {},
+      "retrieval_latency_ms": 0.0,
+      "answer_latency_ms": 0.0,
+      "citation": {},
+      "refusal_accuracy": 1.0,
+      "stage_timings": []
+    },
+    {
+      "item_id": "product-demo-search-01",
+      "question_id": "q5",
+      "mode": "hierarchical",
+      "answer": "The context does not contain information about when the demo explains the cost estimate panel.",
+      "latency_seconds": 1.8667153999995207,
+      "estimated_usd": 2.25e-05,
+      "input_tokens": 133,
+      "output_tokens": 23,
+      "cache_hit": true,
+      "quality": {
+        "groundedness": 0.0769,
+        "correctness": 0.706,
+        "citation_accuracy": 1.0,
+        "overall": 0.5942999999999999
+      },
+      "citation_count": 3,
+      "video_type": "product_demo",
+      "question_type": "timestamp",
+      "difficulty": "medium",
+      "unanswerable": false,
+      "duration_seconds": 120.0,
+      "retrieval": {
+        "k": 3,
+        "recall_at_k": 0.0,
+        "mrr": 0.0,
+        "ndcg_at_k": 0.0,
+        "num_gold_spans": 1,
+        "num_relevant_retrieved": 0
+      },
+      "retrieval_latency_ms": 0.403,
+      "answer_latency_ms": 1865.458,
+      "citation": {
+        "citation_precision": 0.0,
+        "citation_recall": 0.0,
+        "citation_count": 3,
+        "citations_supported": 0
+      },
+      "refusal_accuracy": 0.0,
+      "stage_timings": [
+        {
+          "stage": "extract_media",
+          "seconds": 3.5999983083456755e-06
+        },
+        {
+          "stage": "load_cached_tree",
+          "seconds": 0.00012849999984609894
+        },
+        {
+          "stage": "transcribe",
+          "seconds": 3.9000005926936865e-06
+        },
+        {
+          "stage": "semantic_chunk",
+          "seconds": 2.0999978005420417e-06
+        },
+        {
+          "stage": "keyframe_select",
+          "seconds": 2.1000014385208488e-06
+        },
+        {
+          "stage": "hierarchy_build",
+          "seconds": 2.5000008463393897e-06
+        },
+        {
+          "stage": "store_cached_tree",
+          "seconds": 2.7999994927085936e-06
+        },
+        {
+          "stage": "retrieve",
+          "seconds": 0.00040299999818671495
+        },
+        {
+          "stage": "answer",
+          "seconds": 1.865458000000217
+        }
+      ]
+    },
+    {
+      "item_id": "product-demo-search-01",
+      "question_id": "q6",
+      "mode": "naive",
+      "answer": "The UI highlights which provider answered the question [chunk-0007].",
+      "latency_seconds": 0.8184616999969876,
+      "estimated_usd": 2.84e-05,
+      "input_tokens": 216,
+      "output_tokens": 17,
+      "cache_hit": false,
+      "quality": {
+        "groundedness": 0.7778,
+        "correctness": 1.0,
+        "citation_accuracy": 1.0,
+        "overall": 0.9259333333333334
+      },
+      "citation_count": 1,
+      "video_type": "product_demo",
+      "question_type": "factual",
+      "difficulty": "easy",
+      "unanswerable": false,
+      "duration_seconds": 120.0,
+      "retrieval": {},
+      "retrieval_latency_ms": 0.0,
+      "answer_latency_ms": 0.0,
+      "citation": {},
+      "refusal_accuracy": 1.0,
+      "stage_timings": []
+    },
+    {
+      "item_id": "product-demo-search-01",
+      "question_id": "q6",
+      "mode": "hierarchical",
+      "answer": "The UI highlights which provider answered the question [chunk-0006].",
+      "latency_seconds": 1.9959354999991774,
+      "estimated_usd": 1.81e-05,
+      "input_tokens": 113,
+      "output_tokens": 17,
+      "cache_hit": true,
+      "quality": {
+        "groundedness": 1.0,
+        "correctness": 1.0,
+        "citation_accuracy": 1.0,
+        "overall": 1.0
+      },
+      "citation_count": 1,
+      "video_type": "product_demo",
+      "question_type": "factual",
+      "difficulty": "easy",
+      "unanswerable": false,
+      "duration_seconds": 120.0,
+      "retrieval": {
+        "k": 3,
+        "recall_at_k": 1.0,
+        "mrr": 1.0,
+        "ndcg_at_k": 1.0,
+        "num_gold_spans": 1,
+        "num_relevant_retrieved": 1
+      },
+      "retrieval_latency_ms": 0.3713,
+      "answer_latency_ms": 1994.7522,
+      "citation": {
+        "citation_precision": 1.0,
+        "citation_recall": 1.0,
+        "citation_count": 1,
+        "citations_supported": 1
+      },
+      "refusal_accuracy": 1.0,
+      "stage_timings": [
+        {
+          "stage": "extract_media",
+          "seconds": 2.7999994927085936e-06
+        },
+        {
+          "stage": "load_cached_tree",
+          "seconds": 0.00012770000103046186
+        },
+        {
+          "stage": "transcribe",
+          "seconds": 3.6000019463244826e-06
+        },
+        {
+          "stage": "semantic_chunk",
+          "seconds": 2.2000021999701858e-06
+        },
+        {
+          "stage": "keyframe_select",
+          "seconds": 2.0000006770715117e-06
+        },
+        {
+          "stage": "hierarchy_build",
+          "seconds": 2.2999993234407157e-06
+        },
+        {
+          "stage": "store_cached_tree",
+          "seconds": 2.6000016077887267e-06
+        },
+        {
+          "stage": "retrieve",
+          "seconds": 0.0003713000005518552
+        },
+        {
+          "stage": "answer",
+          "seconds": 1.994752200000221
+        }
+      ]
+    },
+    {
+      "item_id": "product-demo-search-01",
+      "question_id": "q7",
+      "mode": "naive",
+      "answer": "The context mentions a \"cost estimate panel so teams can forecast spend\" but does not specify any monthly subscription price [chunk-0007]. Therefore, the information about the monthly subscription price is not available in the provided context.",
+      "latency_seconds": 1.9713192000017443,
+      "estimated_usd": 4.65e-05,
+      "input_tokens": 221,
+      "output_tokens": 61,
+      "cache_hit": false,
+      "quality": {
+        "groundedness": 0.3793,
+        "correctness": 0.0,
+        "citation_accuracy": 1.0,
+        "overall": 0.45976666666666666
+      },
+      "citation_count": 1,
+      "video_type": "product_demo",
+      "question_type": "negative",
+      "difficulty": "medium",
+      "unanswerable": true,
+      "duration_seconds": 120.0,
+      "retrieval": {},
+      "retrieval_latency_ms": 0.0,
+      "answer_latency_ms": 0.0,
+      "citation": {},
+      "refusal_accuracy": 0.0,
+      "stage_timings": []
+    },
+    {
+      "item_id": "product-demo-search-01",
+      "question_id": "q7",
+      "mode": "hierarchical",
+      "answer": "The context does not provide information about the monthly subscription price.",
+      "latency_seconds": 1.7207942999993975,
+      "estimated_usd": 1.94e-05,
+      "input_tokens": 118,
+      "output_tokens": 19,
+      "cache_hit": true,
+      "quality": {
+        "groundedness": 0.1,
+        "correctness": 0.2896,
+        "citation_accuracy": 1.0,
+        "overall": 0.46320000000000006
+      },
+      "citation_count": 3,
+      "video_type": "product_demo",
+      "question_type": "negative",
+      "difficulty": "medium",
+      "unanswerable": true,
+      "duration_seconds": 120.0,
+      "retrieval": {
+        "k": 3,
+        "recall_at_k": null,
+        "mrr": null,
+        "ndcg_at_k": null,
+        "num_gold_spans": 0,
+        "num_relevant_retrieved": 0
+      },
+      "retrieval_latency_ms": 0.3626,
+      "answer_latency_ms": 1719.6157,
+      "citation": {
+        "citation_precision": null,
+        "citation_recall": null,
+        "citation_count": 3,
+        "citations_supported": 0
+      },
+      "refusal_accuracy": 1.0,
+      "stage_timings": [
+        {
+          "stage": "extract_media",
+          "seconds": 2.9000002541579306e-06
+        },
+        {
+          "stage": "load_cached_tree",
+          "seconds": 0.00011240000094403513
+        },
+        {
+          "stage": "transcribe",
+          "seconds": 2.7999994927085936e-06
+        },
+        {
+          "stage": "semantic_chunk",
+          "seconds": 2.0999978005420417e-06
+        },
+        {
+          "stage": "keyframe_select",
+          "seconds": 2.1000014385208488e-06
+        },
+        {
+          "stage": "hierarchy_build",
+          "seconds": 2.2999993234407157e-06
+        },
+        {
+          "stage": "store_cached_tree",
+          "seconds": 2.4000000848900527e-06
+        },
+        {
+          "stage": "retrieve",
+          "seconds": 0.0003625999997893814
+        },
+        {
+          "stage": "answer",
+          "seconds": 1.7196156999998493
         }
       ]
     }

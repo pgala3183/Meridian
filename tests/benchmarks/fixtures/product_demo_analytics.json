@@ -1,0 +1,20 @@
+{
+  "video_id": "product-demo-analytics-01",
+  "language": "en",
+  "segments": [
+    {"text": "Welcome to a demo of our product analytics dashboard.", "start_seconds": 0.0, "end_seconds": 6.0},
+    {"text": "The home screen shows daily active users at the top.", "start_seconds": 6.0, "end_seconds": 13.0},
+    {"text": "Right below it we display weekly retention as a cohort grid.", "start_seconds": 13.0, "end_seconds": 22.0},
+    {"text": "Each cell in the grid is colored by retention percentage.", "start_seconds": 22.0, "end_seconds": 30.0},
+    {"text": "Click any cohort to drill into the individual users it contains.", "start_seconds": 30.0, "end_seconds": 39.0},
+    {"text": "The funnel view tracks conversion across signup, activation, and purchase.", "start_seconds": 39.0, "end_seconds": 49.0},
+    {"text": "You can add a filter to segment the funnel by acquisition channel.", "start_seconds": 49.0, "end_seconds": 58.0},
+    {"text": "Filters apply instantly without reloading the page.", "start_seconds": 58.0, "end_seconds": 66.0},
+    {"text": "The events explorer lets you build custom charts from raw events.", "start_seconds": 66.0, "end_seconds": 75.0},
+    {"text": "Save any chart to a shared dashboard for your team.", "start_seconds": 75.0, "end_seconds": 83.0},
+    {"text": "Scheduled reports can be emailed every Monday morning automatically.", "start_seconds": 83.0, "end_seconds": 92.0},
+    {"text": "Data exports are available as CSV or through the query API.", "start_seconds": 92.0, "end_seconds": 101.0},
+    {"text": "Role based access controls who can view sensitive revenue metrics.", "start_seconds": 101.0, "end_seconds": 111.0},
+    {"text": "That concludes the analytics dashboard walkthrough.", "start_seconds": 111.0, "end_seconds": 120.0}
+  ]
+}

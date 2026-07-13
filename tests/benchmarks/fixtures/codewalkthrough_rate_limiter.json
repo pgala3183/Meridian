@@ -1,0 +1,20 @@
+{
+  "video_id": "codewalkthrough-rate-limiter-01",
+  "language": "en",
+  "segments": [
+    {"text": "In this code walkthrough we build a token bucket rate limiter.", "start_seconds": 0.0, "end_seconds": 7.0},
+    {"text": "A rate limiter caps how many requests a client can make per second.", "start_seconds": 7.0, "end_seconds": 16.0},
+    {"text": "The token bucket holds tokens that refill at a fixed rate.", "start_seconds": 16.0, "end_seconds": 25.0},
+    {"text": "Each incoming request must remove one token to proceed.", "start_seconds": 25.0, "end_seconds": 34.0},
+    {"text": "If the bucket is empty the request is rejected with status code 429.", "start_seconds": 34.0, "end_seconds": 44.0},
+    {"text": "We store the token count and the last refill timestamp per client.", "start_seconds": 44.0, "end_seconds": 54.0},
+    {"text": "On each request we compute how many tokens to add since the last refill.", "start_seconds": 54.0, "end_seconds": 64.0},
+    {"text": "The refill amount is elapsed time multiplied by the refill rate.", "start_seconds": 64.0, "end_seconds": 74.0},
+    {"text": "We cap the token count at the bucket capacity to prevent bursts.", "start_seconds": 74.0, "end_seconds": 84.0},
+    {"text": "For distributed systems we store the state in Redis instead of memory.", "start_seconds": 84.0, "end_seconds": 94.0},
+    {"text": "Redis lets multiple servers share one consistent limit per client.", "start_seconds": 94.0, "end_seconds": 104.0},
+    {"text": "We use a Lua script so the check and update happen atomically.", "start_seconds": 104.0, "end_seconds": 114.0},
+    {"text": "Finally we return the remaining tokens in a response header.", "start_seconds": 114.0, "end_seconds": 123.0},
+    {"text": "That completes our token bucket rate limiter implementation.", "start_seconds": 123.0, "end_seconds": 132.0}
+  ]
+}

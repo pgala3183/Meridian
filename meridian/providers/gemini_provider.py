@@ -116,9 +116,18 @@ class GeminiProvider(MultimodalProvider):
         parts: list[dict[str, Any]] = [
             {
                 "text": (
-                    "Answer the question using only the provided context. "
-                    "If the context is insufficient, say so. Cite relevant "
-                    "snippets in square brackets when possible.\n\n"
+                    "You answer questions about a video using the transcript "
+                    "context below. Each passage is prefixed with an id and "
+                    "timestamp like [chunk-0007 | 42.00s-55.00s].\n"
+                    "Rules:\n"
+                    "- Answer using only the provided context.\n"
+                    "- The transcript may be in a different language than the "
+                    "question; still answer in the language of the question.\n"
+                    "- Cite the specific passages you used by including their "
+                    "ids in square brackets, e.g. [chunk-0007]. Cite at least "
+                    "one when you can answer.\n"
+                    "- Only say the context is insufficient if the answer truly "
+                    "is not present anywhere in the context.\n\n"
                     f"Context:\n{context}\n\nQuestion:\n{question}"
                 )
             }

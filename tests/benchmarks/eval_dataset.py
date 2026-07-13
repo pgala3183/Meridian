@@ -26,6 +26,25 @@ class VideoType(StrEnum):
     LECTURE = "lecture"
     INTERVIEW = "interview"
     PRODUCT_DEMO = "product_demo"
+    PODCAST = "podcast"
+    TUTORIAL = "tutorial"
+    PANEL = "panel"
+    NEWS = "news"
+    CODE_WALKTHROUGH = "code_walkthrough"
+
+
+class QuestionType(StrEnum):
+    FACTUAL = "factual"
+    SUMMARY = "summary"
+    MULTI_HOP = "multi_hop"
+    TIMESTAMP = "timestamp"
+    NEGATIVE = "negative"
+
+
+class Difficulty(StrEnum):
+    EASY = "easy"
+    MEDIUM = "medium"
+    HARD = "hard"
 
 
 @dataclass(frozen=True, slots=True)
@@ -41,6 +60,15 @@ class EvalQuestion:
     question_id: str
     question: str
     rubric: AnswerRubric
+    question_type: QuestionType = QuestionType.FACTUAL
+    difficulty: Difficulty = Difficulty.MEDIUM
+    # Gold supporting spans (seconds) used for retrieval + citation metrics.
+    # A retrieved/cited chunk counts as relevant if its time span overlaps any
+    # of these ranges. Empty for unanswerable (negative) questions.
+    relevant_timestamps: tuple[tuple[float, float], ...] = ()
+    # True when the answer is intentionally absent from the transcript; the
+    # system should refuse rather than fabricate.
+    unanswerable: bool = False
 
 
 @dataclass(frozen=True, slots=True)
@@ -82,6 +110,24 @@ def _load_transcript(path: Path) -> Transcript:
     )
 
 
+def _parse_question(q: dict[str, Any]) -> EvalQuestion:
+    spans = tuple((float(pair[0]), float(pair[1])) for pair in q.get("relevant_timestamps", []))
+    return EvalQuestion(
+        question_id=str(q["question_id"]),
+        question=str(q["question"]),
+        rubric=AnswerRubric(
+            must_include=tuple(q["rubric"]["must_include"]),
+            acceptable_concepts=tuple(q["rubric"].get("acceptable_concepts", [])),
+            forbidden=tuple(q["rubric"].get("forbidden", [])),
+            expected_answer=str(q["expected_answer"]),
+        ),
+        question_type=QuestionType(str(q.get("question_type", "factual"))),
+        difficulty=Difficulty(str(q.get("difficulty", "medium"))),
+        relevant_timestamps=spans,
+        unanswerable=bool(q.get("unanswerable", False)),
+    )
+
+
 def load_eval_dataset(path: Path | None = None) -> tuple[EvalItem, ...]:
     """Load the versioned eval set and verify fixture checksums."""
     manifest_path = path or _DATASET_PATH
@@ -102,19 +148,7 @@ def load_eval_dataset(path: Path | None = None) -> tuple[EvalItem, ...]:
                 )
             content_hash = expected
 
-        questions = tuple(
-            EvalQuestion(
-                question_id=str(q["question_id"]),
-                question=str(q["question"]),
-                rubric=AnswerRubric(
-                    must_include=tuple(q["rubric"]["must_include"]),
-                    acceptable_concepts=tuple(q["rubric"].get("acceptable_concepts", [])),
-                    forbidden=tuple(q["rubric"].get("forbidden", [])),
-                    expected_answer=str(q["expected_answer"]),
-                ),
-            )
-            for q in entry["questions"]
-        )
+        questions = tuple(_parse_question(q) for q in entry["questions"])
         transcript = _load_transcript(fixture_path)
         items.append(
             EvalItem(

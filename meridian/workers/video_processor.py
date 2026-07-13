@@ -8,31 +8,39 @@ import os
 from datetime import UTC, datetime
 from typing import Any
 
+from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException, Request, Response
 
-from meridian.jobs.firestore_store import FirestoreJobStore
-from meridian.jobs.memory_store import InMemoryJobStore
-from meridian.jobs.models import JobStage, JobStatus, JobStore, VideoJob
-from meridian.jobs.queue import QueueMessage
-from meridian.observability.context import clear_context, set_job_id, set_request_id
-from meridian.observability.health import health_payload, readiness_payload
-from meridian.observability.logging import configure_logging, get_logger
-from meridian.observability.middleware import RequestContextMiddleware
-from meridian.observability.tracing import configure_telemetry, pipeline_stage_span, tracer
-from meridian.storage.base import ObjectStore, StorageBackendName, artifact_key
-from meridian.storage.factory import StorageConfig, create_object_store
+load_dotenv()
+
+from meridian.ingest.youtube import (  # noqa: E402
+    demo_transcript,
+    extract_youtube_id,
+    fetch_youtube_transcript,
+)
+from meridian.jobs.firestore_store import FirestoreJobStore  # noqa: E402
+from meridian.jobs.memory_store import InMemoryJobStore  # noqa: E402
+from meridian.jobs.models import JobStage, JobStatus, JobStore, VideoJob  # noqa: E402
+from meridian.jobs.queue import QueueMessage  # noqa: E402
+from meridian.observability.context import clear_context, set_job_id, set_request_id  # noqa: E402
+from meridian.observability.health import health_payload, readiness_payload  # noqa: E402
+from meridian.observability.logging import configure_logging, get_logger  # noqa: E402
+from meridian.observability.middleware import RequestContextMiddleware  # noqa: E402
+from meridian.observability.tracing import (  # noqa: E402
+    configure_telemetry,
+    pipeline_stage_span,
+    tracer,
+)
+from meridian.providers.types import Transcript  # noqa: E402
+from meridian.storage.base import ObjectStore, StorageBackendName  # noqa: E402
+from meridian.storage.factory import StorageConfig, create_object_store  # noqa: E402
+from meridian.workers.indexing import build_context_tree, persist_index, tree_stats  # noqa: E402
 
 logger = get_logger(__name__)
 
 
 class VideoProcessor:
-    """Processes a single queued video job end-to-end (pipeline stages later).
-
-    For now this advances job state, writes placeholder artifacts to object
-    storage, and updates Firestore/memory job records — enough to exercise the
-    async control plane without blocking the API. Each control-plane stage is
-    wrapped in an OpenTelemetry span so latency shows up in Cloud Trace.
-    """
+    """Ingest captions → semantic index → persist artifacts for grounded ask."""
 
     def __init__(self, store: JobStore, object_store: ObjectStore) -> None:
         self._store = store
@@ -64,42 +72,51 @@ class VideoProcessor:
                 with pipeline_stage_span("transcribe", attributes=_attrs(job)):
                     job.status = JobStatus.RUNNING
                     job.stage = JobStage.TRANSCRIBE
-                    job.progress = 0.2
+                    job.progress = 0.15
                     job.updated_at = datetime.now(UTC)
                     self._store.update_job(job)
 
-                    transcript_key = artifact_key(job.video_id, "transcripts", "full.json")
-                    transcript_blob = json.dumps(
-                        {
-                            "video_id": job.video_id,
+                    transcript = _resolve_transcript(job)
+                    logger.info(
+                        "Transcript ready",
+                        extra={
                             "job_id": job.job_id,
-                            "request_id": request_id,
-                            "note": "placeholder transcript — pipeline wiring lands next",
-                        }
-                    ).encode("utf-8")
-                    stored = self._objects.put_bytes(
-                        transcript_key,
-                        transcript_blob,
-                        content_type="application/json",
-                    )
-                    job.artifact_uris["transcript"] = stored.uri or self._objects.uri_for(
-                        transcript_key
+                            "segments": len(transcript.segments),
+                            "model": transcript.model,
+                        },
                     )
 
                 with pipeline_stage_span("embed", attributes=_attrs(job)):
                     job.stage = JobStage.EMBED
-                    job.progress = 0.6
+                    job.progress = 0.45
                     job.updated_at = datetime.now(UTC)
                     self._store.update_job(job)
 
-                    tree_key = artifact_key(job.video_id, "context", "tree.json")
-                    tree_blob = json.dumps(
-                        {"video_id": job.video_id, "chunks": [], "request_id": request_id}
-                    ).encode("utf-8")
-                    tree = self._objects.put_bytes(
-                        tree_key, tree_blob, content_type="application/json"
+                    tree = build_context_tree(job.video_id, transcript)
+                    stats = tree_stats(tree)
+                    logger.info(
+                        "Index built",
+                        extra={"job_id": job.job_id, **{k: stats[k] for k in ("chunk_count",)}},
                     )
-                    job.artifact_uris["context_tree"] = tree.uri or self._objects.uri_for(tree_key)
+
+                with pipeline_stage_span("index", attributes=_attrs(job)):
+                    job.stage = JobStage.INDEX
+                    job.progress = 0.8
+                    job.updated_at = datetime.now(UTC)
+                    self._store.update_job(job)
+
+                    uris = persist_index(
+                        self._objects,
+                        video_id=job.video_id,
+                        transcript=transcript,
+                        tree=tree,
+                    )
+                    job.artifact_uris["transcript"] = uris["transcript"]
+                    job.artifact_uris["context_tree"] = uris["context_tree"]
+                    job.extra["transcript_key"] = uris["transcript_key"]
+                    job.extra["context_tree_key"] = uris["context_tree_key"]
+                    job.extra["chunk_count"] = stats["chunk_count"]
+                    job.extra["transcript_model"] = transcript.model
 
                 with pipeline_stage_span("complete", attributes=_attrs(job)):
                     job.stage = JobStage.COMPLETE
@@ -117,6 +134,13 @@ class VideoProcessor:
             raise
         finally:
             clear_context()
+
+
+def _resolve_transcript(job: VideoJob) -> Transcript:
+    yt_id = extract_youtube_id(job.source_uri) or extract_youtube_id(job.video_id)
+    if yt_id:
+        return fetch_youtube_transcript(yt_id)
+    return demo_transcript(job.video_id)
 
 
 def _attrs(job: VideoJob) -> dict[str, str]:
@@ -181,7 +205,6 @@ def _parse_pubsub_envelope(body: dict[str, Any]) -> QueueMessage:
     encoded = body["message"]["data"]
     raw = base64.b64decode(encoded)
     message = QueueMessage.from_bytes(raw)
-    # Prefer attribute if publishers set request_id separately.
     attrs = body.get("message", {}).get("attributes") or {}
     attr_rid = attrs.get("request_id")
     if attr_rid and not message.request_id:

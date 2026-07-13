@@ -1,0 +1,21 @@
+{
+  "video_id": "tutorial-python-async-01",
+  "language": "en",
+  "segments": [
+    {"text": "In this tutorial we learn asynchronous programming in Python with asyncio.", "start_seconds": 0.0, "end_seconds": 7.0},
+    {"text": "Async lets a single thread handle many I O bound tasks concurrently.", "start_seconds": 7.0, "end_seconds": 15.0},
+    {"text": "You define a coroutine using the async def keyword.", "start_seconds": 15.0, "end_seconds": 22.0},
+    {"text": "Inside a coroutine you use await to pause until a result is ready.", "start_seconds": 22.0, "end_seconds": 31.0},
+    {"text": "The event loop schedules coroutines and resumes them when awaited work finishes.", "start_seconds": 31.0, "end_seconds": 41.0},
+    {"text": "Use asyncio dot run to start the event loop from synchronous code.", "start_seconds": 41.0, "end_seconds": 50.0},
+    {"text": "To run tasks concurrently wrap them with asyncio dot gather.", "start_seconds": 50.0, "end_seconds": 59.0},
+    {"text": "Gather returns results in the same order as the input coroutines.", "start_seconds": 59.0, "end_seconds": 68.0},
+    {"text": "A common mistake is calling a blocking function inside a coroutine.", "start_seconds": 68.0, "end_seconds": 77.0},
+    {"text": "Blocking calls freeze the event loop and stall every other task.", "start_seconds": 77.0, "end_seconds": 86.0},
+    {"text": "Offload blocking work with asyncio dot to thread to keep the loop responsive.", "start_seconds": 86.0, "end_seconds": 96.0},
+    {"text": "Always set a timeout on network calls to avoid hanging forever.", "start_seconds": 96.0, "end_seconds": 105.0},
+    {"text": "Use asyncio dot wait for to enforce a timeout on any awaitable.", "start_seconds": 105.0, "end_seconds": 114.0},
+    {"text": "Cancellation propagates by raising CancelledError inside the coroutine.", "start_seconds": 114.0, "end_seconds": 123.0},
+    {"text": "That wraps up the basics of async and await in Python.", "start_seconds": 123.0, "end_seconds": 132.0}
+  ]
+}

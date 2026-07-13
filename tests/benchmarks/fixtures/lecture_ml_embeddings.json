@@ -1,0 +1,23 @@
+{
+  "video_id": "lecture-ml-embeddings-01",
+  "language": "en",
+  "segments": [
+    {"text": "Welcome to lecture nine on vector embeddings for machine learning.", "start_seconds": 0.0, "end_seconds": 6.0},
+    {"text": "An embedding maps a discrete token into a dense vector of real numbers.", "start_seconds": 6.0, "end_seconds": 14.0},
+    {"text": "Similar meanings end up close together in the vector space.", "start_seconds": 14.0, "end_seconds": 21.0},
+    {"text": "We measure closeness with cosine similarity between two vectors.", "start_seconds": 21.0, "end_seconds": 29.0},
+    {"text": "Cosine similarity ignores magnitude and focuses on the angle between vectors.", "start_seconds": 29.0, "end_seconds": 38.0},
+    {"text": "Training uses a contrastive objective that pulls positive pairs together.", "start_seconds": 38.0, "end_seconds": 47.0},
+    {"text": "Negative pairs are pushed apart to spread the representation.", "start_seconds": 47.0, "end_seconds": 55.0},
+    {"text": "The dimensionality of the embedding controls capacity and cost.", "start_seconds": 55.0, "end_seconds": 63.0},
+    {"text": "Higher dimensions capture more nuance but require more memory and compute.", "start_seconds": 63.0, "end_seconds": 72.0},
+    {"text": "For retrieval we store embeddings in an approximate nearest neighbor index.", "start_seconds": 72.0, "end_seconds": 82.0},
+    {"text": "An ANN index like HNSW trades a little recall for much faster search.", "start_seconds": 82.0, "end_seconds": 92.0},
+    {"text": "Quantization compresses vectors to reduce storage at a small accuracy cost.", "start_seconds": 92.0, "end_seconds": 101.0},
+    {"text": "Fine-tuning embeddings on your domain usually beats generic off-the-shelf models.", "start_seconds": 101.0, "end_seconds": 111.0},
+    {"text": "Evaluate embeddings with recall at k and mean reciprocal rank on a labeled set.", "start_seconds": 111.0, "end_seconds": 122.0},
+    {"text": "Beware of embedding drift when the underlying model version changes.", "start_seconds": 122.0, "end_seconds": 131.0},
+    {"text": "Always re-index after upgrading the embedding model to avoid mixed spaces.", "start_seconds": 131.0, "end_seconds": 141.0},
+    {"text": "Next lecture covers transformer attention and positional encodings.", "start_seconds": 141.0, "end_seconds": 152.0}
+  ]
+}

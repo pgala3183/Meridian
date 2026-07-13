@@ -20,8 +20,9 @@ export function ChatPanel({ messages, busy, onSeek, onAsk }: Props) {
       <div className="flex-1 space-y-4 overflow-y-auto px-5 py-4">
         {messages.length === 0 && (
           <p className="text-sm text-fog/55">
-            When processing finishes, ask about caching, citations, or how features
-            get validated—answers include seekable timestamps.
+            When processing finishes, ask about who is on the panel, what
+            happened in a scene, or any detail from the video—answers include
+            seekable timestamps.
           </p>
         )}
         {messages.map((m) => (

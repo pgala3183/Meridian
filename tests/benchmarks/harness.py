@@ -27,7 +27,13 @@ from meridian.providers.base import MultimodalProvider
 from meridian.providers.types import ProviderRequest
 from tests.benchmarks.baseline import DeterministicEvalProvider, _approx_tokens, run_naive_baseline
 from tests.benchmarks.eval_dataset import EvalItem, EvalQuestion, item_to_media, load_eval_dataset
-from tests.benchmarks.judge import HeuristicRubricJudge, JudgeScores
+from tests.benchmarks.judge import (
+    HeuristicRubricJudge,
+    JudgeScores,
+    refusal_accuracy,
+    score_citations,
+)
+from tests.benchmarks.retrieval_metrics import score_retrieval
 
 
 @dataclass
@@ -50,6 +56,19 @@ class QuestionResult:
     stage_timings: list[StageTiming] = field(default_factory=list)
     quality: dict[str, float] = field(default_factory=dict)
     citation_count: int = 0
+    # --- metadata for slicing ---
+    video_type: str = ""
+    question_type: str = ""
+    difficulty: str = ""
+    unanswerable: bool = False
+    duration_seconds: float = 0.0
+    # --- retrieval quality (hierarchical only; empty for naive) ---
+    retrieval: dict[str, float | int | None] = field(default_factory=dict)
+    retrieval_latency_ms: float = 0.0
+    answer_latency_ms: float = 0.0
+    # --- citation grounding + refusal correctness ---
+    citation: dict[str, float | int | None] = field(default_factory=dict)
+    refusal_accuracy: float = 0.0
 
 
 @dataclass
@@ -151,6 +170,14 @@ async def _run_hierarchical_once(
         rubric=question.rubric,
         citation_count=len(artifacts.answer.citations),
     )
+
+    gold = question.relevant_timestamps
+    retrieval = score_retrieval(artifacts.hits, gold, k=config.top_k)
+    citation = score_citations(artifacts.answer.citations, gold)
+    refusal = refusal_accuracy(artifacts.answer.answer, unanswerable=question.unanswerable)
+    retrieval_latency_ms = _stage_seconds(timings, "retrieve") * 1000.0
+    answer_latency_ms = _stage_seconds(timings, "answer") * 1000.0
+
     return QuestionResult(
         item_id=item.item_id,
         question_id=question.question_id,
@@ -169,18 +196,40 @@ async def _run_hierarchical_once(
             "overall": scores.overall,
         },
         citation_count=len(artifacts.answer.citations),
+        video_type=item.video_type.value,
+        question_type=question.question_type.value,
+        difficulty=question.difficulty.value,
+        unanswerable=question.unanswerable,
+        duration_seconds=item.duration_seconds,
+        retrieval=retrieval.as_dict(),
+        retrieval_latency_ms=round(retrieval_latency_ms, 4),
+        answer_latency_ms=round(answer_latency_ms, 4),
+        citation=citation.as_dict(),
+        refusal_accuracy=refusal,
     )
+
+
+def _stage_seconds(timings: list[StageTiming], stage: str) -> float:
+    return sum(t.seconds for t in timings if t.stage == stage)
 
 
 async def run_evaluation(
     *,
     provider: MultimodalProvider | None = None,
     repeat_cached_queries: bool = True,
+    max_items: int | None = None,
 ) -> EvalReport:
-    """Run full eval: naive baseline + hierarchical (cold) + hierarchical (warm)."""
+    """Run full eval: naive baseline + hierarchical (cold) + hierarchical (warm).
+
+    ``max_items`` caps the number of videos (useful for a fast smoke run or to
+    limit live-provider spend). ``provider`` defaults to the offline
+    deterministic provider so CI never makes network calls.
+    """
     from tests.benchmarks.eval_dataset import dataset_version
 
     items = load_eval_dataset()
+    if max_items is not None:
+        items = items[:max_items]
     provider = provider or DeterministicEvalProvider()
     config = PipelineConfig(top_k=3, section_group_size=2, cache_enabled=True)
     embedder = HashingEmbedder(dimensions=64)
@@ -224,6 +273,14 @@ async def run_evaluation(
                         "overall": naive_scores.overall,
                     },
                     citation_count=len(naive["citations"]),
+                    video_type=item.video_type.value,
+                    question_type=question.question_type.value,
+                    difficulty=question.difficulty.value,
+                    unanswerable=question.unanswerable,
+                    duration_seconds=item.duration_seconds,
+                    refusal_accuracy=refusal_accuracy(
+                        str(naive["answer"]), unanswerable=question.unanswerable
+                    ),
                 )
             )
 
@@ -252,11 +309,41 @@ async def run_evaluation(
                 results.append(warm)
 
     summary = summarize_results(results)
+    summary["provider"] = provider.name
+    summary["n_videos"] = len(items)
     return EvalReport(
         dataset_version=dataset_version(),
         results=results,
         summary=summary,
     )
+
+
+def _avg(vals: list[float]) -> float:
+    return sum(vals) / len(vals) if vals else 0.0
+
+
+def _percentile(vals: list[float], pct: float) -> float:
+    """Linear-interpolation percentile (pct in [0, 100])."""
+    if not vals:
+        return 0.0
+    ordered = sorted(vals)
+    if len(ordered) == 1:
+        return ordered[0]
+    rank = (pct / 100.0) * (len(ordered) - 1)
+    low = int(rank)
+    high = min(low + 1, len(ordered) - 1)
+    frac = rank - low
+    return ordered[low] + (ordered[high] - ordered[low]) * frac
+
+
+def _avg_optional(results: list[QuestionResult], key: str, source: str) -> float | None:
+    """Average a metric that may be ``None`` (skips N/A entries)."""
+    vals = [
+        v
+        for r in results
+        if (v := (r.retrieval if source == "retrieval" else r.citation).get(key)) is not None
+    ]
+    return round(_avg([float(v) for v in vals]), 4) if vals else None
 
 
 def summarize_results(results: list[QuestionResult]) -> dict[str, Any]:
@@ -268,9 +355,6 @@ def summarize_results(results: list[QuestionResult]) -> dict[str, Any]:
     naive = _subset("naive")
     hier = _subset("hierarchical")
     cached = _subset("hierarchical_cached")
-
-    def _avg(vals: list[float]) -> float:
-        return sum(vals) / len(vals) if vals else 0.0
 
     naive_cost = _avg([r.estimated_usd for r in naive])
     hier_cost = _avg([r.estimated_usd for r in hier])
@@ -290,10 +374,24 @@ def summarize_results(results: list[QuestionResult]) -> dict[str, Any]:
             stage_totals.setdefault(st.stage, []).append(st.seconds)
     stage_avg = {k: _avg(v) for k, v in stage_totals.items()}
 
-    return {
+    # --- Latency percentiles (ms) on the hierarchical cold path ---
+    ask_ms = [r.latency_seconds * 1000.0 for r in hier]
+    answer_ms = [r.answer_latency_ms for r in hier if r.answer_latency_ms > 0]
+    retrieval_ms = [r.retrieval_latency_ms for r in hier if r.retrieval_latency_ms > 0]
+
+    # --- Retrieval + citation quality (answerable questions only) ---
+    answerable_hier = [r for r in hier if not r.unanswerable]
+    retrieval_k = next((int(r.retrieval.get("k") or 0) for r in answerable_hier), 0)
+
+    # --- Refusal accuracy ---
+    unanswerable_hier = [r for r in hier if r.unanswerable]
+
+    summary: dict[str, Any] = {
         "n_naive": len(naive),
         "n_hierarchical": len(hier),
         "n_hierarchical_cached": len(cached),
+        "n_answerable": len(answerable_hier),
+        "n_unanswerable": len(unanswerable_hier),
         "avg_cost_usd_naive": round(naive_cost, 8),
         "avg_cost_usd_hierarchical": round(hier_cost, 8),
         "cost_reduction_pct": round(cost_reduction_pct, 2),
@@ -307,8 +405,53 @@ def summarize_results(results: list[QuestionResult]) -> dict[str, Any]:
             _avg([r.quality.get("overall", 0.0) for r in hier]), 4
         ),
         "avg_stage_seconds_hierarchical": {k: round(v, 6) for k, v in stage_avg.items()},
+        # Latency percentiles (end-to-end ask, hierarchical cold)
+        "ask_latency_ms_p50": round(_percentile(ask_ms, 50), 4),
+        "ask_latency_ms_p95": round(_percentile(ask_ms, 95), 4),
+        "ask_latency_ms_p99": round(_percentile(ask_ms, 99), 4),
+        "answer_stage_latency_ms_p95": round(_percentile(answer_ms, 95), 4),
+        "retrieval_stage_latency_ms_avg": round(_avg(retrieval_ms), 4),
+        # Retrieval quality (IR metrics)
+        "retrieval_k": retrieval_k,
+        "retrieval_recall_at_k": _avg_optional(answerable_hier, "recall_at_k", "retrieval"),
+        "retrieval_mrr": _avg_optional(answerable_hier, "mrr", "retrieval"),
+        "retrieval_ndcg_at_k": _avg_optional(answerable_hier, "ndcg_at_k", "retrieval"),
+        # Citation grounding
+        "citation_precision": _avg_optional(answerable_hier, "citation_precision", "citation"),
+        "citation_recall": _avg_optional(answerable_hier, "citation_recall", "citation"),
+        # Refusal correctness
+        "refusal_accuracy_overall": round(_avg([r.refusal_accuracy for r in hier]), 4),
+        "refusal_accuracy_answerable": round(
+            _avg([r.refusal_accuracy for r in answerable_hier]), 4
+        ),
+        "refusal_accuracy_unanswerable": round(
+            _avg([r.refusal_accuracy for r in unanswerable_hier]), 4
+        ),
+        "by_video_type": _breakdown(hier, "video_type"),
+        "by_question_type": _breakdown(hier, "question_type"),
+        "by_difficulty": _breakdown(hier, "difficulty"),
         "judge": "heuristic_rubric (approximation — not ground truth)",
     }
+    return summary
+
+
+def _breakdown(results: list[QuestionResult], attr: str) -> dict[str, dict[str, Any]]:
+    """Group hierarchical results by a metadata attribute and summarize each."""
+    groups: dict[str, list[QuestionResult]] = {}
+    for r in results:
+        groups.setdefault(getattr(r, attr), []).append(r)
+
+    out: dict[str, dict[str, Any]] = {}
+    for key, group in sorted(groups.items()):
+        answerable = [r for r in group if not r.unanswerable]
+        out[key] = {
+            "n": len(group),
+            "quality_overall": round(_avg([r.quality.get("overall", 0.0) for r in group]), 4),
+            "recall_at_k": _avg_optional(answerable, "recall_at_k", "retrieval"),
+            "citation_precision": _avg_optional(answerable, "citation_precision", "citation"),
+            "refusal_accuracy": round(_avg([r.refusal_accuracy for r in group]), 4),
+        }
+    return out
 
 
 def report_to_dict(report: EvalReport) -> dict[str, Any]:

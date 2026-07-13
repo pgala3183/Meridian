@@ -1,0 +1,19 @@
+{
+  "video_id": "news-tech-roundup-01",
+  "language": "en",
+  "segments": [
+    {"text": "Welcome to this week's technology news roundup.", "start_seconds": 0.0, "end_seconds": 5.0},
+    {"text": "Our top story is a major chip maker announcing a new energy efficient processor.", "start_seconds": 5.0, "end_seconds": 14.0},
+    {"text": "The company claims the chip cuts power usage by forty percent.", "start_seconds": 14.0, "end_seconds": 23.0},
+    {"text": "Analysts say the gain comes mostly from a smaller manufacturing process.", "start_seconds": 23.0, "end_seconds": 33.0},
+    {"text": "In cloud news a provider lowered prices on long term storage.", "start_seconds": 33.0, "end_seconds": 42.0},
+    {"text": "The price cut targets customers archiving large datasets.", "start_seconds": 42.0, "end_seconds": 51.0},
+    {"text": "A popular open source database released version fifteen this week.", "start_seconds": 51.0, "end_seconds": 60.0},
+    {"text": "The release adds native support for parallel query execution.", "start_seconds": 60.0, "end_seconds": 69.0},
+    {"text": "In security news researchers disclosed a flaw in a widely used library.", "start_seconds": 69.0, "end_seconds": 79.0},
+    {"text": "A patch is already available and users should update immediately.", "start_seconds": 79.0, "end_seconds": 88.0},
+    {"text": "On the funding front a robotics startup raised fifty million dollars.", "start_seconds": 88.0, "end_seconds": 98.0},
+    {"text": "The startup builds warehouse robots for small businesses.", "start_seconds": 98.0, "end_seconds": 107.0},
+    {"text": "That is all for this week's roundup, see you next time.", "start_seconds": 107.0, "end_seconds": 116.0}
+  ]
+}

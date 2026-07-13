@@ -22,6 +22,80 @@ def _approx_tokens(text: str) -> int:
     return max(1, len(text) // 4)
 
 
+# Minimal stopword list so refusal decisions ignore filler words that appear in
+# every transcript (otherwise "the"/"does" would make every question look
+# answerable). Content-word overlap of zero => decline to answer.
+_STOPWORDS = frozenset(
+    {
+        "the",
+        "a",
+        "an",
+        "and",
+        "or",
+        "of",
+        "to",
+        "in",
+        "on",
+        "for",
+        "is",
+        "are",
+        "was",
+        "were",
+        "be",
+        "do",
+        "does",
+        "did",
+        "how",
+        "what",
+        "when",
+        "where",
+        "who",
+        "why",
+        "which",
+        "this",
+        "that",
+        "these",
+        "those",
+        "it",
+        "its",
+        "with",
+        "at",
+        "by",
+        "from",
+        "as",
+        "into",
+        "about",
+        "per",
+        "you",
+        "your",
+        "they",
+        "their",
+        "we",
+        "our",
+        "he",
+        "she",
+        "his",
+        "her",
+        "can",
+        "could",
+        "should",
+        "would",
+        "will",
+        "shall",
+        "may",
+        "might",
+        "much",
+        "many",
+        "any",
+        "some",
+    }
+)
+
+
+def _content_tokens(text: str) -> set[str]:
+    return {t for t in re.findall(r"[a-z0-9]+", text.lower()) if t not in _STOPWORDS and len(t) > 2}
+
+
 class DeterministicEvalProvider(MultimodalProvider):
     """Offline provider that answers from context keywords (no network).
 
@@ -59,6 +133,22 @@ class DeterministicEvalProvider(MultimodalProvider):
         # Extract the highest-overlap sentence from context as a grounded answer.
         sentences = [s.strip() for s in re.split(r"(?<=[.!?])\s+", context) if s.strip()]
         q_tokens = set(re.findall(r"[a-z0-9]+", question.lower()))
+
+        # Refusal path: if no context sentence shares a content word with the
+        # question, decline instead of returning an irrelevant sentence. This
+        # makes unanswerable (negative) questions behave realistically offline.
+        q_content = _content_tokens(question)
+        best_content_overlap = max(
+            (len(q_content & _content_tokens(s)) for s in sentences),
+            default=0,
+        )
+        if q_content and best_content_overlap == 0:
+            return GroundedAnswer(
+                answer="The context does not provide information to answer this question.",
+                citations=(),
+                model=self.name,
+            )
+
         best = ""
         best_score = -1
         for sentence in sentences:

@@ -1,0 +1,21 @@
+{
+  "video_id": "podcast-startup-scaling-01",
+  "language": "en",
+  "segments": [
+    {"text": "On today's podcast we talk about scaling an early stage startup.", "start_seconds": 0.0, "end_seconds": 6.0},
+    {"text": "Our guest founded a developer tools company three years ago.", "start_seconds": 6.0, "end_seconds": 13.0},
+    {"text": "She says the first hire after product market fit was a support engineer.", "start_seconds": 13.0, "end_seconds": 22.0},
+    {"text": "Support surfaced the bugs that were quietly driving churn.", "start_seconds": 22.0, "end_seconds": 30.0},
+    {"text": "They kept the team under ten people until revenue was predictable.", "start_seconds": 30.0, "end_seconds": 39.0},
+    {"text": "Predictable revenue meant three months of stable net retention.", "start_seconds": 39.0, "end_seconds": 48.0},
+    {"text": "The biggest mistake was hiring salespeople before the product could sell itself.", "start_seconds": 48.0, "end_seconds": 58.0},
+    {"text": "She recommends founders do sales themselves for the first year.", "start_seconds": 58.0, "end_seconds": 67.0},
+    {"text": "On fundraising she raised a seed round of two million dollars.", "start_seconds": 67.0, "end_seconds": 76.0},
+    {"text": "The seed round gave them eighteen months of runway.", "start_seconds": 76.0, "end_seconds": 84.0},
+    {"text": "They avoided raising a large series A until growth was clearly repeatable.", "start_seconds": 84.0, "end_seconds": 94.0},
+    {"text": "Culture wise she protected engineering focus time aggressively.", "start_seconds": 94.0, "end_seconds": 103.0},
+    {"text": "No meetings before noon became a simple but powerful rule.", "start_seconds": 103.0, "end_seconds": 112.0},
+    {"text": "Her advice to new founders is to talk to customers every single week.", "start_seconds": 112.0, "end_seconds": 122.0},
+    {"text": "She closes by saying durability beats hypergrowth for most companies.", "start_seconds": 122.0, "end_seconds": 132.0}
+  ]
+}

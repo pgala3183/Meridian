@@ -1,0 +1,21 @@
+{
+  "video_id": "tutorial-docker-basics-01",
+  "language": "en",
+  "segments": [
+    {"text": "This tutorial introduces the basics of Docker containers.", "start_seconds": 0.0, "end_seconds": 6.0},
+    {"text": "A container packages an application together with its dependencies.", "start_seconds": 6.0, "end_seconds": 14.0},
+    {"text": "Unlike a virtual machine a container shares the host operating system kernel.", "start_seconds": 14.0, "end_seconds": 24.0},
+    {"text": "That makes containers lightweight and fast to start.", "start_seconds": 24.0, "end_seconds": 32.0},
+    {"text": "You describe an image using a text file called a Dockerfile.", "start_seconds": 32.0, "end_seconds": 41.0},
+    {"text": "The FROM instruction sets the base image to build on.", "start_seconds": 41.0, "end_seconds": 49.0},
+    {"text": "The COPY instruction adds your source code into the image.", "start_seconds": 49.0, "end_seconds": 58.0},
+    {"text": "The RUN instruction executes commands during the build.", "start_seconds": 58.0, "end_seconds": 66.0},
+    {"text": "You build an image with the docker build command.", "start_seconds": 66.0, "end_seconds": 74.0},
+    {"text": "You start a container with the docker run command.", "start_seconds": 74.0, "end_seconds": 82.0},
+    {"text": "Map a container port to the host using the dash p flag.", "start_seconds": 82.0, "end_seconds": 91.0},
+    {"text": "Persist data outside the container by mounting a volume.", "start_seconds": 91.0, "end_seconds": 100.0},
+    {"text": "Push your image to a registry so others can pull and run it.", "start_seconds": 100.0, "end_seconds": 110.0},
+    {"text": "Keep images small by using a minimal base and multi stage builds.", "start_seconds": 110.0, "end_seconds": 120.0},
+    {"text": "That covers the essential Docker workflow.", "start_seconds": 120.0, "end_seconds": 128.0}
+  ]
+}

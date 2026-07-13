@@ -1,5 +1,5 @@
 {
-  "dataset_version": "2026.07.12",
+  "dataset_version": "2026.07.13",
   "items": [
     {
       "item_id": "lecture-os-caching-01",
@@ -16,28 +16,43 @@
       "questions": [
         {
           "question_id": "q1",
-          "question": "What is the purpose of a CPU cache according to the lecture?",
+          "question": "Where does a CPU cache store frequently used data?",
+          "question_type": "factual",
+          "difficulty": "medium",
+          "relevant_timestamps": [
+            [
+              26.0,
+              34.0
+            ]
+          ],
           "rubric": {
             "must_include": [
-              "faster",
-              "memory",
-              "cache"
+              "processor",
+              "data"
             ],
             "acceptable_concepts": [
-              "latency",
-              "locality",
-              "hierarchy"
+              "cache",
+              "frequently",
+              "closer"
             ],
             "forbidden": [
               "rocket",
               "tomato"
             ]
           },
-          "expected_answer": "CPU caches store frequently used data closer to the processor to reduce memory latency."
+          "expected_answer": "A CPU cache stores frequently used data closer to the processor."
         },
         {
           "question_id": "q2",
           "question": "What happens on a cache miss?",
+          "question_type": "factual",
+          "difficulty": "easy",
+          "relevant_timestamps": [
+            [
+              76.0,
+              86.0
+            ]
+          ],
           "rubric": {
             "must_include": [
               "miss",
@@ -46,14 +61,141 @@
             "acceptable_concepts": [
               "fetch",
               "slower",
-              "main memory"
+              "block"
             ],
             "forbidden": [
               "mulch",
               "tomato"
             ]
           },
-          "expected_answer": "On a cache miss the system fetches the block from slower main memory into the cache."
+          "expected_answer": "On a cache miss the system fetches the block from slower main memory."
+        },
+        {
+          "question_id": "q3",
+          "question": "What does temporal locality mean?",
+          "question_type": "factual",
+          "difficulty": "medium",
+          "relevant_timestamps": [
+            [
+              42.0,
+              50.0
+            ]
+          ],
+          "rubric": {
+            "must_include": [
+              "temporal",
+              "locality"
+            ],
+            "acceptable_concepts": [
+              "recently",
+              "reused"
+            ],
+            "forbidden": [
+              "tomato"
+            ]
+          },
+          "expected_answer": "Temporal locality means recently accessed lines are likely reused."
+        },
+        {
+          "question_id": "q4",
+          "question": "What does spatial locality mean?",
+          "question_type": "factual",
+          "difficulty": "medium",
+          "relevant_timestamps": [
+            [
+              50.0,
+              58.0
+            ]
+          ],
+          "rubric": {
+            "must_include": [
+              "spatial",
+              "locality"
+            ],
+            "acceptable_concepts": [
+              "nearby",
+              "addresses"
+            ],
+            "forbidden": [
+              "tomato"
+            ]
+          },
+          "expected_answer": "Spatial locality means nearby addresses are often accessed together."
+        },
+        {
+          "question_id": "q5",
+          "question": "What happens on a cache hit?",
+          "question_type": "factual",
+          "difficulty": "easy",
+          "relevant_timestamps": [
+            [
+              68.0,
+              76.0
+            ]
+          ],
+          "rubric": {
+            "must_include": [
+              "hit",
+              "cache"
+            ],
+            "acceptable_concepts": [
+              "fast",
+              "hierarchy",
+              "returns"
+            ],
+            "forbidden": [
+              "tomato"
+            ]
+          },
+          "expected_answer": "On a cache hit the data returns from the fast cache hierarchy."
+        },
+        {
+          "question_id": "q6",
+          "question": "Which replacement policy approximates recency?",
+          "question_type": "factual",
+          "difficulty": "hard",
+          "relevant_timestamps": [
+            [
+              112.0,
+              122.0
+            ]
+          ],
+          "rubric": {
+            "must_include": [
+              "lru",
+              "recency"
+            ],
+            "acceptable_concepts": [
+              "replacement",
+              "policies"
+            ],
+            "forbidden": [
+              "tomato"
+            ]
+          },
+          "expected_answer": "Replacement policies such as LRU approximate recency under limited hardware budgets."
+        },
+        {
+          "question_id": "q7",
+          "question": "What GPU brand does the lecture recommend for gaming?",
+          "question_type": "negative",
+          "difficulty": "medium",
+          "unanswerable": true,
+          "relevant_timestamps": [],
+          "rubric": {
+            "must_include": [],
+            "acceptable_concepts": [
+              "not",
+              "does not",
+              "no information"
+            ],
+            "forbidden": [
+              "nvidia",
+              "amd",
+              "radeon"
+            ]
+          },
+          "expected_answer": "The lecture does not discuss GPU brands or gaming."
         }
       ]
     },
@@ -72,23 +214,189 @@
       "questions": [
         {
           "question_id": "q1",
-          "question": "How does the founder say they validate ML features before launch?",
+          "question": "How does the founder first validate an ML feature before launch?",
+          "question_type": "factual",
+          "difficulty": "medium",
+          "relevant_timestamps": [
+            [
+              18.0,
+              26.0
+            ]
+          ],
           "rubric": {
             "must_include": [
               "offline",
-              "eval"
+              "labeled"
             ],
             "acceptable_concepts": [
               "metrics",
-              "shadow",
-              "A/B"
+              "evals"
             ],
             "forbidden": [
-              "cache line",
               "tomato"
             ]
           },
-          "expected_answer": "They run offline evals on labeled sets, then shadow traffic, then a small A/B test."
+          "expected_answer": "First we run offline evals on a labeled set with clear metrics."
+        },
+        {
+          "question_id": "q2",
+          "question": "What does shadow mode do?",
+          "question_type": "factual",
+          "difficulty": "medium",
+          "relevant_timestamps": [
+            [
+              42.0,
+              50.0
+            ]
+          ],
+          "rubric": {
+            "must_include": [
+              "shadow",
+              "outputs"
+            ],
+            "acceptable_concepts": [
+              "compares",
+              "users"
+            ],
+            "forbidden": [
+              "tomato"
+            ]
+          },
+          "expected_answer": "Shadow mode compares model outputs without affecting users."
+        },
+        {
+          "question_id": "q3",
+          "question": "What does the A/B gate require?",
+          "question_type": "factual",
+          "difficulty": "medium",
+          "relevant_timestamps": [
+            [
+              66.0,
+              74.0
+            ]
+          ],
+          "rubric": {
+            "must_include": [
+              "success",
+              "metric"
+            ],
+            "acceptable_concepts": [
+              "stopping",
+              "registered"
+            ],
+            "forbidden": [
+              "tomato"
+            ]
+          },
+          "expected_answer": "The A/B gate requires a pre-registered success metric and a stopping rule."
+        },
+        {
+          "question_id": "q4",
+          "question": "What fails most often according to the founder?",
+          "question_type": "factual",
+          "difficulty": "hard",
+          "relevant_timestamps": [
+            [
+              78.0,
+              88.0
+            ]
+          ],
+          "rubric": {
+            "must_include": [
+              "drift",
+              "regressions"
+            ],
+            "acceptable_concepts": [
+              "label",
+              "silent"
+            ],
+            "forbidden": [
+              "tomato"
+            ]
+          },
+          "expected_answer": "Label drift and silent quality regressions between offline and live data."
+        },
+        {
+          "question_id": "q5",
+          "question": "What are the validation steps before a full launch?",
+          "question_type": "multi_hop",
+          "difficulty": "hard",
+          "relevant_timestamps": [
+            [
+              18.0,
+              26.0
+            ],
+            [
+              34.0,
+              42.0
+            ],
+            [
+              58.0,
+              66.0
+            ]
+          ],
+          "rubric": {
+            "must_include": [
+              "offline",
+              "shadow"
+            ],
+            "acceptable_concepts": [
+              "test",
+              "traffic"
+            ],
+            "forbidden": [
+              "tomato"
+            ]
+          },
+          "expected_answer": "Run offline evals, then enable shadow traffic, then a small A/B test."
+        },
+        {
+          "question_id": "q6",
+          "question": "What advice does the founder give early teams?",
+          "question_type": "factual",
+          "difficulty": "easy",
+          "relevant_timestamps": [
+            [
+              110.0,
+              118.0
+            ]
+          ],
+          "rubric": {
+            "must_include": [
+              "eval",
+              "datasets"
+            ],
+            "acceptable_concepts": [
+              "invest",
+              "numbers"
+            ],
+            "forbidden": [
+              "tomato"
+            ]
+          },
+          "expected_answer": "Invest in eval datasets early; demos without numbers are dangerous."
+        },
+        {
+          "question_id": "q7",
+          "question": "What programming language does the founder recommend?",
+          "question_type": "negative",
+          "difficulty": "medium",
+          "unanswerable": true,
+          "relevant_timestamps": [],
+          "rubric": {
+            "must_include": [],
+            "acceptable_concepts": [
+              "not",
+              "does not",
+              "no information"
+            ],
+            "forbidden": [
+              "python",
+              "rust",
+              "java"
+            ]
+          },
+          "expected_answer": "The interview does not mention any specific programming language."
         }
       ]
     },
@@ -108,22 +416,1924 @@
         {
           "question_id": "q1",
           "question": "What does clicking a citation do in the demo?",
+          "question_type": "factual",
+          "difficulty": "easy",
+          "relevant_timestamps": [
+            [
+              38.0,
+              46.0
+            ]
+          ],
           "rubric": {
             "must_include": [
-              "timestamp",
-              "seek"
+              "seeks",
+              "timestamp"
             ],
             "acceptable_concepts": [
-              "jump",
-              "playback",
-              "citation"
+              "player",
+              "citation",
+              "jump"
             ],
             "forbidden": [
               "cache miss",
-              "A/B"
+              "a/b"
             ]
           },
-          "expected_answer": "Clicking a citation seeks the player to the cited timestamp in the video."
+          "expected_answer": "Clicking a citation seeks the player to that timestamp automatically."
+        },
+        {
+          "question_id": "q2",
+          "question": "What does each citation include?",
+          "question_type": "factual",
+          "difficulty": "medium",
+          "relevant_timestamps": [
+            [
+              32.0,
+              38.0
+            ]
+          ],
+          "rubric": {
+            "must_include": [
+              "start",
+              "timestamp"
+            ],
+            "acceptable_concepts": [
+              "end",
+              "citation"
+            ],
+            "forbidden": [
+              "tomato"
+            ]
+          },
+          "expected_answer": "Each citation includes a start and end timestamp."
+        },
+        {
+          "question_id": "q3",
+          "question": "How can you filter search results?",
+          "question_type": "factual",
+          "difficulty": "medium",
+          "relevant_timestamps": [
+            [
+              46.0,
+              54.0
+            ]
+          ],
+          "rubric": {
+            "must_include": [
+              "filter",
+              "chapter"
+            ],
+            "acceptable_concepts": [
+              "hierarchy",
+              "tree"
+            ],
+            "forbidden": [
+              "tomato"
+            ]
+          },
+          "expected_answer": "You can filter results by chapter using the hierarchy tree."
+        },
+        {
+          "question_id": "q4",
+          "question": "What happens on repeat queries against the same video?",
+          "question_type": "factual",
+          "difficulty": "medium",
+          "relevant_timestamps": [
+            [
+              62.0,
+              70.0
+            ]
+          ],
+          "rubric": {
+            "must_include": [
+              "cache",
+              "repeat"
+            ],
+            "acceptable_concepts": [
+              "multi-tier",
+              "queries"
+            ],
+            "forbidden": [
+              "tomato"
+            ]
+          },
+          "expected_answer": "Repeat queries against the same video hit the multi-tier cache."
+        },
+        {
+          "question_id": "q5",
+          "question": "When does the demo explain the cost estimate panel?",
+          "question_type": "timestamp",
+          "difficulty": "medium",
+          "relevant_timestamps": [
+            [
+              78.0,
+              86.0
+            ]
+          ],
+          "rubric": {
+            "must_include": [
+              "cost",
+              "estimate"
+            ],
+            "acceptable_concepts": [
+              "forecast",
+              "spend",
+              "panel"
+            ],
+            "forbidden": [
+              "tomato"
+            ]
+          },
+          "expected_answer": "Around 78 to 86 seconds the demo shows a cost estimate panel to forecast spend."
+        },
+        {
+          "question_id": "q6",
+          "question": "What does the UI highlight at the end?",
+          "question_type": "factual",
+          "difficulty": "easy",
+          "relevant_timestamps": [
+            [
+              86.0,
+              120.0
+            ]
+          ],
+          "rubric": {
+            "must_include": [
+              "provider",
+              "question"
+            ],
+            "acceptable_concepts": [
+              "highlights",
+              "answered"
+            ],
+            "forbidden": [
+              "tomato"
+            ]
+          },
+          "expected_answer": "The UI highlights which provider answered the question."
+        },
+        {
+          "question_id": "q7",
+          "question": "What is the monthly subscription price shown in the demo?",
+          "question_type": "negative",
+          "difficulty": "medium",
+          "unanswerable": true,
+          "relevant_timestamps": [],
+          "rubric": {
+            "must_include": [],
+            "acceptable_concepts": [
+              "not",
+              "does not",
+              "no information"
+            ],
+            "forbidden": [
+              "dollars",
+              "price is"
+            ]
+          },
+          "expected_answer": "The demo does not mention any subscription price."
+        }
+      ]
+    },
+    {
+      "item_id": "lecture-ml-embeddings-01",
+      "video_type": "lecture",
+      "title": "Machine Learning \u2014 Vector Embeddings (synthetic lecture)",
+      "content_hash": "sha256:c980aea8f2154aeaf332a8302f51374099867e606640b72589dd9096f2f0d67c",
+      "duration_seconds": 152.0,
+      "transcript_file": "fixtures/lecture_ml_embeddings.json",
+      "source": {
+        "kind": "synthetic_checked_in",
+        "license": "CC0-1.0-equivalent-synthetic",
+        "notes": "Synthetic ML lecture transcript for eval."
+      },
+      "questions": [
+        {
+          "question_id": "q1",
+          "question": "What is an embedding?",
+          "question_type": "factual",
+          "difficulty": "easy",
+          "relevant_timestamps": [
+            [
+              6.0,
+              14.0
+            ]
+          ],
+          "rubric": {
+            "must_include": [
+              "vector",
+              "token"
+            ],
+            "acceptable_concepts": [
+              "dense",
+              "real"
+            ],
+            "forbidden": [
+              "tomato"
+            ]
+          },
+          "expected_answer": "An embedding maps a discrete token into a dense vector of real numbers."
+        },
+        {
+          "question_id": "q2",
+          "question": "How do we measure closeness between two vectors?",
+          "question_type": "factual",
+          "difficulty": "medium",
+          "relevant_timestamps": [
+            [
+              21.0,
+              29.0
+            ]
+          ],
+          "rubric": {
+            "must_include": [
+              "cosine",
+              "similarity"
+            ],
+            "acceptable_concepts": [
+              "vectors",
+              "closeness"
+            ],
+            "forbidden": [
+              "tomato"
+            ]
+          },
+          "expected_answer": "We measure closeness with cosine similarity between two vectors."
+        },
+        {
+          "question_id": "q3",
+          "question": "What does cosine similarity focus on?",
+          "question_type": "factual",
+          "difficulty": "medium",
+          "relevant_timestamps": [
+            [
+              29.0,
+              38.0
+            ]
+          ],
+          "rubric": {
+            "must_include": [
+              "angle",
+              "magnitude"
+            ],
+            "acceptable_concepts": [
+              "cosine",
+              "vectors"
+            ],
+            "forbidden": [
+              "tomato"
+            ]
+          },
+          "expected_answer": "Cosine similarity ignores magnitude and focuses on the angle between vectors."
+        },
+        {
+          "question_id": "q4",
+          "question": "What does an ANN index like HNSW trade off?",
+          "question_type": "factual",
+          "difficulty": "hard",
+          "relevant_timestamps": [
+            [
+              82.0,
+              92.0
+            ]
+          ],
+          "rubric": {
+            "must_include": [
+              "recall",
+              "faster"
+            ],
+            "acceptable_concepts": [
+              "ann",
+              "hnsw",
+              "search"
+            ],
+            "forbidden": [
+              "tomato"
+            ]
+          },
+          "expected_answer": "An ANN index like HNSW trades a little recall for much faster search."
+        },
+        {
+          "question_id": "q5",
+          "question": "How should you evaluate embeddings?",
+          "question_type": "factual",
+          "difficulty": "medium",
+          "relevant_timestamps": [
+            [
+              111.0,
+              122.0
+            ]
+          ],
+          "rubric": {
+            "must_include": [
+              "recall",
+              "rank"
+            ],
+            "acceptable_concepts": [
+              "labeled",
+              "reciprocal"
+            ],
+            "forbidden": [
+              "tomato"
+            ]
+          },
+          "expected_answer": "Evaluate embeddings with recall at k and mean reciprocal rank on a labeled set."
+        },
+        {
+          "question_id": "q6",
+          "question": "What must you do after upgrading the embedding model?",
+          "question_type": "factual",
+          "difficulty": "medium",
+          "relevant_timestamps": [
+            [
+              131.0,
+              141.0
+            ]
+          ],
+          "rubric": {
+            "must_include": [
+              "re-index",
+              "model"
+            ],
+            "acceptable_concepts": [
+              "upgrading",
+              "spaces"
+            ],
+            "forbidden": [
+              "tomato"
+            ]
+          },
+          "expected_answer": "Re-index after upgrading the embedding model to avoid mixed spaces."
+        },
+        {
+          "question_id": "q7",
+          "question": "Which cloud GPU instance type does the lecture recommend?",
+          "question_type": "negative",
+          "difficulty": "medium",
+          "unanswerable": true,
+          "relevant_timestamps": [],
+          "rubric": {
+            "must_include": [],
+            "acceptable_concepts": [
+              "not",
+              "does not",
+              "no information"
+            ],
+            "forbidden": [
+              "a100",
+              "h100",
+              "instance type is"
+            ]
+          },
+          "expected_answer": "The lecture does not recommend any specific GPU instance type."
+        }
+      ]
+    },
+    {
+      "item_id": "podcast-startup-scaling-01",
+      "video_type": "podcast",
+      "title": "Podcast \u2014 Scaling an Early Stage Startup (synthetic)",
+      "content_hash": "sha256:d9ce42d7efaebb9f9bfe796bcab3067aed5bddd2941936b5aee0b846bb11fe30",
+      "duration_seconds": 132.0,
+      "transcript_file": "fixtures/podcast_startup_scaling.json",
+      "source": {
+        "kind": "synthetic_checked_in",
+        "license": "CC0-1.0-equivalent-synthetic",
+        "notes": "Synthetic podcast transcript for eval."
+      },
+      "questions": [
+        {
+          "question_id": "q1",
+          "question": "What was the first hire after product market fit?",
+          "question_type": "factual",
+          "difficulty": "medium",
+          "relevant_timestamps": [
+            [
+              13.0,
+              22.0
+            ]
+          ],
+          "rubric": {
+            "must_include": [
+              "support",
+              "engineer"
+            ],
+            "acceptable_concepts": [
+              "hire",
+              "first"
+            ],
+            "forbidden": [
+              "tomato"
+            ]
+          },
+          "expected_answer": "The first hire after product market fit was a support engineer."
+        },
+        {
+          "question_id": "q2",
+          "question": "What does the founder say was the biggest mistake?",
+          "question_type": "factual",
+          "difficulty": "hard",
+          "relevant_timestamps": [
+            [
+              48.0,
+              58.0
+            ]
+          ],
+          "rubric": {
+            "must_include": [
+              "salespeople",
+              "product"
+            ],
+            "acceptable_concepts": [
+              "mistake",
+              "hiring"
+            ],
+            "forbidden": [
+              "tomato"
+            ]
+          },
+          "expected_answer": "The biggest mistake was hiring salespeople before the product could sell itself."
+        },
+        {
+          "question_id": "q3",
+          "question": "How much did they raise in the seed round?",
+          "question_type": "factual",
+          "difficulty": "medium",
+          "relevant_timestamps": [
+            [
+              67.0,
+              76.0
+            ]
+          ],
+          "rubric": {
+            "must_include": [
+              "seed",
+              "million"
+            ],
+            "acceptable_concepts": [
+              "round",
+              "two"
+            ],
+            "forbidden": [
+              "tomato"
+            ]
+          },
+          "expected_answer": "They raised a seed round of two million dollars."
+        },
+        {
+          "question_id": "q4",
+          "question": "How much runway did the seed round provide?",
+          "question_type": "factual",
+          "difficulty": "medium",
+          "relevant_timestamps": [
+            [
+              76.0,
+              84.0
+            ]
+          ],
+          "rubric": {
+            "must_include": [
+              "eighteen",
+              "runway"
+            ],
+            "acceptable_concepts": [
+              "months",
+              "seed"
+            ],
+            "forbidden": [
+              "tomato"
+            ]
+          },
+          "expected_answer": "The seed round gave them eighteen months of runway."
+        },
+        {
+          "question_id": "q5",
+          "question": "What simple rule protected engineering focus time?",
+          "question_type": "factual",
+          "difficulty": "easy",
+          "relevant_timestamps": [
+            [
+              103.0,
+              112.0
+            ]
+          ],
+          "rubric": {
+            "must_include": [
+              "meetings",
+              "noon"
+            ],
+            "acceptable_concepts": [
+              "focus",
+              "rule"
+            ],
+            "forbidden": [
+              "tomato"
+            ]
+          },
+          "expected_answer": "No meetings before noon became a simple but powerful rule."
+        },
+        {
+          "question_id": "q6",
+          "question": "What advice does she give new founders?",
+          "question_type": "factual",
+          "difficulty": "easy",
+          "relevant_timestamps": [
+            [
+              112.0,
+              122.0
+            ]
+          ],
+          "rubric": {
+            "must_include": [
+              "customers",
+              "week"
+            ],
+            "acceptable_concepts": [
+              "talk",
+              "every"
+            ],
+            "forbidden": [
+              "tomato"
+            ]
+          },
+          "expected_answer": "Talk to customers every single week."
+        },
+        {
+          "question_id": "q7",
+          "question": "What city is the startup headquartered in?",
+          "question_type": "negative",
+          "difficulty": "medium",
+          "unanswerable": true,
+          "relevant_timestamps": [],
+          "rubric": {
+            "must_include": [],
+            "acceptable_concepts": [
+              "not",
+              "does not",
+              "no information"
+            ],
+            "forbidden": [
+              "san francisco",
+              "new york",
+              "london"
+            ]
+          },
+          "expected_answer": "The podcast does not mention where the startup is headquartered."
+        }
+      ]
+    },
+    {
+      "item_id": "tutorial-python-async-01",
+      "video_type": "tutorial",
+      "title": "Tutorial \u2014 Async Programming in Python (synthetic)",
+      "content_hash": "sha256:9ded222cfbc0340608d681881b46b2094060b0b87f6f277955acfa5e625f8037",
+      "duration_seconds": 132.0,
+      "transcript_file": "fixtures/tutorial_python_async.json",
+      "source": {
+        "kind": "synthetic_checked_in",
+        "license": "CC0-1.0-equivalent-synthetic",
+        "notes": "Synthetic tutorial transcript for eval."
+      },
+      "questions": [
+        {
+          "question_id": "q1",
+          "question": "How do you define a coroutine in Python?",
+          "question_type": "factual",
+          "difficulty": "easy",
+          "relevant_timestamps": [
+            [
+              15.0,
+              22.0
+            ]
+          ],
+          "rubric": {
+            "must_include": [
+              "coroutine",
+              "async"
+            ],
+            "acceptable_concepts": [
+              "def",
+              "keyword"
+            ],
+            "forbidden": [
+              "tomato"
+            ]
+          },
+          "expected_answer": "You define a coroutine using the async def keyword."
+        },
+        {
+          "question_id": "q2",
+          "question": "What does await do inside a coroutine?",
+          "question_type": "factual",
+          "difficulty": "medium",
+          "relevant_timestamps": [
+            [
+              22.0,
+              31.0
+            ]
+          ],
+          "rubric": {
+            "must_include": [
+              "await",
+              "pause"
+            ],
+            "acceptable_concepts": [
+              "result",
+              "ready"
+            ],
+            "forbidden": [
+              "tomato"
+            ]
+          },
+          "expected_answer": "Inside a coroutine you use await to pause until a result is ready."
+        },
+        {
+          "question_id": "q3",
+          "question": "How do you run tasks concurrently?",
+          "question_type": "factual",
+          "difficulty": "medium",
+          "relevant_timestamps": [
+            [
+              50.0,
+              59.0
+            ]
+          ],
+          "rubric": {
+            "must_include": [
+              "gather",
+              "concurrently"
+            ],
+            "acceptable_concepts": [
+              "asyncio",
+              "tasks"
+            ],
+            "forbidden": [
+              "tomato"
+            ]
+          },
+          "expected_answer": "To run tasks concurrently wrap them with asyncio gather."
+        },
+        {
+          "question_id": "q4",
+          "question": "What is a common mistake in async code?",
+          "question_type": "factual",
+          "difficulty": "hard",
+          "relevant_timestamps": [
+            [
+              68.0,
+              77.0
+            ]
+          ],
+          "rubric": {
+            "must_include": [
+              "blocking",
+              "coroutine"
+            ],
+            "acceptable_concepts": [
+              "mistake",
+              "function"
+            ],
+            "forbidden": [
+              "tomato"
+            ]
+          },
+          "expected_answer": "A common mistake is calling a blocking function inside a coroutine."
+        },
+        {
+          "question_id": "q5",
+          "question": "How do you offload blocking work?",
+          "question_type": "factual",
+          "difficulty": "medium",
+          "relevant_timestamps": [
+            [
+              86.0,
+              96.0
+            ]
+          ],
+          "rubric": {
+            "must_include": [
+              "thread",
+              "blocking"
+            ],
+            "acceptable_concepts": [
+              "offload",
+              "asyncio"
+            ],
+            "forbidden": [
+              "tomato"
+            ]
+          },
+          "expected_answer": "Offload blocking work with asyncio to thread to keep the loop responsive."
+        },
+        {
+          "question_id": "q6",
+          "question": "How do you enforce a timeout on an awaitable?",
+          "question_type": "factual",
+          "difficulty": "medium",
+          "relevant_timestamps": [
+            [
+              105.0,
+              114.0
+            ]
+          ],
+          "rubric": {
+            "must_include": [
+              "timeout",
+              "wait"
+            ],
+            "acceptable_concepts": [
+              "asyncio",
+              "enforce"
+            ],
+            "forbidden": [
+              "tomato"
+            ]
+          },
+          "expected_answer": "Use asyncio wait for to enforce a timeout on any awaitable."
+        },
+        {
+          "question_id": "q7",
+          "question": "Which Python web framework does the tutorial use?",
+          "question_type": "negative",
+          "difficulty": "medium",
+          "unanswerable": true,
+          "relevant_timestamps": [],
+          "rubric": {
+            "must_include": [],
+            "acceptable_concepts": [
+              "not",
+              "does not",
+              "no information"
+            ],
+            "forbidden": [
+              "fastapi",
+              "django",
+              "flask"
+            ]
+          },
+          "expected_answer": "The tutorial does not mention any specific web framework."
+        }
+      ]
+    },
+    {
+      "item_id": "interview-researcher-rag-01",
+      "video_type": "interview",
+      "title": "Interview \u2014 A Researcher on RAG (synthetic)",
+      "content_hash": "sha256:1454aef96ad50ad1fd07554b2a9830db0a3cda3d03a4d7754afd4aefc26db983",
+      "duration_seconds": 128.0,
+      "transcript_file": "fixtures/interview_researcher_rag.json",
+      "source": {
+        "kind": "synthetic_checked_in",
+        "license": "CC0-1.0-equivalent-synthetic",
+        "notes": "Synthetic interview transcript for eval."
+      },
+      "questions": [
+        {
+          "question_id": "q1",
+          "question": "What does RAG do?",
+          "question_type": "factual",
+          "difficulty": "easy",
+          "relevant_timestamps": [
+            [
+              7.0,
+              15.0
+            ]
+          ],
+          "rubric": {
+            "must_include": [
+              "grounds",
+              "retrieved"
+            ],
+            "acceptable_concepts": [
+              "language",
+              "documents"
+            ],
+            "forbidden": [
+              "tomato"
+            ]
+          },
+          "expected_answer": "RAG grounds a language model in retrieved documents."
+        },
+        {
+          "question_id": "q2",
+          "question": "What does the researcher say is the biggest quality lever?",
+          "question_type": "factual",
+          "difficulty": "hard",
+          "relevant_timestamps": [
+            [
+              24.0,
+              33.0
+            ]
+          ],
+          "rubric": {
+            "must_include": [
+              "retrieval",
+              "lever"
+            ],
+            "acceptable_concepts": [
+              "quality",
+              "generator"
+            ],
+            "forbidden": [
+              "tomato"
+            ]
+          },
+          "expected_answer": "The biggest quality lever is retrieval, not the generator."
+        },
+        {
+          "question_id": "q3",
+          "question": "What happens if the right passage is missing?",
+          "question_type": "factual",
+          "difficulty": "medium",
+          "relevant_timestamps": [
+            [
+              33.0,
+              42.0
+            ]
+          ],
+          "rubric": {
+            "must_include": [
+              "hallucinate",
+              "missing"
+            ],
+            "acceptable_concepts": [
+              "passage",
+              "model"
+            ],
+            "forbidden": [
+              "tomato"
+            ]
+          },
+          "expected_answer": "If the right passage is missing the model will hallucinate confidently."
+        },
+        {
+          "question_id": "q4",
+          "question": "What chunking approach does he prefer?",
+          "question_type": "factual",
+          "difficulty": "medium",
+          "relevant_timestamps": [
+            [
+              51.0,
+              60.0
+            ]
+          ],
+          "rubric": {
+            "must_include": [
+              "semantic",
+              "boundaries"
+            ],
+            "acceptable_concepts": [
+              "chunking",
+              "windows"
+            ],
+            "forbidden": [
+              "tomato"
+            ]
+          },
+          "expected_answer": "He prefers semantic boundaries over fixed token windows."
+        },
+        {
+          "question_id": "q5",
+          "question": "Do long context windows remove the need for retrieval?",
+          "question_type": "factual",
+          "difficulty": "hard",
+          "relevant_timestamps": [
+            [
+              69.0,
+              79.0
+            ]
+          ],
+          "rubric": {
+            "must_include": [
+              "context",
+              "retrieval"
+            ],
+            "acceptable_concepts": [
+              "long",
+              "windows"
+            ],
+            "forbidden": [
+              "tomato"
+            ]
+          },
+          "expected_answer": "Long context windows do not remove the need for retrieval."
+        },
+        {
+          "question_id": "q6",
+          "question": "What does he track so answers point to real evidence?",
+          "question_type": "factual",
+          "difficulty": "medium",
+          "relevant_timestamps": [
+            [
+              98.0,
+              108.0
+            ]
+          ],
+          "rubric": {
+            "must_include": [
+              "citation",
+              "accuracy"
+            ],
+            "acceptable_concepts": [
+              "evidence",
+              "answers"
+            ],
+            "forbidden": [
+              "tomato"
+            ]
+          },
+          "expected_answer": "He tracks citation accuracy so answers point to real evidence."
+        },
+        {
+          "question_id": "q7",
+          "question": "Which company does the researcher work for?",
+          "question_type": "negative",
+          "difficulty": "medium",
+          "unanswerable": true,
+          "relevant_timestamps": [],
+          "rubric": {
+            "must_include": [],
+            "acceptable_concepts": [
+              "not",
+              "does not",
+              "no information"
+            ],
+            "forbidden": [
+              "google",
+              "openai",
+              "meta"
+            ]
+          },
+          "expected_answer": "The interview does not mention the researcher's employer."
+        }
+      ]
+    },
+    {
+      "item_id": "product-demo-analytics-01",
+      "video_type": "product_demo",
+      "title": "Product Demo \u2014 Product Analytics Dashboard (synthetic)",
+      "content_hash": "sha256:944dc6feaa924ce80a1fa7dc93c1fa980fbcaab4473034a0edc8a3368e7da83a",
+      "duration_seconds": 120.0,
+      "transcript_file": "fixtures/product_demo_analytics.json",
+      "source": {
+        "kind": "synthetic_checked_in",
+        "license": "CC0-1.0-equivalent-synthetic",
+        "notes": "Synthetic product-demo transcript for eval."
+      },
+      "questions": [
+        {
+          "question_id": "q1",
+          "question": "What does the home screen show at the top?",
+          "question_type": "factual",
+          "difficulty": "easy",
+          "relevant_timestamps": [
+            [
+              6.0,
+              13.0
+            ]
+          ],
+          "rubric": {
+            "must_include": [
+              "active",
+              "users"
+            ],
+            "acceptable_concepts": [
+              "daily",
+              "home"
+            ],
+            "forbidden": [
+              "tomato"
+            ]
+          },
+          "expected_answer": "The home screen shows daily active users at the top."
+        },
+        {
+          "question_id": "q2",
+          "question": "How is weekly retention displayed?",
+          "question_type": "factual",
+          "difficulty": "medium",
+          "relevant_timestamps": [
+            [
+              13.0,
+              22.0
+            ]
+          ],
+          "rubric": {
+            "must_include": [
+              "cohort",
+              "retention"
+            ],
+            "acceptable_concepts": [
+              "grid",
+              "weekly"
+            ],
+            "forbidden": [
+              "tomato"
+            ]
+          },
+          "expected_answer": "Weekly retention is displayed as a cohort grid."
+        },
+        {
+          "question_id": "q3",
+          "question": "What does the funnel view track?",
+          "question_type": "factual",
+          "difficulty": "medium",
+          "relevant_timestamps": [
+            [
+              39.0,
+              49.0
+            ]
+          ],
+          "rubric": {
+            "must_include": [
+              "conversion",
+              "funnel"
+            ],
+            "acceptable_concepts": [
+              "signup",
+              "purchase"
+            ],
+            "forbidden": [
+              "tomato"
+            ]
+          },
+          "expected_answer": "The funnel view tracks conversion across signup, activation, and purchase."
+        },
+        {
+          "question_id": "q4",
+          "question": "How can you segment the funnel?",
+          "question_type": "factual",
+          "difficulty": "medium",
+          "relevant_timestamps": [
+            [
+              49.0,
+              58.0
+            ]
+          ],
+          "rubric": {
+            "must_include": [
+              "filter",
+              "channel"
+            ],
+            "acceptable_concepts": [
+              "segment",
+              "acquisition"
+            ],
+            "forbidden": [
+              "tomato"
+            ]
+          },
+          "expected_answer": "Add a filter to segment the funnel by acquisition channel."
+        },
+        {
+          "question_id": "q5",
+          "question": "When are scheduled reports emailed?",
+          "question_type": "factual",
+          "difficulty": "easy",
+          "relevant_timestamps": [
+            [
+              83.0,
+              92.0
+            ]
+          ],
+          "rubric": {
+            "must_include": [
+              "monday",
+              "reports"
+            ],
+            "acceptable_concepts": [
+              "scheduled",
+              "emailed"
+            ],
+            "forbidden": [
+              "tomato"
+            ]
+          },
+          "expected_answer": "Scheduled reports are emailed every Monday morning automatically."
+        },
+        {
+          "question_id": "q6",
+          "question": "What controls who can view revenue metrics?",
+          "question_type": "factual",
+          "difficulty": "medium",
+          "relevant_timestamps": [
+            [
+              101.0,
+              111.0
+            ]
+          ],
+          "rubric": {
+            "must_include": [
+              "role",
+              "access"
+            ],
+            "acceptable_concepts": [
+              "revenue",
+              "controls"
+            ],
+            "forbidden": [
+              "tomato"
+            ]
+          },
+          "expected_answer": "Role based access controls who can view sensitive revenue metrics."
+        },
+        {
+          "question_id": "q7",
+          "question": "What is the price of the analytics product?",
+          "question_type": "negative",
+          "difficulty": "medium",
+          "unanswerable": true,
+          "relevant_timestamps": [],
+          "rubric": {
+            "must_include": [],
+            "acceptable_concepts": [
+              "not",
+              "does not",
+              "no information"
+            ],
+            "forbidden": [
+              "per month",
+              "per seat",
+              "dollars"
+            ]
+          },
+          "expected_answer": "The demo does not mention the product price."
+        }
+      ]
+    },
+    {
+      "item_id": "panel-ai-ethics-01",
+      "video_type": "panel",
+      "title": "Panel \u2014 Ethics of AI at Scale (synthetic)",
+      "content_hash": "sha256:ee3863e02f866ad022418fb1da4b15a4c12f903f75561bbd71b66ee51a46bd73",
+      "duration_seconds": 121.0,
+      "transcript_file": "fixtures/panel_ai_ethics.json",
+      "source": {
+        "kind": "synthetic_checked_in",
+        "license": "CC0-1.0-equivalent-synthetic",
+        "notes": "Synthetic panel transcript for eval."
+      },
+      "questions": [
+        {
+          "question_id": "q1",
+          "question": "What does the first panelist argue must come before automation?",
+          "question_type": "factual",
+          "difficulty": "medium",
+          "relevant_timestamps": [
+            [
+              7.0,
+              16.0
+            ]
+          ],
+          "rubric": {
+            "must_include": [
+              "transparency",
+              "automation"
+            ],
+            "acceptable_concepts": [
+              "before",
+              "argues"
+            ],
+            "forbidden": [
+              "tomato"
+            ]
+          },
+          "expected_answer": "Transparency must come before automation."
+        },
+        {
+          "question_id": "q2",
+          "question": "What does the second panelist say about biased data?",
+          "question_type": "factual",
+          "difficulty": "medium",
+          "relevant_timestamps": [
+            [
+              33.0,
+              42.0
+            ]
+          ],
+          "rubric": {
+            "must_include": [
+              "biased",
+              "outcomes"
+            ],
+            "acceptable_concepts": [
+              "data",
+              "scale"
+            ],
+            "forbidden": [
+              "tomato"
+            ]
+          },
+          "expected_answer": "Biased data produces biased outcomes at scale."
+        },
+        {
+          "question_id": "q3",
+          "question": "What is his top recommendation about datasets?",
+          "question_type": "factual",
+          "difficulty": "medium",
+          "relevant_timestamps": [
+            [
+              42.0,
+              51.0
+            ]
+          ],
+          "rubric": {
+            "must_include": [
+              "auditing",
+              "datasets"
+            ],
+            "acceptable_concepts": [
+              "training",
+              "before"
+            ],
+            "forbidden": [
+              "tomato"
+            ]
+          },
+          "expected_answer": "Auditing datasets before training is his top recommendation."
+        },
+        {
+          "question_id": "q4",
+          "question": "Who should remain responsible for high stakes decisions?",
+          "question_type": "factual",
+          "difficulty": "hard",
+          "relevant_timestamps": [
+            [
+              61.0,
+              71.0
+            ]
+          ],
+          "rubric": {
+            "must_include": [
+              "human",
+              "responsible"
+            ],
+            "acceptable_concepts": [
+              "decisions",
+              "stakes"
+            ],
+            "forbidden": [
+              "tomato"
+            ]
+          },
+          "expected_answer": "A human must remain responsible for high stakes decisions."
+        },
+        {
+          "question_id": "q5",
+          "question": "What does the panel agree is often unclear to users?",
+          "question_type": "factual",
+          "difficulty": "medium",
+          "relevant_timestamps": [
+            [
+              71.0,
+              81.0
+            ]
+          ],
+          "rubric": {
+            "must_include": [
+              "consent",
+              "unclear"
+            ],
+            "acceptable_concepts": [
+              "data",
+              "users"
+            ],
+            "forbidden": [
+              "tomato"
+            ]
+          },
+          "expected_answer": "Consent for data use is often unclear to users."
+        },
+        {
+          "question_id": "q6",
+          "question": "What builds long term trust according to the panel?",
+          "question_type": "factual",
+          "difficulty": "easy",
+          "relevant_timestamps": [
+            [
+              110.0,
+              121.0
+            ]
+          ],
+          "rubric": {
+            "must_include": [
+              "accountability",
+              "trust"
+            ],
+            "acceptable_concepts": [
+              "clear",
+              "long"
+            ],
+            "forbidden": [
+              "tomato"
+            ]
+          },
+          "expected_answer": "Clear accountability builds long term trust."
+        },
+        {
+          "question_id": "q7",
+          "question": "Which specific law or regulation do the panelists cite by name?",
+          "question_type": "negative",
+          "difficulty": "hard",
+          "unanswerable": true,
+          "relevant_timestamps": [],
+          "rubric": {
+            "must_include": [],
+            "acceptable_concepts": [
+              "not",
+              "does not",
+              "no information"
+            ],
+            "forbidden": [
+              "gdpr",
+              "hipaa",
+              "act of"
+            ]
+          },
+          "expected_answer": "The panel does not cite any specific law by name."
+        }
+      ]
+    },
+    {
+      "item_id": "tutorial-docker-basics-01",
+      "video_type": "tutorial",
+      "title": "Tutorial \u2014 Docker Basics (synthetic)",
+      "content_hash": "sha256:ce1e32ae08fed1071147e422e4c176d6f61a07aa95c9abac47b1d2925ffeaeba",
+      "duration_seconds": 128.0,
+      "transcript_file": "fixtures/tutorial_docker_basics.json",
+      "source": {
+        "kind": "synthetic_checked_in",
+        "license": "CC0-1.0-equivalent-synthetic",
+        "notes": "Synthetic tutorial transcript for eval."
+      },
+      "questions": [
+        {
+          "question_id": "q1",
+          "question": "What does a container package?",
+          "question_type": "factual",
+          "difficulty": "easy",
+          "relevant_timestamps": [
+            [
+              6.0,
+              14.0
+            ]
+          ],
+          "rubric": {
+            "must_include": [
+              "application",
+              "dependencies"
+            ],
+            "acceptable_concepts": [
+              "container",
+              "packages"
+            ],
+            "forbidden": [
+              "tomato"
+            ]
+          },
+          "expected_answer": "A container packages an application together with its dependencies."
+        },
+        {
+          "question_id": "q2",
+          "question": "How does a container differ from a virtual machine?",
+          "question_type": "factual",
+          "difficulty": "hard",
+          "relevant_timestamps": [
+            [
+              14.0,
+              24.0
+            ]
+          ],
+          "rubric": {
+            "must_include": [
+              "kernel",
+              "host"
+            ],
+            "acceptable_concepts": [
+              "shares",
+              "operating"
+            ],
+            "forbidden": [
+              "tomato"
+            ]
+          },
+          "expected_answer": "Unlike a virtual machine a container shares the host operating system kernel."
+        },
+        {
+          "question_id": "q3",
+          "question": "What file describes a Docker image?",
+          "question_type": "factual",
+          "difficulty": "medium",
+          "relevant_timestamps": [
+            [
+              32.0,
+              41.0
+            ]
+          ],
+          "rubric": {
+            "must_include": [
+              "dockerfile",
+              "image"
+            ],
+            "acceptable_concepts": [
+              "describe",
+              "text"
+            ],
+            "forbidden": [
+              "tomato"
+            ]
+          },
+          "expected_answer": "You describe an image using a text file called a Dockerfile."
+        },
+        {
+          "question_id": "q4",
+          "question": "What does the FROM instruction do?",
+          "question_type": "factual",
+          "difficulty": "medium",
+          "relevant_timestamps": [
+            [
+              41.0,
+              49.0
+            ]
+          ],
+          "rubric": {
+            "must_include": [
+              "from",
+              "base"
+            ],
+            "acceptable_concepts": [
+              "image",
+              "instruction"
+            ],
+            "forbidden": [
+              "tomato"
+            ]
+          },
+          "expected_answer": "The FROM instruction sets the base image to build on."
+        },
+        {
+          "question_id": "q5",
+          "question": "How do you start a container?",
+          "question_type": "factual",
+          "difficulty": "easy",
+          "relevant_timestamps": [
+            [
+              74.0,
+              82.0
+            ]
+          ],
+          "rubric": {
+            "must_include": [
+              "docker",
+              "run"
+            ],
+            "acceptable_concepts": [
+              "container",
+              "start"
+            ],
+            "forbidden": [
+              "tomato"
+            ]
+          },
+          "expected_answer": "You start a container with the docker run command."
+        },
+        {
+          "question_id": "q6",
+          "question": "How do you persist data outside a container?",
+          "question_type": "factual",
+          "difficulty": "medium",
+          "relevant_timestamps": [
+            [
+              91.0,
+              100.0
+            ]
+          ],
+          "rubric": {
+            "must_include": [
+              "volume",
+              "data"
+            ],
+            "acceptable_concepts": [
+              "persist",
+              "mounting"
+            ],
+            "forbidden": [
+              "tomato"
+            ]
+          },
+          "expected_answer": "Persist data outside the container by mounting a volume."
+        },
+        {
+          "question_id": "q7",
+          "question": "Which container orchestration platform does the tutorial recommend?",
+          "question_type": "negative",
+          "difficulty": "medium",
+          "unanswerable": true,
+          "relevant_timestamps": [],
+          "rubric": {
+            "must_include": [],
+            "acceptable_concepts": [
+              "not",
+              "does not",
+              "no information"
+            ],
+            "forbidden": [
+              "kubernetes",
+              "nomad",
+              "swarm"
+            ]
+          },
+          "expected_answer": "The tutorial does not recommend any orchestration platform."
+        }
+      ]
+    },
+    {
+      "item_id": "news-tech-roundup-01",
+      "video_type": "news",
+      "title": "News \u2014 Weekly Technology Roundup (synthetic)",
+      "content_hash": "sha256:ea59afc01f43c5901f7719ac7251439d507e8e12cac7ab192b42d1874afcbcfe",
+      "duration_seconds": 116.0,
+      "transcript_file": "fixtures/news_tech_roundup.json",
+      "source": {
+        "kind": "synthetic_checked_in",
+        "license": "CC0-1.0-equivalent-synthetic",
+        "notes": "Synthetic news transcript for eval."
+      },
+      "questions": [
+        {
+          "question_id": "q1",
+          "question": "What is the top story this week?",
+          "question_type": "factual",
+          "difficulty": "easy",
+          "relevant_timestamps": [
+            [
+              5.0,
+              14.0
+            ]
+          ],
+          "rubric": {
+            "must_include": [
+              "processor",
+              "efficient"
+            ],
+            "acceptable_concepts": [
+              "chip",
+              "energy"
+            ],
+            "forbidden": [
+              "tomato"
+            ]
+          },
+          "expected_answer": "A major chip maker announced a new energy efficient processor."
+        },
+        {
+          "question_id": "q2",
+          "question": "By how much does the new chip cut power usage?",
+          "question_type": "factual",
+          "difficulty": "medium",
+          "relevant_timestamps": [
+            [
+              14.0,
+              23.0
+            ]
+          ],
+          "rubric": {
+            "must_include": [
+              "forty",
+              "power"
+            ],
+            "acceptable_concepts": [
+              "percent",
+              "chip"
+            ],
+            "forbidden": [
+              "tomato"
+            ]
+          },
+          "expected_answer": "The chip cuts power usage by forty percent."
+        },
+        {
+          "question_id": "q3",
+          "question": "Where does the chip's efficiency gain come from?",
+          "question_type": "factual",
+          "difficulty": "hard",
+          "relevant_timestamps": [
+            [
+              23.0,
+              33.0
+            ]
+          ],
+          "rubric": {
+            "must_include": [
+              "manufacturing",
+              "smaller"
+            ],
+            "acceptable_concepts": [
+              "process",
+              "gain"
+            ],
+            "forbidden": [
+              "tomato"
+            ]
+          },
+          "expected_answer": "The gain comes mostly from a smaller manufacturing process."
+        },
+        {
+          "question_id": "q4",
+          "question": "What did the open source database add in version fifteen?",
+          "question_type": "multi_hop",
+          "difficulty": "medium",
+          "relevant_timestamps": [
+            [
+              51.0,
+              60.0
+            ],
+            [
+              60.0,
+              69.0
+            ]
+          ],
+          "rubric": {
+            "must_include": [
+              "parallel",
+              "query"
+            ],
+            "acceptable_concepts": [
+              "database",
+              "execution"
+            ],
+            "forbidden": [
+              "tomato"
+            ]
+          },
+          "expected_answer": "Version fifteen adds native support for parallel query execution."
+        },
+        {
+          "question_id": "q5",
+          "question": "What security news was reported this week?",
+          "question_type": "factual",
+          "difficulty": "medium",
+          "relevant_timestamps": [
+            [
+              69.0,
+              79.0
+            ]
+          ],
+          "rubric": {
+            "must_include": [
+              "flaw",
+              "library"
+            ],
+            "acceptable_concepts": [
+              "security",
+              "researchers"
+            ],
+            "forbidden": [
+              "tomato"
+            ]
+          },
+          "expected_answer": "Researchers disclosed a flaw in a widely used library."
+        },
+        {
+          "question_id": "q6",
+          "question": "How much did the robotics startup raise?",
+          "question_type": "factual",
+          "difficulty": "easy",
+          "relevant_timestamps": [
+            [
+              88.0,
+              98.0
+            ]
+          ],
+          "rubric": {
+            "must_include": [
+              "fifty",
+              "million"
+            ],
+            "acceptable_concepts": [
+              "robotics",
+              "raised"
+            ],
+            "forbidden": [
+              "tomato"
+            ]
+          },
+          "expected_answer": "A robotics startup raised fifty million dollars."
+        },
+        {
+          "question_id": "q7",
+          "question": "What was the stock price of the chip maker after the announcement?",
+          "question_type": "negative",
+          "difficulty": "medium",
+          "unanswerable": true,
+          "relevant_timestamps": [],
+          "rubric": {
+            "must_include": [],
+            "acceptable_concepts": [
+              "not",
+              "does not",
+              "no information"
+            ],
+            "forbidden": [
+              "share price",
+              "stock rose",
+              "stock fell"
+            ]
+          },
+          "expected_answer": "The roundup does not mention any stock price."
+        }
+      ]
+    },
+    {
+      "item_id": "codewalkthrough-rate-limiter-01",
+      "video_type": "code_walkthrough",
+      "title": "Code Walkthrough \u2014 Token Bucket Rate Limiter (synthetic)",
+      "content_hash": "sha256:fcabce96c8923817649bd7aa7518d4e3bfdea84e99333855ccf7be130ff737d2",
+      "duration_seconds": 132.0,
+      "transcript_file": "fixtures/codewalkthrough_rate_limiter.json",
+      "source": {
+        "kind": "synthetic_checked_in",
+        "license": "CC0-1.0-equivalent-synthetic",
+        "notes": "Synthetic code-walkthrough transcript for eval."
+      },
+      "questions": [
+        {
+          "question_id": "q1",
+          "question": "What does a rate limiter do?",
+          "question_type": "factual",
+          "difficulty": "easy",
+          "relevant_timestamps": [
+            [
+              7.0,
+              16.0
+            ]
+          ],
+          "rubric": {
+            "must_include": [
+              "requests",
+              "second"
+            ],
+            "acceptable_concepts": [
+              "client",
+              "limiter"
+            ],
+            "forbidden": [
+              "tomato"
+            ]
+          },
+          "expected_answer": "A rate limiter caps how many requests a client can make per second."
+        },
+        {
+          "question_id": "q2",
+          "question": "How does the token bucket work?",
+          "question_type": "factual",
+          "difficulty": "medium",
+          "relevant_timestamps": [
+            [
+              16.0,
+              25.0
+            ]
+          ],
+          "rubric": {
+            "must_include": [
+              "tokens",
+              "refill"
+            ],
+            "acceptable_concepts": [
+              "bucket",
+              "rate"
+            ],
+            "forbidden": [
+              "tomato"
+            ]
+          },
+          "expected_answer": "The token bucket holds tokens that refill at a fixed rate."
+        },
+        {
+          "question_id": "q3",
+          "question": "What happens when the bucket is empty?",
+          "question_type": "factual",
+          "difficulty": "medium",
+          "relevant_timestamps": [
+            [
+              34.0,
+              44.0
+            ]
+          ],
+          "rubric": {
+            "must_include": [
+              "rejected",
+              "429"
+            ],
+            "acceptable_concepts": [
+              "empty",
+              "request"
+            ],
+            "forbidden": [
+              "tomato"
+            ]
+          },
+          "expected_answer": "If the bucket is empty the request is rejected with status code 429."
+        },
+        {
+          "question_id": "q4",
+          "question": "How is the refill amount computed?",
+          "question_type": "factual",
+          "difficulty": "hard",
+          "relevant_timestamps": [
+            [
+              64.0,
+              74.0
+            ]
+          ],
+          "rubric": {
+            "must_include": [
+              "elapsed",
+              "rate"
+            ],
+            "acceptable_concepts": [
+              "refill",
+              "multiplied"
+            ],
+            "forbidden": [
+              "tomato"
+            ]
+          },
+          "expected_answer": "The refill amount is elapsed time multiplied by the refill rate."
+        },
+        {
+          "question_id": "q5",
+          "question": "Where is state stored for distributed rate limiting?",
+          "question_type": "factual",
+          "difficulty": "medium",
+          "relevant_timestamps": [
+            [
+              84.0,
+              94.0
+            ]
+          ],
+          "rubric": {
+            "must_include": [
+              "redis",
+              "state"
+            ],
+            "acceptable_concepts": [
+              "distributed",
+              "store"
+            ],
+            "forbidden": [
+              "tomato"
+            ]
+          },
+          "expected_answer": "For distributed systems the state is stored in Redis."
+        },
+        {
+          "question_id": "q6",
+          "question": "Why use a Lua script in the rate limiter?",
+          "question_type": "factual",
+          "difficulty": "hard",
+          "relevant_timestamps": [
+            [
+              104.0,
+              114.0
+            ]
+          ],
+          "rubric": {
+            "must_include": [
+              "lua",
+              "atomically"
+            ],
+            "acceptable_concepts": [
+              "script",
+              "update"
+            ],
+            "forbidden": [
+              "tomato"
+            ]
+          },
+          "expected_answer": "We use a Lua script so the check and update happen atomically."
+        },
+        {
+          "question_id": "q7",
+          "question": "What programming language is the walkthrough written in?",
+          "question_type": "negative",
+          "difficulty": "medium",
+          "unanswerable": true,
+          "relevant_timestamps": [],
+          "rubric": {
+            "must_include": [],
+            "acceptable_concepts": [
+              "not",
+              "does not",
+              "no information"
+            ],
+            "forbidden": [
+              "python",
+              "go",
+              "java"
+            ]
+          },
+          "expected_answer": "The walkthrough does not state the implementation language."
         }
       ]
     }

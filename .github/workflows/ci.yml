@@ -42,6 +42,9 @@ jobs:
       - name: Pytest
         run: uv run pytest -q --tb=short
 
+      - name: Eval regression gate (offline, deterministic)
+        run: uv run python -m tests.benchmarks.run_eval --pin-checksums --check-thresholds
+
   security:
     name: Security tests & audits
     runs-on: ubuntu-latest

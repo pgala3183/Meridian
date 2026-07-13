@@ -8,10 +8,34 @@ a live provider is intentionally configured.
 from __future__ import annotations
 
 import re
+from collections.abc import Sequence
 from dataclasses import dataclass
 from typing import Protocol
 
+from meridian.core.models import Citation
 from tests.benchmarks.eval_dataset import AnswerRubric
+
+GoldSpans = Sequence[tuple[float, float]]
+
+# Phrases that signal the model declined to answer (used for refusal accuracy).
+_REFUSAL_PATTERNS = (
+    "does not provide",
+    "does not contain",
+    "does not mention",
+    "not provide information",
+    "no information",
+    "insufficient context",
+    "context is insufficient",
+    "cannot determine",
+    "can't determine",
+    "not enough context",
+    "not mentioned",
+    "not discussed",
+    "not stated",
+    "unable to answer",
+    "i don't know",
+    "i do not know",
+)
 
 
 @dataclass(frozen=True, slots=True)
@@ -104,6 +128,79 @@ class HeuristicRubricJudge:
             correctness=round(correctness, 4),
             citation_accuracy=round(min(1.0, citation_accuracy), 4),
         )
+
+
+@dataclass(frozen=True, slots=True)
+class CitationScores:
+    """Citation grounding vs gold spans (``None`` = not applicable)."""
+
+    precision: float | None
+    recall: float | None
+    count: int
+    supported: int
+
+    def as_dict(self) -> dict[str, float | int | None]:
+        return {
+            "citation_precision": _round(self.precision),
+            "citation_recall": _round(self.recall),
+            "citation_count": self.count,
+            "citations_supported": self.supported,
+        }
+
+
+def _round(value: float | None) -> float | None:
+    return round(value, 4) if value is not None else None
+
+
+def _citation_overlaps(citation: Citation, gold: GoldSpans) -> bool:
+    return any(
+        citation.start_time < g_end and g_start < citation.end_time for g_start, g_end in gold
+    )
+
+
+def score_citations(citations: Sequence[Citation], gold: GoldSpans) -> CitationScores:
+    """Precision/recall of citations against gold supporting spans.
+
+    - precision: cited spans overlapping a gold span / total citations.
+    - recall: gold spans covered by at least one citation / total gold spans.
+
+    Both are ``None`` for unanswerable questions (no gold spans) since a correct
+    refusal should carry no citations.
+    """
+    if not gold:
+        return CitationScores(precision=None, recall=None, count=len(citations), supported=0)
+
+    supported = sum(1 for c in citations if _citation_overlaps(c, gold))
+    precision = (supported / len(citations)) if citations else 0.0
+    covered = sum(
+        1
+        for g_start, g_end in gold
+        if any(c.start_time < g_end and g_start < c.end_time for c in citations)
+    )
+    recall = covered / len(gold)
+    return CitationScores(
+        precision=precision,
+        recall=recall,
+        count=len(citations),
+        supported=supported,
+    )
+
+
+def is_refusal(answer: str) -> bool:
+    """Heuristic: did the answer decline to answer / claim missing context?"""
+    text = answer.lower()
+    return any(pattern in text for pattern in _REFUSAL_PATTERNS)
+
+
+def refusal_accuracy(answer: str, *, unanswerable: bool) -> float:
+    """1.0 when the refusal behavior matches the ground truth, else 0.0.
+
+    Unanswerable questions should be refused; answerable ones should not.
+    """
+    refused = is_refusal(answer)
+    if unanswerable:
+        return 1.0 if refused else 0.0
+    return 1.0 if not refused else 0.0
 
 
 class LLMJudge:

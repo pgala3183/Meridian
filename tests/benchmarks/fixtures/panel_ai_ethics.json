@@ -1,0 +1,19 @@
+{
+  "video_id": "panel-ai-ethics-01",
+  "language": "en",
+  "segments": [
+    {"text": "This panel discusses the ethics of deploying AI systems at scale.", "start_seconds": 0.0, "end_seconds": 7.0},
+    {"text": "The first panelist argues that transparency must come before automation.", "start_seconds": 7.0, "end_seconds": 16.0},
+    {"text": "She says users deserve to know when a decision was made by a model.", "start_seconds": 16.0, "end_seconds": 25.0},
+    {"text": "The second panelist focuses on bias in training data.", "start_seconds": 25.0, "end_seconds": 33.0},
+    {"text": "He notes that biased data produces biased outcomes at scale.", "start_seconds": 33.0, "end_seconds": 42.0},
+    {"text": "Auditing datasets before training is his top recommendation.", "start_seconds": 42.0, "end_seconds": 51.0},
+    {"text": "A third panelist raises the question of accountability when models fail.", "start_seconds": 51.0, "end_seconds": 61.0},
+    {"text": "She argues a human must remain responsible for high stakes decisions.", "start_seconds": 61.0, "end_seconds": 71.0},
+    {"text": "The panel agrees that consent for data use is often unclear to users.", "start_seconds": 71.0, "end_seconds": 81.0},
+    {"text": "They debate whether regulation should be global or regional.", "start_seconds": 81.0, "end_seconds": 90.0},
+    {"text": "One panelist warns that heavy regulation could slow beneficial research.", "start_seconds": 90.0, "end_seconds": 100.0},
+    {"text": "Another counters that unregulated deployment risks public trust.", "start_seconds": 100.0, "end_seconds": 110.0},
+    {"text": "They close by agreeing that clear accountability builds long term trust.", "start_seconds": 110.0, "end_seconds": 121.0}
+  ]
+}
