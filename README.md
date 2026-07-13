@@ -15,31 +15,30 @@ instrumentation, Terraform-managed Google Cloud infrastructure, and gated CI/CD.
 
 ## Live Gemini benchmark
 
-A limited live evaluation using Vertex AI Gemini 2.5 Flash measured 21 questions across
-three video categories:
+Full live evaluation on Vertex AI Gemini 2.5 Flash across **12 videos and 84 labeled
+questions** (72 answerable, 12 unanswerable):
 
 | Metric | Result |
 |---|---:|
-| Retrieval recall@3 | **87.0%** |
-| Mean reciprocal rank | **0.806** |
-| nDCG@3 | **0.811** |
-| Citation precision | **86.1%** |
-| Citation recall | **87.0%** |
-| Correct refusal on unanswerable questions | **100%** |
-| Estimated cost reduction vs full-transcript baseline | **44.4%** |
-| Q&A latency p50 / p95 | **1.37s / 2.34s** |
+| Retrieval recall@3 | **89.8%** |
+| Mean reciprocal rank | **0.824** |
+| nDCG@3 | **0.835** |
+| Citation precision / recall | **89.6% / 89.8%** |
+| Refusal accuracy (answerable / unanswerable) | **97.2% / 91.7%** |
+| Estimated cost reduction vs full-transcript baseline | **37.2%** |
+| Q&A latency p50 / p95 | **1.34s / 3.78s** |
+| Answer quality (heuristic overall) | **0.877** |
 
-The complete reproducible suite contains **12 synthetic videos and 84 labeled questions**
-across lectures, interviews, product demos, podcasts, tutorials, panels, news, and code
-walkthroughs. Gold timestamp spans support recall@k, MRR, nDCG, and citation scoring.
-
-See the [full benchmark report](docs/benchmarks/latest_report.md), the
+The suite spans lectures, interviews, product demos, podcasts, tutorials, panels, news,
+and code walkthroughs. Gold timestamp spans support recall@k, MRR, nDCG, and citation
+scoring. See the [full benchmark report](docs/benchmarks/latest_report.md), the
 [machine-readable results](docs/benchmarks/latest_results.json), and the
 [evaluation methodology](docs/benchmarks/README.md).
 
-> Benchmark quality uses deterministic rubric scoring and synthetic, checked-in transcripts.
-> Cost is estimated from token counts rather than billing exports. The live report is a
-> limited three-video run, not a claim about the entire 84-question dataset.
+> Quality uses deterministic rubric scoring on synthetic, checked-in transcripts — not
+> human ground truth. Cost is estimated from token counts, not billing exports. Repeat-query
+> cache hits skip re-indexing but still call Gemini, so end-to-end latency stays ~1x on
+> warm runs in this eval harness.
 
 ## Product flow
 

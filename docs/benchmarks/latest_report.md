@@ -1,89 +1,94 @@
 # Meridian benchmark report
 
-- Generated (UTC): `2026-07-13T07:22:10.409849+00:00`
+- Generated (UTC): `2026-07-13T07:51:06.208537+00:00`
 - Dataset version: `2026.07.13`
 - Provider: `gemini`
-- Scope: **3 videos**, **21 questions** (18 answerable, 3 unanswerable)
+- Scope: **12 videos**, **84 questions** (72 answerable, 12 unanswerable)
 - Judge: heuristic_rubric (approximation — not ground truth)
 
 ## Resume headline
 
-- Evaluated grounded Q&A on **21 questions across 3 videos** spanning interview, lecture, and product demo content.
-- Retrieval quality: **recall@3 87.0%**, MRR 0.806, nDCG@3 0.811.
-- Citation grounding: precision 86.1%, recall 87.0% against gold timestamp spans.
-- Refusal correctness: 94.4% answerable, 100.0% unanswerable.
-- Cost: **44.4% lower** than the naive full-transcript run.
-- Caching: not measured in this run (`--no-cached`).
-- Ask latency (cold): p50 1373.3 ms, p95 2342.0 ms, p99 2529.9 ms.
+- Evaluated grounded Q&A on **84 questions across 12 videos** spanning code walkthrough, interview, lecture, news, panel, podcast, product demo, tutorial.
+- Retrieval quality: **recall@3 89.8%**, MRR 0.824, nDCG@3 0.835.
+- Citation grounding: precision 89.6%, recall 89.8% against gold timestamp spans.
+- Refusal correctness: 97.2% answerable, 91.7% unanswerable.
+- Cost: **37.2% lower** than the naive full-transcript run.
+- Caching: **0.94x** faster on repeat queries (100% hit rate).
+- Ask latency (cold): p50 1340.9 ms, p95 3779.5 ms, p99 4488.8 ms.
 
 ## Naive vs hierarchical (measured)
 
 | Metric | Naive baseline | Hierarchical | Delta |
 |---|---:|---:|---:|
-| Avg estimated cost (USD) | 0.00004385 | 0.00002438 | **44.40% reduction** |
-| Avg latency cold (s) | 1.552642 | 1.475384 | — |
-| Avg latency cached repeat (s) | — | n/a | not measured |
-| Avg quality overall (0-1) | 0.8337 | 0.8418 | — |
-| Cache hit rate on repeat | — | n/a | — |
+| Avg estimated cost (USD) | 0.00003642 | 0.00002287 | **37.21% reduction** |
+| Avg latency cold (s) | 1.855706 | 1.628540 | — |
+| Avg latency cached repeat (s) | — | 1.740180 | **0.936x vs cold hierarchical** |
+| Avg quality overall (0-1) | 0.8491 | 0.8769 | — |
+| Cache hit rate on repeat | — | 100.00% | — |
 
 ## Retrieval quality (recall/MRR/nDCG @ k=3)
 
 | Metric | Value |
 |---|---:|
-| Recall@3 | 0.8704 |
-| MRR | 0.8056 |
-| nDCG@3 | 0.8109 |
-| Avg retrieval stage latency (ms) | 0.3906 |
+| Recall@3 | 0.8981 |
+| MRR | 0.8241 |
+| nDCG@3 | 0.8348 |
+| Avg retrieval stage latency (ms) | 0.3828 |
 
 ## Citation grounding + refusal correctness
 
 | Metric | Value |
 |---|---:|
-| Citation precision | 0.8611 |
-| Citation recall | 0.8704 |
-| Refusal accuracy (answerable) | 0.9444 |
-| Refusal accuracy (unanswerable) | 1.0000 |
-| Refusal accuracy (overall) | 0.9524 |
+| Citation precision | 0.8958 |
+| Citation recall | 0.8981 |
+| Refusal accuracy (answerable) | 0.9722 |
+| Refusal accuracy (unanswerable) | 0.9167 |
+| Refusal accuracy (overall) | 0.9643 |
 
 ## Latency percentiles (hierarchical cold ask)
 
 | Percentile | Milliseconds |
 |---|---:|
-| p50 | 1373.2734 |
-| p95 | 2342.0042 |
-| p99 | 2529.9227 |
-| answer-stage p95 | 2337.9804 |
+| p50 | 1340.8646 |
+| p95 | 3779.4720 |
+| p99 | 4488.7992 |
+| answer-stage p95 | 3778.8209 |
 
 ## Breakdown by video type
 
 | Video type | N | Quality | Recall@k | Citation precision | Refusal acc |
 |---|---:|---:|---:|---:|---:|
-| interview | 7 | 0.851 | 0.944 | 1.000 | 1.000 |
-| lecture | 7 | 0.878 | 1.000 | 1.000 | 1.000 |
-| product_demo | 7 | 0.796 | 0.667 | 0.583 | 0.857 |
+| code_walkthrough | 7 | 0.873 | 0.833 | 0.833 | 1.000 |
+| interview | 14 | 0.857 | 0.889 | 0.917 | 0.929 |
+| lecture | 14 | 0.863 | 0.917 | 0.917 | 1.000 |
+| news | 7 | 0.843 | 0.833 | 0.833 | 0.857 |
+| panel | 7 | 0.892 | 0.833 | 0.833 | 1.000 |
+| podcast | 7 | 0.918 | 1.000 | 0.917 | 1.000 |
+| product_demo | 14 | 0.862 | 0.833 | 0.833 | 0.929 |
+| tutorial | 14 | 0.917 | 1.000 | 1.000 | 1.000 |
 
 ## Breakdown by question type
 
 | Question type | N | Quality | Recall@k | Refusal acc |
 |---|---:|---:|---:|---:|
-| factual | 16 | 0.931 | 0.938 | 1.000 |
-| multi_hop | 1 | 0.737 | 0.667 | 1.000 |
-| negative | 3 | 0.484 | n/a | 1.000 |
+| factual | 69 | 0.945 | 0.913 | 0.986 |
+| multi_hop | 2 | 0.851 | 0.833 | 1.000 |
+| negative | 12 | 0.512 | n/a | 0.917 |
 | timestamp | 1 | 0.594 | 0.000 | 0.000 |
 
 ## Stage latency (hierarchical cold, avg seconds)
 
 | Stage | Seconds |
 |---|---:|
-| `extract_media` | 0.000005 |
-| `load_cached_tree` | 0.000122 |
-| `transcribe` | 0.000039 |
-| `semantic_chunk` | 0.000284 |
-| `keyframe_select` | 0.000010 |
-| `hierarchy_build` | 0.000061 |
+| `extract_media` | 0.000003 |
+| `load_cached_tree` | 0.000110 |
+| `transcribe` | 0.000035 |
+| `semantic_chunk` | 0.000251 |
+| `keyframe_select` | 0.000011 |
+| `hierarchy_build` | 0.000067 |
 | `store_cached_tree` | 0.000006 |
-| `retrieve` | 0.000391 |
-| `answer` | 1.473788 |
+| `retrieve` | 0.000383 |
+| `answer` | 1.627024 |
 
 ## Methodology
 
