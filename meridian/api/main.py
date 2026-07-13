@@ -7,6 +7,7 @@ from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 from meridian.api.rate_limit import RateLimitConfig, TokenBucketRateLimiter
 from meridian.api.routes import videos as videos_routes
@@ -22,6 +23,11 @@ from meridian.secrets import (
 )
 from meridian.storage.base import StorageBackendName
 from meridian.storage.factory import StorageConfig, create_object_store
+
+
+def _cors_origins() -> list[str]:
+    raw = os.getenv("MERIDIAN_CORS_ORIGINS", "http://localhost:3000")
+    return [origin.strip() for origin in raw.split(",") if origin.strip()]
 
 
 def _boot_secrets() -> None:
@@ -120,6 +126,13 @@ def create_app(
         description="Long-form video intelligence platform",
         version="0.1.0",
         lifespan=_lifespan,
+    )
+    application.add_middleware(
+        CORSMiddleware,
+        allow_origins=_cors_origins(),
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
     )
     application.include_router(videos_routes.router)
 

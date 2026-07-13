@@ -62,6 +62,25 @@ def test_status_404(tmp_path) -> None:
     assert resp.status_code == 404
 
 
+def test_ask_requires_succeeded_job(tmp_path) -> None:
+    client, _store, _queue = _client(tmp_path)
+    with client:
+        created = client.post("/videos", json={"video_id": "ask-me", "user_id": "demo-web"}).json()
+        import time
+
+        job_id = created["job_id"]
+        for _ in range(40):
+            status = client.get(f"/videos/{job_id}/status").json()
+            if status["status"] == "succeeded":
+                break
+            time.sleep(0.05)
+        resp = client.post(f"/videos/{job_id}/ask", json={"question": "What about the cache?"})
+    assert resp.status_code == 200
+    body = resp.json()
+    assert body["citations"]
+    assert body["citations"][0]["start_time"] >= 0
+
+
 def test_rate_limiter_blocks() -> None:
     limiter = TokenBucketRateLimiter(RateLimitConfig(capacity=2, refill_per_second=0.0))
     limiter.allow("user:x")

@@ -36,10 +36,22 @@ variable "api_image" {
   default     = "us-docker.pkg.dev/cloudrun/container/hello"
 }
 
-variable "worker_image" {
+variable "web_image" {
   type        = string
-  description = "Container image for the worker Cloud Run service"
+  description = "Container image for the web Cloud Run service"
   default     = "us-docker.pkg.dev/cloudrun/container/hello"
+}
+
+variable "billing_account" {
+  type        = string
+  description = "Billing account ID for budget alerts (e.g. 01ABCD-...)"
+  default     = ""
+}
+
+variable "monthly_budget_usd" {
+  type        = number
+  description = "Monthly GCP budget threshold for the demo stack"
+  default     = 50
 }
 
 locals {
@@ -63,6 +75,7 @@ resource "google_project_service" "services" {
     "iam.googleapis.com",
     "artifactregistry.googleapis.com",
     "cloudbuild.googleapis.com",
+    "billingbudgets.googleapis.com",
   ])
   service            = each.key
   disable_on_destroy = false
@@ -400,4 +413,84 @@ output "api_service_account" {
 
 output "worker_service_account" {
   value = google_service_account.worker.email
+}
+
+# ---------------------------------------------------------------------------
+# Web (Next.js demo) + billing budget alert
+# ---------------------------------------------------------------------------
+
+resource "google_service_account" "web" {
+  account_id   = "${var.name_prefix}-web"
+  display_name = "Meridian web demo"
+}
+
+resource "google_cloud_run_v2_service" "web" {
+  name     = "${var.name_prefix}-web"
+  location = var.region
+  ingress  = "INGRESS_TRAFFIC_ALL"
+
+  template {
+    service_account = google_service_account.web.email
+    scaling {
+      min_instance_count = 0
+      max_instance_count = 5
+    }
+    containers {
+      image = var.web_image
+      ports {
+        container_port = 8080
+      }
+      env {
+        name  = "NODE_ENV"
+        value = "production"
+      }
+      resources {
+        limits = {
+          cpu    = "1"
+          memory = "512Mi"
+        }
+      }
+    }
+  }
+
+  depends_on = [google_project_service.services]
+}
+
+resource "google_cloud_run_v2_service_iam_member" "web_public" {
+  name     = google_cloud_run_v2_service.web.name
+  location = var.region
+  role     = "roles/run.invoker"
+  member   = "allUsers"
+}
+
+resource "google_billing_budget" "meridian_demo" {
+  count = var.billing_account == "" ? 0 : 1
+
+  billing_account = var.billing_account
+  display_name    = "${var.name_prefix}-monthly-cap"
+
+  budget_filter {
+    projects = ["projects/${data.google_project.current.number}"]
+  }
+
+  amount {
+    specified_amount {
+      currency_code = "USD"
+      units         = tostring(floor(var.monthly_budget_usd))
+    }
+  }
+
+  threshold_rules {
+    threshold_percent = 0.5
+  }
+  threshold_rules {
+    threshold_percent = 0.9
+  }
+  threshold_rules {
+    threshold_percent = 1.0
+  }
+}
+
+output "web_uri" {
+  value = google_cloud_run_v2_service.web.uri
 }
