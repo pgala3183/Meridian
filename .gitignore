@@ -38,9 +38,6 @@ coverage.xml
 # Type checkers / linters
 .pytype/
 
-# uv / packaging
-uv.lock
-
 # IDE
 .idea/
 .vscode/
