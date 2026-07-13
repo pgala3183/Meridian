@@ -5,7 +5,7 @@
       "item_id": "lecture-os-caching-01",
       "video_type": "lecture",
       "title": "Operating Systems \u2014 Caching Basics (synthetic lecture)",
-      "content_hash": "sha256:ca89951defae2043bd6570be2d4695ed790f2f2b562d33db72d0f15e5e1173e7",
+      "content_hash": "sha256:dabd7cd084bf2172632b22af4e6cf11eb55dd2683ceb4530e6c48d94709fa5a2",
       "duration_seconds": 180.0,
       "transcript_file": "fixtures/lecture_os_caching.json",
       "source": {
@@ -203,7 +203,7 @@
       "item_id": "interview-founder-01",
       "video_type": "interview",
       "title": "Founder Interview \u2014 Shipping ML Features (synthetic)",
-      "content_hash": "sha256:457337ed0e569480394c3bcd8295e921ed7951015a624fd2916a329b7ffb399c",
+      "content_hash": "sha256:91faf7f85d6712b12a7df8f432bfcd7da2a66b228393c94cd1ae452468e8d241",
       "duration_seconds": 150.0,
       "transcript_file": "fixtures/interview_founder.json",
       "source": {
@@ -404,7 +404,7 @@
       "item_id": "product-demo-search-01",
       "video_type": "product_demo",
       "title": "Product Demo \u2014 Semantic Video Search UI (synthetic)",
-      "content_hash": "sha256:7349de67e7ba04f79565053a6c14611546cfda83e0b50c67be0b8fdecd5013d9",
+      "content_hash": "sha256:f6e12cd82f794e2ddaf252e69c4877df8e5346cdb800441d19e64502cb90c6fd",
       "duration_seconds": 120.0,
       "transcript_file": "fixtures/product_demo_search.json",
       "source": {
@@ -599,7 +599,7 @@
       "item_id": "lecture-ml-embeddings-01",
       "video_type": "lecture",
       "title": "Machine Learning \u2014 Vector Embeddings (synthetic lecture)",
-      "content_hash": "sha256:c980aea8f2154aeaf332a8302f51374099867e606640b72589dd9096f2f0d67c",
+      "content_hash": "sha256:6215f8d95f9329d91d2157606aee5baabe26f4986e05d6cc496ba8e394ac134f",
       "duration_seconds": 152.0,
       "transcript_file": "fixtures/lecture_ml_embeddings.json",
       "source": {
@@ -793,7 +793,7 @@
       "item_id": "podcast-startup-scaling-01",
       "video_type": "podcast",
       "title": "Podcast \u2014 Scaling an Early Stage Startup (synthetic)",
-      "content_hash": "sha256:d9ce42d7efaebb9f9bfe796bcab3067aed5bddd2941936b5aee0b846bb11fe30",
+      "content_hash": "sha256:fa63d00e0284ae4117fd4df2a59ffcbddcd8cbbd4315d5a151a43f73d759acfd",
       "duration_seconds": 132.0,
       "transcript_file": "fixtures/podcast_startup_scaling.json",
       "source": {
@@ -986,7 +986,7 @@
       "item_id": "tutorial-python-async-01",
       "video_type": "tutorial",
       "title": "Tutorial \u2014 Async Programming in Python (synthetic)",
-      "content_hash": "sha256:9ded222cfbc0340608d681881b46b2094060b0b87f6f277955acfa5e625f8037",
+      "content_hash": "sha256:d6a5d2def7bfe5cd8bc626136284b6417f11aebc5ea88fc4dd1e5913e7919958",
       "duration_seconds": 132.0,
       "transcript_file": "fixtures/tutorial_python_async.json",
       "source": {
@@ -1179,7 +1179,7 @@
       "item_id": "interview-researcher-rag-01",
       "video_type": "interview",
       "title": "Interview \u2014 A Researcher on RAG (synthetic)",
-      "content_hash": "sha256:1454aef96ad50ad1fd07554b2a9830db0a3cda3d03a4d7754afd4aefc26db983",
+      "content_hash": "sha256:8b64a5c24a3077fc18c9f69a76871554a559015cb6f4310c99d86876b74870f1",
       "duration_seconds": 128.0,
       "transcript_file": "fixtures/interview_researcher_rag.json",
       "source": {
@@ -1372,7 +1372,7 @@
       "item_id": "product-demo-analytics-01",
       "video_type": "product_demo",
       "title": "Product Demo \u2014 Product Analytics Dashboard (synthetic)",
-      "content_hash": "sha256:944dc6feaa924ce80a1fa7dc93c1fa980fbcaab4473034a0edc8a3368e7da83a",
+      "content_hash": "sha256:18561595eb4d20225c5cfc1f45cbcf7079d09b43f6c9011c426957d9c9965ad3",
       "duration_seconds": 120.0,
       "transcript_file": "fixtures/product_demo_analytics.json",
       "source": {
@@ -1565,7 +1565,7 @@
       "item_id": "panel-ai-ethics-01",
       "video_type": "panel",
       "title": "Panel \u2014 Ethics of AI at Scale (synthetic)",
-      "content_hash": "sha256:ee3863e02f866ad022418fb1da4b15a4c12f903f75561bbd71b66ee51a46bd73",
+      "content_hash": "sha256:a16bc1e91f9a16af933e81f60a1050ef11978eae6cdc3818649e477e87eb7f41",
       "duration_seconds": 121.0,
       "transcript_file": "fixtures/panel_ai_ethics.json",
       "source": {
@@ -1758,7 +1758,7 @@
       "item_id": "tutorial-docker-basics-01",
       "video_type": "tutorial",
       "title": "Tutorial \u2014 Docker Basics (synthetic)",
-      "content_hash": "sha256:ce1e32ae08fed1071147e422e4c176d6f61a07aa95c9abac47b1d2925ffeaeba",
+      "content_hash": "sha256:93fecaa6c6ab0ee8f6a59a3fad52373f9a4fff3de2eb96d54684b3759ffc612b",
       "duration_seconds": 128.0,
       "transcript_file": "fixtures/tutorial_docker_basics.json",
       "source": {
@@ -1951,7 +1951,7 @@
       "item_id": "news-tech-roundup-01",
       "video_type": "news",
       "title": "News \u2014 Weekly Technology Roundup (synthetic)",
-      "content_hash": "sha256:ea59afc01f43c5901f7719ac7251439d507e8e12cac7ab192b42d1874afcbcfe",
+      "content_hash": "sha256:ab154c04c0e04451ef2907706fce043a28cbe6f3e0340bb8b05395504274d673",
       "duration_seconds": 116.0,
       "transcript_file": "fixtures/news_tech_roundup.json",
       "source": {
@@ -2148,7 +2148,7 @@
       "item_id": "codewalkthrough-rate-limiter-01",
       "video_type": "code_walkthrough",
       "title": "Code Walkthrough \u2014 Token Bucket Rate Limiter (synthetic)",
-      "content_hash": "sha256:fcabce96c8923817649bd7aa7518d4e3bfdea84e99333855ccf7be130ff737d2",
+      "content_hash": "sha256:2ab3fed049ac6945bcfb998a07048be88513772ec51c2b5379467836eada4fdc",
       "duration_seconds": 132.0,
       "transcript_file": "fixtures/codewalkthrough_rate_limiter.json",
       "source": {
