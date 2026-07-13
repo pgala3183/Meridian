@@ -38,8 +38,10 @@ from meridian.core.models import (
     VideoSource,
 )
 from meridian.core.retrieval import build_grounding_context, retrieve
+from meridian.core.security.prompt_guard import PromptGuard
 from meridian.providers.base import MultimodalProvider
 from meridian.providers.types import AudioInput, GroundedAnswer, Transcript, TranscriptSegment
+from meridian.storage.safe_path import scratch_directory
 
 _CHUNK_REF = re.compile(
     r"\[(chunk-\d{4})\s*\|\s*([0-9.]+)s-([0-9.]+)s\]|(?:\[)?(chunk-\d{4})(?:\])?"
@@ -62,6 +64,9 @@ class ExtractMediaStage(PipelineStage):
     Production will shell out to ffmpeg / probe libraries. For now the stage
     accepts pre-extracted ``ExtractedMedia`` already placed on artifacts, or
     synthesizes a minimal payload from ``VideoSource`` for offline tests.
+
+    Any on-disk scratch work uses ``scratch_directory`` so temp files are always
+    cleaned up, including when extraction raises.
     """
 
     name = "extract_media"
@@ -76,22 +81,27 @@ class ExtractMediaStage(PipelineStage):
         if artifacts.media is not None:
             return artifacts
 
-        # Synthetic fallback: empty audio placeholder with declared duration.
-        duration = artifacts.source.duration_seconds or 0.0
-        fingerprint = artifacts.source.content_hash or fingerprint_bytes(
-            artifacts.source.video_id.encode("utf-8")
-        )
-        artifacts.media = ExtractedMedia(
-            metadata=VideoMetadata(
-                video_id=artifacts.source.video_id,
-                duration_seconds=duration,
-                title=artifacts.source.title,
-                source_path=artifacts.source.path,
-                content_hash=fingerprint,
-            ),
-            audio_bytes=b"",
-            audio_mime_type="audio/wav",
-        )
+        # Scratch sandbox is reserved for future ffmpeg extract; always cleaned up.
+        with scratch_directory(prefix="meridian-extract-") as sandbox:
+            artifacts.extras["extract_scratch_root"] = str(sandbox.root)
+            duration = artifacts.source.duration_seconds or 0.0
+            fingerprint = artifacts.source.content_hash or fingerprint_bytes(
+                artifacts.source.video_id.encode("utf-8")
+            )
+            # Placeholder probe file demonstrates sandboxed writes.
+            probe = sandbox.open_write("probe.json")
+            probe.write_text("{}", encoding="utf-8")
+            artifacts.media = ExtractedMedia(
+                metadata=VideoMetadata(
+                    video_id=artifacts.source.video_id,
+                    duration_seconds=duration,
+                    title=artifacts.source.title,
+                    source_path=artifacts.source.path,
+                    content_hash=fingerprint,
+                ),
+                audio_bytes=b"",
+                audio_mime_type="audio/wav",
+            )
         return artifacts
 
 
@@ -367,28 +377,37 @@ class AnswerStage(PipelineStage):
         provider: MultimodalProvider,
         *,
         question: str,
+        prompt_guard: PromptGuard | None = None,
     ) -> None:
         self._provider = provider
         self._question = question
+        self._prompt_guard = prompt_guard or PromptGuard()
 
     async def run(self, artifacts: PipelineArtifacts) -> PipelineArtifacts:
         if not artifacts.hits:
             raise RuntimeError("AnswerStage requires retrieval hits for grounding")
 
         context = build_grounding_context(artifacts.hits)
+        guarded_context = self._prompt_guard.wrap_untrusted(context, label="retrieved_transcript")
+        guarded_question = self._prompt_guard.wrap_untrusted(self._question, label="user_question")
+        # Questions stay lightly wrapped; primary policy is on transcript context.
         raw: GroundedAnswer = await self._provider.answer_question(
-            context=context,
+            context=guarded_context,
             question=self._question,
             images=None,
         )
+        answer_text = self._prompt_guard.filter_answer(raw.answer)
+        if self._prompt_guard.answer_looks_leaky(raw.answer):
+            artifacts.extras["prompt_leak_redacted"] = True
         citations = build_citations(artifacts.hits, raw)
         artifacts.answer = CitedAnswer(
-            answer=raw.answer,
+            answer=answer_text,
             citations=tuple(citations),
             confidence=raw.confidence,
             model=raw.model,
             retrieved_chunk_ids=tuple(h.chunk.chunk_id for h in artifacts.hits),
         )
+        artifacts.extras["prompt_guard_question"] = guarded_question
         return artifacts
 
 

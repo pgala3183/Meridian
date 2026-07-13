@@ -1,0 +1,42 @@
+name: Dependency audit
+
+on:
+  pull_request:
+  push:
+    branches: [main, master]
+
+permissions:
+  contents: read
+
+jobs:
+  python-audit:
+    name: pip-audit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+      - name: Install project (locked)
+        run: uv sync --extra dev
+      - name: Run pip-audit
+        run: uv run pip-audit --progress-spinner off
+
+  npm-audit:
+    name: npm audit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Audit frontend when package.json exists
+        run: |
+          if [ -f web/package.json ]; then
+            cd web
+            if [ -f package-lock.json ] || [ -f npm-shrinkwrap.json ]; then
+              npm ci
+            else
+              npm install --package-lock-only
+            fi
+            npm audit --audit-level=high
+          else
+            echo "No web/package.json yet — skipping npm audit"
+          fi

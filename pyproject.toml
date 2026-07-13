@@ -17,6 +17,8 @@ dependencies = [
     "sentence-transformers>=3.0.0",
     "numpy>=1.26.0",
     "redis>=5.0.0",
+    "python-dotenv>=1.0.0",
+    "google-cloud-secret-manager>=2.20.0",
 ]
 
 [project.optional-dependencies]
@@ -27,6 +29,7 @@ dev = [
     "ruff>=0.8.0",
     "mypy>=1.13.0",
     "pre-commit>=4.0.0",
+    "pip-audit>=2.7.0",
 ]
 
 [project.scripts]
@@ -84,10 +87,12 @@ disallow_untyped_defs = false
 module = [
     "google.*",
     "google.genai.*",
+    "google.cloud.*",
     "openai.*",
     "anthropic.*",
     "sentence_transformers.*",
     "redis.*",
+    "dotenv.*",
 ]
 ignore_missing_imports = true
 
