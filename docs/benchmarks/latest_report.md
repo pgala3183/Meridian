@@ -1,6 +1,6 @@
 # Meridian benchmark report
 
-- Generated (UTC): `2026-08-31T11:53:49.798333+00:00`
+- Generated (UTC): `2026-09-07T10:46:43.981891+00:00`
 - Dataset version: `2026.07.13`
 - Provider: `eval-deterministic`
 - Scope: **12 videos**, **84 questions** (72 answerable, 12 unanswerable)
@@ -13,16 +13,16 @@
 - Citation grounding: precision 72.2%, recall 72.2% against gold timestamp spans.
 - Refusal correctness: 97.2% answerable, 25.0% unanswerable.
 - Cost: **19.1% lower** than the naive full-transcript run.
-- Caching: **1.29x** faster on repeat queries (100% hit rate).
-- Ask latency (cold): p50 0.5 ms, p95 1.4 ms, p99 2.1 ms.
+- Caching: **1.26x** faster on repeat queries (100% hit rate).
+- Ask latency (cold): p50 0.6 ms, p95 1.5 ms, p99 2.2 ms.
 
 ## Naive vs hierarchical (measured)
 
 | Metric | Naive baseline | Hierarchical | Delta |
 |---|---:|---:|---:|
 | Avg estimated cost (USD) | 0.00003226 | 0.00002611 | **19.08% reduction** |
-| Avg latency cold (s) | 0.000143 | 0.000643 | — |
-| Avg latency cached repeat (s) | — | 0.000499 | **1.288x vs cold hierarchical** |
+| Avg latency cold (s) | 0.000151 | 0.000719 | — |
+| Avg latency cached repeat (s) | — | 0.000573 | **1.256x vs cold hierarchical** |
 | Avg quality overall (0-1) | 0.5840 | 0.7365 | — |
 | Cache hit rate on repeat | — | 100.00% | — |
 
@@ -33,7 +33,7 @@
 | Recall@3 | 0.8981 |
 | MRR | 0.8241 |
 | nDCG@3 | 0.8348 |
-| Avg retrieval stage latency (ms) | 0.1110 |
+| Avg retrieval stage latency (ms) | 0.1216 |
 
 ## Citation grounding + refusal correctness
 
@@ -49,10 +49,10 @@
 
 | Percentile | Milliseconds |
 |---|---:|
-| p50 | 0.5033 |
-| p95 | 1.3879 |
-| p99 | 2.0758 |
-| answer-stage p95 | 0.2427 |
+| p50 | 0.5735 |
+| p95 | 1.5110 |
+| p99 | 2.2051 |
+| answer-stage p95 | 0.2563 |
 
 ## Breakdown by video type
 
@@ -81,14 +81,14 @@
 | Stage | Seconds |
 |---|---:|
 | `extract_media` | 0.000001 |
-| `load_cached_tree` | 0.000028 |
+| `load_cached_tree` | 0.000032 |
 | `transcribe` | 0.000013 |
-| `semantic_chunk` | 0.000075 |
-| `keyframe_select` | 0.000013 |
-| `hierarchy_build` | 0.000029 |
+| `semantic_chunk` | 0.000080 |
+| `keyframe_select` | 0.000016 |
+| `hierarchy_build` | 0.000030 |
 | `store_cached_tree` | 0.000001 |
-| `retrieve` | 0.000111 |
-| `answer` | 0.000218 |
+| `retrieve` | 0.000122 |
+| `answer` | 0.000226 |
 
 ## Methodology
 
